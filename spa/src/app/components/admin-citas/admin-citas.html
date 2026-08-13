@@ -1,0 +1,66 @@
+<h1>Gestión de Citas (Admin)</h1>
+<hr>
+
+<div class="filtro">
+  <input 
+    type="text" 
+    [(ngModel)]="textoFiltro" 
+    placeholder="Buscar por fecha, hora, usuario, profesional, servicio u observación" 
+  />
+</div>
+<!--Pone el estado segun sea necesario-->
+<div *ngIf="estado$ | async as estado">
+  
+  <div *ngIf="estado.loading">
+    <p>Cargando citas...</p>
+  </div>
+  
+  <div *ngIf="estado.error" class="error">
+    <p>{{ estado.error }}</p>
+  </div>
+
+  <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length === 0">
+    <p>No hay citas registradas o no coinciden con tu búsqueda.</p>
+  </div>
+
+  <!--Crea la tabla si el estado es diferente de cargando, error y tiene mas de 0 citas-->
+  <!-- TABLA HORIZONTAL -->
+  <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length > 0">
+    <table class="tabla-citas">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Usuario</th>
+          <th>Profesional</th>
+          <th>Servicio</th>
+          <th>Observación</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--Recorre citas filtradas y crea una lista segun encuente-->
+        <tr *ngFor="let cita of filtrarCitas(estado.data)">
+          <td>{{ cita.id }}</td>
+          <td>{{ cita.fecha }}</td>
+          <td>{{ cita.hora }}</td>
+          <td>{{ cita.usuario?.nombre || 'No disponible' }}</td>
+          <td>{{ cita.profesional?.nombre || 'No disponible' }}</td>
+          <td>{{ cita.servicio?.nombre || 'No disponible' }}</td>
+          <td>{{ cita.observacion || '-' }}</td>
+          
+          <!-- BOTÓN CANCELAR -->
+          <td>
+            <button 
+              type="button" 
+              (click)="cancelarCita(cita)"
+              class="btn-cancelar">
+              Cancelar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

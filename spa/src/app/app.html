@@ -1,0 +1,46 @@
+<header>
+  <nav class="navbar">
+    <div class="nav-left">
+      <!-- Rutas públicas (siempre visibles) -->
+      <a routerLink="/servicios" routerLinkActive="activo">Servicios</a>
+      <a routerLink="/profesionales" routerLinkActive="activo">Profesionales</a>
+      <a routerLink="/horarios" routerLinkActive="activo">Horarios</a>
+
+      <!-- Mis Citas: solo si hay sesión activa -->
+      <ng-container *ngIf="sesion$ | async as sesion">
+        <a routerLink="/mis-citas" routerLinkActive="activo">Mis citas</a>
+      </ng-container>
+
+      <span class="separador">|</span>
+
+      <!-- Sección Admin: SOLO si es ADMIN -->
+      <ng-container *ngIf="(sesion$ | async)?.rol === 'ADMIN'">
+        <a routerLink="/admin/servicios" routerLinkActive="activo">Admin Servicios</a>
+        <a routerLink="/admin/profesionales" routerLinkActive="activo">Admin Profesionales</a>
+        <a routerLink="/admin/horarios" routerLinkActive="activo">Admin Horarios</a>
+        <a routerLink="/admin/citas" routerLinkActive="activo">Admin Citas</a>
+        <a routerLink="/admin/usuarios" routerLinkActive="activo">Admin Usuarios</a>
+        <span class="separador">|</span>
+      </ng-container>
+    </div>
+
+    <div class="nav-right">
+      <!-- Si HAY sesión activa -->
+      <ng-container *ngIf="sesion$ | async as sesion; else noLogueado">
+        <span class="user-name">{{ sesion.nombre }}</span>
+        <button type="button" class="btn-logout" (click)="cerrarSesion()">Cerrar sesión</button>
+      </ng-container>
+
+      <!-- Si NO hay sesión activa -->
+      <ng-template #noLogueado>
+        <a routerLink="/login" routerLinkActive="activo">Login</a>
+        <a routerLink="/registro" routerLinkActive="activo">Registro</a>
+      </ng-template>
+    </div>
+  </nav>
+</header>
+
+<hr>
+<main>
+  <router-outlet></router-outlet>
+</main>

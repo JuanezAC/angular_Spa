@@ -1,0 +1,25 @@
+<div class="modal-content">
+  <h2>Crear Servicio</h2>
+  <form (ngSubmit)="guardarServicio()">
+    <div class="campo">
+      <label>Nombre</label>
+      <input name="nombre" [(ngModel)]="servicioNuevo.nombre" required />
+    </div>
+    <div class="campo">
+      <label>Descripción</label>
+      <input name="descripcion" [(ngModel)]="servicioNuevo.descripcion" />
+    </div>
+    <div class="campo">
+      <label>Duración (min)</label>
+      <input name="duracion" type="number" [(ngModel)]="servicioNuevo.duracion" required />
+    </div>
+    <div class="campo">
+      <label>Precio</label>
+      <input name="precio" type="number" [(ngModel)]="servicioNuevo.precio" step="0.01" required />
+    </div>
+    <div class="acciones">
+      <button type="submit">Guardar</button>
+      <button type="button" (click)="cerrar()">Cancelar</button>
+    </div>
+  </form>
+</div>

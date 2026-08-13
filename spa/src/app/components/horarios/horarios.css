@@ -1,0 +1,95 @@
+h1 { 
+  text-align: center; 
+  margin: 20px 0; 
+  font-size: 28px; 
+}
+
+.filtro { 
+  margin-bottom: 16px; 
+}
+
+.filtro input { 
+  width: 100%; 
+  padding: 8px; 
+  box-sizing: border-box; 
+  border: 1px solid #ccc; 
+  border-radius: 6px; 
+}
+
+/* TABLA HORIZONTAL */
+.tabla-horarios {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla-horarios thead {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.tabla-horarios th,
+.tabla-horarios td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabla-horarios th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.tabla-horarios tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Selects */
+.select-servicio,
+.select-usuario {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.9rem;
+}
+
+/* Botón Reservar */
+.btn-reservar {
+  padding: 8px 16px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-reservar:hover {
+  background-color: #059669;
+}
+
+.btn-reservar:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.error { 
+  color: crimson; 
+  font-weight: 600; 
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tabla-horarios {
+    display: block;
+    overflow-x: auto;
+  }
+}

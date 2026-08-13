@@ -1,0 +1,58 @@
+<h1>Gestión de Servicios</h1>
+<div class="acciones-top">
+  <!-- 🔹 BOTÓN QUE ABRE MODAL CREAR -->
+  <button type="button" (click)="abrirModalCrear()" class="btn-crear">Crear nuevo</button>
+  <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre o descripción" />
+</div>
+<hr>
+
+<div *ngIf="estado$ | async as estado">
+  <div *ngIf="estado.loading"><p>Cargando...</p></div>
+  <div *ngIf="estado.error" class="error"><p>{{ estado.error }}</p></div>
+
+  <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0">
+    <p>No hay servicios registrados.</p>
+  </div>
+
+  <table *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0" class="tabla-admin">
+    <thead>
+      <tr>
+        <th>ID</th><th>Nombre</th><th>Descripción</th><th>Duración</th><th>Precio</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of filtrar(estado.data)">
+        <td>{{ s.id }}</td>
+        <td>{{ s.nombre }}</td>
+        <td>{{ s.descripcion || '-' }}</td>
+        <td>{{ s.duracion }} min</td>
+        <td>${{ s.precio | number:'1.2-2' }}</td>
+        <td class="acciones-tabla">
+          <button type="button" (click)="abrirModalEditar(s)" class="btn-editar">Editar</button>
+          <button type="button" (click)="eliminar(s)" class="btn-eliminar">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 🔹 MODAL CREAR (con componente hijo) -->
+<div *ngIf="modalCrearAbierto" class="overlay" (click)="cerrarModalCrear()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <app-admin-servicios-crear
+      (servicioCreado)="recargarLista(); cerrarModalCrear()"
+      (cancelar)="cerrarModalCrear()">
+    </app-admin-servicios-crear>
+  </div>
+</div>
+
+<!-- 🔹 MODAL EDITAR (con componente hijo) -->
+<div *ngIf="modalEditarAbierto" class="overlay" (click)="cerrarModalEditar()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <app-admin-servicios-editar
+      [servicio]="servicioSeleccionado"
+      (servicioEditado)="recargarLista(); cerrarModalEditar()"
+      (cancelar)="cerrarModalEditar()">
+    </app-admin-servicios-editar>
+  </div>
+</div>

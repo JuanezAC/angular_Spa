@@ -1,0 +1,47 @@
+<h1>Lista de servicios</h1>
+<hr>
+
+<div class="filtro">
+  <input 
+    type="text" 
+    [(ngModel)]="textoFiltro" 
+    placeholder="Buscar por nombre o descripción" 
+  />
+</div>
+
+<div *ngIf="estado$ | async as estado">
+  
+  <div *ngIf="estado.loading">
+    <p>Cargando servicios...</p>
+  </div>
+  
+  <div *ngIf="estado.error" class="error">
+    <p>{{ estado.error }}</p>
+  </div>
+
+  <div *ngIf="!estado.loading && !estado.error && filtrarServicios(estado.data).length === 0">
+    <p>No hay servicios disponibles para mostrar.</p>
+  </div>
+
+  <!-- TABLA HORIZONTAL -->
+  <div *ngIf="!estado.loading && !estado.error && filtrarServicios(estado.data).length > 0">
+    <table class="tabla-servicios">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Duración</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let servicio of filtrarServicios(estado.data)">
+          <td>{{ servicio.nombre }}</td>
+          <td>{{ servicio.descripcion || 'Sin descripción' }}</td>
+          <td>{{ servicio.duracion }} min</td>
+          <td>COP ${{ servicio.precio | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

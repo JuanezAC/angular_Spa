@@ -1,0 +1,61 @@
+<h1>Gestión de Horarios</h1>
+<div class="acciones-top">
+  <button type="button" (click)="abrirModalCrear()" class="btn-crear">Crear nuevo</button>
+  <input [(ngModel)]="textoFiltro" placeholder="Buscar por fecha, hora o profesional" />
+</div>
+<hr>
+
+<div *ngIf="estado$ | async as estado">
+  <div *ngIf="estado.loading"><p>Cargando...</p></div>
+  <div *ngIf="estado.error" class="error"><p>{{ estado.error }}</p></div>
+  <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0">
+    <p>No hay horarios registrados.</p>
+  </div>
+
+  <table *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0" class="tabla-admin">
+    <thead>
+      <tr>
+        <th>ID</th><th>Fecha</th><th>Hora</th><th>Profesional</th><th>Especialidad</th><th>Disponible</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let h of filtrar(estado.data)">
+        <td>{{ h.id }}</td>
+        <td>{{ h.fecha }}</td>
+        <td>{{ h.hora }}</td>
+        <td>{{ h.profesional?.nombre || 'N/A' }}</td>
+        <td>{{ h.profesional?.especialidad || 'N/A' }}</td>
+        <td>
+          <span class="badge" [class.activo]="h.disponible" [class.inactivo]="!h.disponible">
+            {{ h.disponible ? 'Sí' : 'No' }}
+          </span>
+        </td>
+        <td class="acciones-tabla">
+          <button type="button" (click)="abrirModalEditar(h)" class="btn-editar">Editar</button>
+          <button type="button" (click)="eliminar(h)" class="btn-eliminar">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MODAL CREAR -->
+<div *ngIf="modalCrearAbierto" class="overlay" (click)="cerrarModalCrear()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <app-admin-horarios-crear
+      (horarioCreado)="recargarLista(); cerrarModalCrear()"
+      (cancelar)="cerrarModalCrear()">
+    </app-admin-horarios-crear>
+  </div>
+</div>
+
+<!-- MODAL EDITAR -->
+<div *ngIf="modalEditarAbierto" class="overlay" (click)="cerrarModalEditar()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <app-admin-horarios-editar
+      [horario]="horarioSeleccionado"
+      (horarioEditado)="recargarLista(); cerrarModalEditar()"
+      (cancelar)="cerrarModalEditar()">
+    </app-admin-horarios-editar>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f8fafc; /* Fondo general claro */
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3b82f6; /* Navbar claro */
+  padding: 12px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Sombra suave para separar del contenido */
+}
+
+.navbar a {
+  color: #ffff; /* Texto oscuro para buen contraste */
+  text-decoration: none;
+  margin-right: 15px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.navbar a:hover {
+  background-color: #b2c5dc; /* Fondo oscuro al hover */
+  color: #0f172a; /* Texto claro al hover */
+  text-decoration: none;
+}
+
+/* Estado activo de la ruta */
+.activo {
+  background-color: #ffff;
+  color: #334155 !important;
+  font-weight: 600;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Botón de logout (opcional pero funcional con app.ts) */
+.btn-logout {
+  background: none;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 8px;
+  transition: all 0.2s;
+}
+.btn-logout:hover {
+  background-color: #fee2e2;
+  border-color: #f87171;
+  color: #dc2626;
+}
+
+main {
+  padding: 24px;
+  min-height: calc(100vh - 100px);
+}
+
+hr {
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.separador {
+  color: #ccc;
+  user-select: none;
+}
+
+.user-name {
+  color: #ffff;
+  margin-right: 12px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}

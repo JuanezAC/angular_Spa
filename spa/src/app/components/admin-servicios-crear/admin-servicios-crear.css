@@ -1,0 +1,62 @@
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.campo input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.acciones {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.acciones button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.acciones button[type="submit"] {
+  background: #10b981;
+  color: white;
+}
+
+.acciones button[type="submit"]:hover {
+  background: #059669;
+}
+
+.acciones button[type="button"] {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.acciones button[type="button"]:hover {
+  background: #d1d5db;
+}

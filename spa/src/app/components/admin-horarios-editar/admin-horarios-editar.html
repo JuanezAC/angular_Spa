@@ -1,0 +1,19 @@
+<h2>Editar Horario</h2>
+<form (ngSubmit)="guardarCambios()">
+  <div class="campo">
+    <label>Profesional</label>
+    <select name="profesional" [(ngModel)]="profesionalId" required>
+      <option [ngValue]="null">Seleccionar profesional</option>
+      <option *ngFor="let p of profesionales" [ngValue]="p.id">{{ p.nombre }} ({{ p.especialidad }})</option>
+    </select>
+  </div>
+  <div class="campo"><label>Fecha</label><input type="date" name="fecha" [(ngModel)]="fecha" required /></div>
+  <div class="campo"><label>Hora</label><input type="time" name="hora" [(ngModel)]="hora" required /></div>
+  <div class="campo checkbox">
+    <label><input type="checkbox" [(ngModel)]="disponible" name="disponible" /> Disponible</label>
+  </div>
+  <div class="acciones">
+    <button type="submit">Actualizar</button>
+    <button type="button" (click)="cerrar()">Cancelar</button>
+  </div>
+</form>

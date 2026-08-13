@@ -1,0 +1,60 @@
+<h1>Mis Citas</h1>
+<hr>
+
+<div class="filtro">
+  <input 
+    type="text" 
+    [(ngModel)]="textoFiltro" 
+    placeholder="Buscar por fecha, hora, profesional, servicio u observación" 
+  />
+</div>
+
+<div *ngIf="estado$ | async as estado">
+  
+  <div *ngIf="estado.loading">
+    <p>Cargando tus citas...</p>
+  </div>
+  
+  <div *ngIf="estado.error" class="error">
+    <p>{{ estado.error }}</p>
+  </div>
+
+  <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length === 0">
+    <p>No tienes citas registradas o no coinciden con tu búsqueda.</p>
+  </div>
+
+  <!-- TABLA HORIZONTAL -->
+  <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length > 0">
+    <table class="tabla-citas">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Profesional</th>
+          <th>Servicio</th>
+          <th>Observación</th>
+          <th>Acción</th> <!-- ← NUEVA COLUMNA -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cita of filtrarCitas(estado.data)">
+          <td>{{ cita.fecha }}</td>
+          <td>{{ cita.hora }}</td>
+          <td>{{ cita.profesional?.nombre || 'No disponible' }}</td>
+          <td>{{ cita.servicio?.nombre || 'No disponible' }}</td>
+          <td>{{ cita.observacion || '-' }}</td>
+          
+          <!-- BOTÓN ELIMINAR -->
+          <td>
+            <button 
+              type="button" 
+              (click)="eliminarCita(cita)"
+              class="btn-eliminar">
+              Cancelar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

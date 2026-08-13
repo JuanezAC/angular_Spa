@@ -1,0 +1,64 @@
+<h1>Gestión de Usuarios</h1>
+<div class="acciones-top">
+  <button type="button" (click)="abrirModalCrear()" class="btn-crear">Crear nuevo</button>
+  <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre, correo o rol" />
+</div>
+<hr>
+
+<div *ngIf="estado$ | async as estado">
+  <div *ngIf="estado.loading"><p>Cargando...</p></div>
+  <div *ngIf="estado.error" class="error"><p>{{ estado.error }}</p></div>
+  <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0">
+    <p>No hay usuarios registrados.</p>
+  </div>
+
+  <table *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0" class="tabla-admin">
+    <thead>
+      <tr>
+        <th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Fecha Registro</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of filtrar(estado.data)">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.correo }}</td>
+        <td>
+          <span class="badge-rol" [ngClass]="{
+            'rol-admin': usuario.rol === 'ADMIN',
+            'rol-cliente': usuario.rol === 'CLIENTE',
+            'rol-profesional': usuario.rol === 'PROFESIONAL'
+          }">
+            {{ usuario.rol }}
+          </span>
+        </td>
+        <td>{{ usuario.fechaRegistro | date:'dd/MM/yyyy' }}</td>
+        <td class="acciones-tabla">
+          <button type="button" (click)="abrirModalEditar(usuario)" class="btn-editar">Editar</button>
+          <button type="button" (click)="eliminar(usuario)" class="btn-eliminar">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MODAL CREAR -->
+<div *ngIf="modalCrearAbierto" class="overlay" (click)="cerrarModalCrear()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <app-admin-usuarios-crear
+      (usuarioCreado)="recargarLista(); cerrarModalCrear()"
+      (cancelar)="cerrarModalCrear()">
+    </app-admin-usuarios-crear>
+  </div>
+</div>
+
+<!-- MODAL EDITAR -->
+<div *ngIf="modalEditarAbierto" class="overlay" (click)="cerrarModalEditar()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <app-admin-usuarios-editar
+      [usuario]="usuarioSeleccionado"
+      (usuarioEditado)="recargarLista(); cerrarModalEditar()"
+      (cancelar)="cerrarModalEditar()">
+    </app-admin-usuarios-editar>
+  </div>
+</div>

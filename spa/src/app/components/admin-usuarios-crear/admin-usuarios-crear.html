@@ -1,0 +1,18 @@
+<h2>Crear Usuario</h2>
+<form (ngSubmit)="guardarUsuario()">
+  <div class="campo"><label>Nombre</label><input name="nombre" [(ngModel)]="usuarioNuevo.nombre" required /></div>
+  <div class="campo"><label>Correo</label><input name="correo" type="email" [(ngModel)]="usuarioNuevo.correo" required /></div>
+  <div class="campo"><label>Contraseña</label><input name="contrasena" type="password" [(ngModel)]="usuarioNuevo.contrasena" required /></div>
+  <div class="campo">
+    <label>Rol</label>
+    <select name="rol" [(ngModel)]="usuarioNuevo.rol" required>
+      <option value="CLIENTE">Cliente</option>
+      <option value="ADMIN">Administrador</option>
+      <option value="PROFESIONAL">Profesional</option>
+    </select>
+  </div>
+  <div class="acciones">
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="cerrar()">Cancelar</button>
+  </div>
+</form>

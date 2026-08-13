@@ -1,0 +1,89 @@
+<h1>Horarios disponibles</h1>
+<hr>
+
+<div class="filtro">
+  <input 
+    type="text" 
+    [(ngModel)]="textoFiltro" 
+    placeholder="Buscar por fecha, hora o profesional" 
+  />
+</div>
+<!--verifica el estado actual-->
+<div *ngIf="estado$ | async as estado">
+ 
+  <!--indica si esta cargando-->
+  <div *ngIf="estado.loading">
+    <p>Cargando horarios...</p>
+  </div>
+  <!--avisa si tiene errores -->
+  <div *ngIf="estado.error" class="error">
+    <p>{{ estado.error }}</p>
+  </div>
+  <!-- verifica si el no tiene errores, no esta cargando y si su longitud es 0-->
+  <div *ngIf="!estado.loading && !estado.error && filtrarHorarios(estado.data).length === 0">
+    <p>No hay horarios disponibles para mostrar.</p>
+  </div>
+  <!-- si no esta cargando no tiene errores y su longitud es mayor a cero-->
+  <!-- TABLA HORIZONTAL -->
+  <div *ngIf="!estado.loading && !estado.error && filtrarHorarios(estado.data).length > 0">
+    <table class="tabla-horarios">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Profesional</th>
+          <th>Especialidad</th>
+          <th>Servicio</th>
+          <!--Verifica que es admin-->
+          <th *ngIf="esAdmin">Usuario</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--Recorre horarios filtrados y muestra fecha,hora,nombre y especialidad (Si ya esta asignado)-->
+        <tr *ngFor="let horario of filtrarHorarios(estado.data)">
+          <td>{{ horario.fecha }}</td>
+          <td>{{ horario.hora }}</td>
+          <td>{{ horario.profesional?.nombre || 'No disponible' }}</td>
+          <td>{{ horario.profesional?.especialidad || '-' }}</td>
+          
+          <!-- Select de Servicio -->
+          <td>
+            <!---->
+            <select 
+              [(ngModel)]="servicioSeleccionado[horario.id!]"
+              class="select-servicio">
+              <option [ngValue]="null">-- Elegir --</option>
+              <option *ngFor="let s of obtenerServiciosPorProfesional(horario.profesional?.id)" 
+                      [ngValue]="s.id">
+                {{ s.nombre }} (${{ s.precio }})
+              </option>
+            </select>
+          </td>
+          
+          <!-- Select de Usuario (solo admin) -->
+          <td *ngIf="esAdmin">
+            <select 
+              [(ngModel)]="usuarioSeleccionado[horario.id!]"
+              class="select-usuario">
+              <option [ngValue]="null">-- Elegir --</option>
+              <option *ngFor="let u of usuarios" [ngValue]="u.id">
+                {{ u.nombre }} ({{ u.correo }})
+              </option>
+            </select>
+          </td>
+          
+          <!-- Botón Reservar -->
+          <td>
+            <button 
+              type="button" 
+              (click)="reservar(horario)"
+              class="btn-reservar">
+              Reservar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

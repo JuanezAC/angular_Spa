@@ -1,0 +1,18 @@
+<div class="login-container">
+    <div class="login-card">
+        <h2>Iniciar sesión</h2>
+        <form (ngSubmit)="iniciarSesion()">
+        <div class="campo">
+            <label for="correo">Correo</label>
+            <input id="correo" name="correo" type="email" [(ngModel)]="correo" placeholder="Ingresa tu correo"/>
+        </div>
+        <div class="campo">
+            <label for="contrasena">Contraseña</label>
+            <input id="contrasena" name="contrasena" type="password" [(ngModel)]="contrasena" placeholder="Ingresa tu contraseña"/>
+        </div>
+        <div class="acciones">
+            <button type="submit">Entrar</button>
+        </div>
+        </form>
+    </div>
+</div>

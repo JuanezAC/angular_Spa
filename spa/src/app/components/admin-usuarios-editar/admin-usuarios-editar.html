@@ -1,0 +1,21 @@
+<h2>Editar Usuario</h2>
+<form (ngSubmit)="guardarCambios()">
+  <div class="campo"><label>Nombre</label><input name="nombre" [(ngModel)]="usuarioEditando.nombre" required /></div>
+  <div class="campo"><label>Correo</label><input name="correo" type="email" [(ngModel)]="usuarioEditando.correo" required /></div>
+  <div class="campo">
+    <label>Nueva Contraseña <small style="color:#6b7280; font-weight:400">(dejar vacío para mantener la actual)</small></label>
+    <input name="contrasena" type="password" [(ngModel)]="contrasenaNueva" />
+  </div>
+  <div class="campo">
+    <label>Rol</label>
+    <select name="rol" [(ngModel)]="usuarioEditando.rol" required>
+      <option value="CLIENTE">Cliente</option>
+      <option value="ADMIN">Administrador</option>
+      <option value="PROFESIONAL">Profesional</option>
+    </select>
+  </div>
+  <div class="acciones">
+    <button type="submit">Actualizar</button>
+    <button type="button" (click)="cerrar()">Cancelar</button>
+  </div>
+</form>
