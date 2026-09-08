@@ -29,7 +29,7 @@ export class AdminProfesionales implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private sesionService = inject(SesionService);
 
-  estado$: Observable<ProfesionalState>;
+  estado$!: Observable<ProfesionalState>;
   textoFiltro: string = '';
 
   modalCrearAbierto = false;

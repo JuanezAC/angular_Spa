@@ -30,7 +30,7 @@ export class AdminHorarios implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private sesionService = inject(SesionService);
 
-  estado$: Observable<HorarioState>;
+  estado$!: Observable<HorarioState>;
   textoFiltro: string = '';
 
   modalCrearAbierto = false;

@@ -27,7 +27,7 @@ export class AdminCitas implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private sesionService = inject(SesionService);
 
-  estado$: Observable<CitaState>;
+  estado$!: Observable<CitaState>;
   textoFiltro: string = '';
 
   ngOnInit(): void {

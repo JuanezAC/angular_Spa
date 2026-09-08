@@ -29,7 +29,7 @@ export class AdminUsuarios implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private sesionService = inject(SesionService);
 
-  estado$: Observable<UsuarioState>;
+  estado$!: Observable<UsuarioState>;
   textoFiltro: string = '';
 
   modalCrearAbierto = false;

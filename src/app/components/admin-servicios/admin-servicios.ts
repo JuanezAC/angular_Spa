@@ -31,7 +31,7 @@ export class AdminServicios implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private sesionService = inject(SesionService);
 
-  estado$: Observable<ServicioState>;
+  estado$!: Observable<ServicioState>;
   textoFiltro: string = '';
 
   modalCrearAbierto = false;
