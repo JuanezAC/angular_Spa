@@ -1,0 +1,26 @@
+<h2>Crear Profesional</h2>
+<form (ngSubmit)="guardarProfesional()">
+  <div class="campo"><label>Nombre</label><input name="nombre" [(ngModel)]="profesionalNuevo.nombre" required /></div>
+  <div class="campo"><label>Especialidad</label><input name="especialidad" [(ngModel)]="profesionalNuevo.especialidad" required /></div>
+  <div class="campo"><label>Correo</label><input name="correo" type="email" [(ngModel)]="profesionalNuevo.correo" required /></div>
+  <div class="campo"><label>Teléfono</label><input name="telefono" [(ngModel)]="profesionalNuevo.telefono" required /></div>
+  <div class="campo checkbox">
+    <label><input type="checkbox" [(ngModel)]="profesionalNuevo.estado" name="estado" /> Activo</label>
+  </div>
+
+  <!-- ✅ LISTA DE SERVICIOS -->
+  <div class="campo">
+    <label>Servicios asignados</label>
+    <div class="servicios-lista">
+      <label *ngFor="let s of serviciosDisponibles" class="servicio-item">
+        <input type="checkbox" [checked]="serviciosSeleccionados.includes(s.id!)" (change)="toggleServicio(s.id!)">
+        <span>{{ s.nombre }} ({{ s.duracion }} min)</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="acciones">
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="cerrar()">Cancelar</button>
+  </div>
+</form>

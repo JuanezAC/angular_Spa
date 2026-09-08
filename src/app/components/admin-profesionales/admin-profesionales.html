@@ -1,0 +1,61 @@
+<h1>Gestión de Profesionales</h1>
+<div class="acciones-top">
+  <button type="button" (click)="abrirModalCrear()" class="btn-crear">Crear nuevo</button>
+  <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre, especialidad o correo" />
+</div>
+<hr>
+
+<div *ngIf="estado$ | async as estado">
+  <div *ngIf="estado.loading"><p>Cargando...</p></div>
+  <div *ngIf="estado.error" class="error"><p>{{ estado.error }}</p></div>
+  <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0">
+    <p>No hay profesionales registrados.</p>
+  </div>
+
+  <table *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0" class="tabla-admin">
+    <thead>
+      <tr>
+        <th>ID</th><th>Nombre</th><th>Especialidad</th><th>Correo</th><th>Teléfono</th><th>Estado</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of filtrar(estado.data)">
+        <td>{{ p.id }}</td>
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.especialidad }}</td>
+        <td>{{ p.correo }}</td>
+        <td>{{ p.telefono }}</td>
+        <td>
+          <span class="badge" [class.activo]="p.estado" [class.inactivo]="!p.estado">
+            {{ p.estado ? 'Activo' : 'Inactivo' }}
+          </span>
+        </td>
+        <td class="acciones-tabla">
+          <button type="button" (click)="abrirModalEditar(p)" class="btn-editar">Editar</button>
+          <button type="button" (click)="eliminar(p)" class="btn-eliminar">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MODAL CREAR -->
+<div *ngIf="modalCrearAbierto" class="overlay" (click)="cerrarModalCrear()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <app-admin-profesionales-crear
+      (profesionalCreado)="recargarLista(); cerrarModalCrear()"
+      (cancelar)="cerrarModalCrear()">
+    </app-admin-profesionales-crear>
+  </div>
+</div>
+
+<!-- MODAL EDITAR -->
+<div *ngIf="modalEditarAbierto" class="overlay" (click)="cerrarModalEditar()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <app-admin-profesionales-editar
+      [profesional]="profesionalSeleccionado"
+      (profesionalEditado)="recargarLista(); cerrarModalEditar()"
+      (cancelar)="cerrarModalEditar()">
+    </app-admin-profesionales-editar>
+  </div>
+</div>
