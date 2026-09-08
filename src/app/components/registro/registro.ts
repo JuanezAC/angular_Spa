@@ -3,13 +3,12 @@ import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario/usuario-service';
 import { Usuario } from '../../models/usuario';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './registro.html',
   styleUrl: './registro.css'
 })

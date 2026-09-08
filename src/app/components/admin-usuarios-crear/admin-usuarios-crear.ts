@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario/usuario-service';
@@ -8,7 +7,7 @@ import { Usuario } from '../../models/usuario';
 @Component({
   selector: 'app-admin-usuarios-crear',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule],
   templateUrl: './admin-usuarios-crear.html',
   styleUrl: './admin-usuarios-crear.css',
 })

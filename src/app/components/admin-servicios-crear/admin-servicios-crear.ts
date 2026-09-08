@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ServicioService } from '../../services/servicio/servicio-service';
@@ -8,7 +7,7 @@ import { Servicio } from '../../models/servicio';
 @Component({
   selector: 'app-admin-servicios-crear',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule],
   templateUrl: './admin-servicios-crear.html',
   styleUrl: './admin-servicios-crear.css',
 })

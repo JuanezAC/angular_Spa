@@ -10,7 +10,7 @@ import { HorarioDisponible } from '../../models/horario-disponible';
 import { Cita } from '../../models/cita';
 import { Servicio } from '../../models/servicio';
 import { Usuario } from '../../models/usuario';
-import { Observable, catchError, map, of, startWith, forkJoin } from 'rxjs';
+import { Observable, catchError, map, of, startWith } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ProSerService } from '../../services/proSer/pro-ser-service';

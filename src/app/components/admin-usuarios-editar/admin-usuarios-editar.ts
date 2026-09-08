@@ -1,5 +1,4 @@
 import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario/usuario-service';
 import Swal from 'sweetalert2';
@@ -8,7 +7,7 @@ import { Usuario } from '../../models/usuario';
 @Component({
   selector: 'app-admin-usuarios-editar',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './admin-usuarios-editar.html',
   styleUrl: './admin-usuarios-editar.css'
 })

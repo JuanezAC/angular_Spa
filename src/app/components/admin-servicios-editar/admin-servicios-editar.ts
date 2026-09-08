@@ -1,5 +1,4 @@
 import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServicioService } from '../../services/servicio/servicio-service';
 import { Servicio } from '../../models/servicio';
@@ -8,7 +7,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-admin-servicios-editar',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './admin-servicios-editar.html',
   styleUrl: './admin-servicios-editar.css'
 })

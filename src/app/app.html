@@ -1,20 +1,16 @@
 <header>
   <nav class="navbar">
-    <div class="nav-left">
+    <div class="nav-left" *ngIf="sesion$ | async as sesion">
       <!-- Rutas públicas (siempre visibles) -->
       <a routerLink="/servicios" routerLinkActive="activo">Servicios</a>
       <a routerLink="/profesionales" routerLinkActive="activo">Profesionales</a>
       <a routerLink="/horarios" routerLinkActive="activo">Horarios</a>
-
-      <!-- Mis Citas: solo si hay sesión activa -->
-      <ng-container *ngIf="sesion$ | async as sesion">
-        <a routerLink="/mis-citas" routerLinkActive="activo">Mis citas</a>
-      </ng-container>
+      <a routerLink="/mis-citas" routerLinkActive="activo">Mis citas</a>
 
       <span class="separador">|</span>
 
       <!-- Sección Admin: SOLO si es ADMIN -->
-      <ng-container *ngIf="(sesion$ | async)?.rol === 'ADMIN'">
+      <ng-container *ngIf="sesion.rol === 'ADMIN'">
         <a routerLink="/admin/servicios" routerLinkActive="activo">Admin Servicios</a>
         <a routerLink="/admin/profesionales" routerLinkActive="activo">Admin Profesionales</a>
         <a routerLink="/admin/horarios" routerLinkActive="activo">Admin Horarios</a>
@@ -22,6 +18,12 @@
         <a routerLink="/admin/usuarios" routerLinkActive="activo">Admin Usuarios</a>
         <span class="separador">|</span>
       </ng-container>
+    </div>
+
+    <div class="nav-left" *ngIf="!(sesion$ | async)">
+      <a routerLink="/servicios" routerLinkActive="activo">Servicios</a>
+      <a routerLink="/profesionales" routerLinkActive="activo">Profesionales</a>
+      <a routerLink="/horarios" routerLinkActive="activo">Horarios</a>
     </div>
 
     <div class="nav-right">

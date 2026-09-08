@@ -44,8 +44,8 @@
         <tr *ngFor="let horario of filtrarHorarios(estado.data)">
           <td>{{ horario.fecha }}</td>
           <td>{{ horario.hora }}</td>
-          <td>{{ horario.profesional?.nombre || 'No disponible' }}</td>
-          <td>{{ horario.profesional?.especialidad || '-' }}</td>
+          <td>{{ horario.profesional.nombre || 'No disponible' }}</td>
+          <td>{{ horario.profesional.especialidad || '-' }}</td>
           
           <!-- Select de Servicio -->
           <td>

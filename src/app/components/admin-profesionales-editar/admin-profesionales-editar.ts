@@ -7,7 +7,6 @@ import { ProSerService } from '../../services/proSer/pro-ser-service';
 import Swal from 'sweetalert2';
 import { Profesional } from '../../models/profesional';
 import { Servicio } from '../../models/servicio';
-import { ProfesionalServicio } from '../../models/profesional-servicio';
 import { firstValueFrom } from 'rxjs';
 
 @Component({

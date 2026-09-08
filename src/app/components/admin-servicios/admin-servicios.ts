@@ -1,7 +1,6 @@
 import { Component, inject, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { ServicioService } from '../../services/servicio/servicio-service';
 import { Servicio } from '../../models/servicio';
 import { Observable, catchError, map, of, startWith } from 'rxjs';
@@ -21,7 +20,7 @@ interface ServicioState {
   selector: 'app-admin-servicios',
   standalone: true,
   // 🔹 AGREGAR HIJOS A LOS IMPORTS
-  imports: [CommonModule, FormsModule, RouterLink, AdminServiciosEditar, AdminServiciosCrear],
+  imports: [CommonModule, FormsModule, AdminServiciosEditar, AdminServiciosCrear],
   templateUrl: './admin-servicios.html',
   styleUrl: './admin-servicios.css'
 })

@@ -23,8 +23,8 @@
         <td>{{ h.id }}</td>
         <td>{{ h.fecha }}</td>
         <td>{{ h.hora }}</td>
-        <td>{{ h.profesional?.nombre || 'N/A' }}</td>
-        <td>{{ h.profesional?.especialidad || 'N/A' }}</td>
+        <td>{{ h.profesional.nombre || 'N/A' }}</td>
+        <td>{{ h.profesional.especialidad || 'N/A' }}</td>
         <td>
           <span class="badge" [class.activo]="h.disponible" [class.inactivo]="!h.disponible">
             {{ h.disponible ? 'Sí' : 'No' }}

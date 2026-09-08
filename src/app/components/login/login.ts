@@ -2,13 +2,12 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SesionService } from '../../services/sesion/sesion-service';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })

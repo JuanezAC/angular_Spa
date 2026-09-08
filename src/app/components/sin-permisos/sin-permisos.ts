@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sin-permisos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './sin-permisos.html',
   styleUrl: './sin-permisos.css'
 })
