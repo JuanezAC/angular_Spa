@@ -40,8 +40,8 @@
         <tr *ngFor="let cita of filtrarCitas(estado.data)">
           <td>{{ cita.fecha }}</td>
           <td>{{ cita.hora }}</td>
-          <td>{{ cita.profesional?.nombre || 'No disponible' }}</td>
-          <td>{{ cita.servicio?.nombre || 'No disponible' }}</td>
+          <td>{{ cita.profesional.nombre || 'No disponible' }}</td>
+          <td>{{ cita.servicio.nombre || 'No disponible' }}</td>
           <td>{{ cita.observacion || '-' }}</td>
           
           <!-- BOTÓN ELIMINAR -->

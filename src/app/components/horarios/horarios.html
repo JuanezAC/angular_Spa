@@ -54,7 +54,7 @@
               [(ngModel)]="servicioSeleccionado[horario.id!]"
               class="select-servicio">
               <option [ngValue]="null">-- Elegir --</option>
-              <option *ngFor="let s of obtenerServiciosPorProfesional(horario.profesional?.id)" 
+              <option *ngFor="let s of obtenerServiciosPorProfesional(horario.profesional.id)" 
                       [ngValue]="s.id">
                 {{ s.nombre }} (${{ s.precio }})
               </option>
