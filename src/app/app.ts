@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SesionService } from './services/sesion/sesion-service';
@@ -10,18 +10,19 @@ import { SesionService } from './services/sesion/sesion-service';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
   private router = inject(Router);
   private sesionService = inject(SesionService);
 
-  // Observable que emite el usuario logueado o null
-  sesion$ = this.sesionService.obtenerSesion();
+  sesion$ = this.sesionService.sesion$;
+
+  ngOnInit(): void {
+    this.sesionService.refrescarSesion();
+  }
 
   cerrarSesion(): void {
     this.sesionService.logout().subscribe({
       next: () => {
-        // Recargamos el observable para que Angular detecte que la sesión se cerró
-        this.sesion$ = this.sesionService.obtenerSesion();
         this.router.navigate(['/login']);
       },
       error: (err) => console.error('Error al cerrar sesión', err)

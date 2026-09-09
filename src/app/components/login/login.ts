@@ -37,8 +37,8 @@ export class Login {
           timer: 1500,
           timerProgressBar: true
         }).then(() => {
+          this.sesionService.refrescarSesion();
           this.router.navigate(['/servicios']);
-          setTimeout(() => window.location.reload(), 100);
         });
       },
       error: (err) => {
