@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profesional } from '../../models/profesional';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ProfesionalService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/profesionales';
+  private apiUrl = `${environment.apiUrl}/api/profesionales`;
 
   obtenerTodos(): Observable<Profesional[]> {
     return this.http.get<Profesional[]>(this.apiUrl, { withCredentials: true });
