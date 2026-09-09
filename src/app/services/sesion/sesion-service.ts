@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs'; // ← Importar catchError y of
 import { UsuarioSesion } from '../../models/usuario-sesion';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SesionService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://springboot-spa.onrender.com/api/sesion';
+  private apiUrl = `${environment.apiUrl}/api/sesion`;
 
   login(correo: string, contrasena: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { correo, contrasena }, { withCredentials: true });

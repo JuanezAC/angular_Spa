@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HorarioDisponible } from '../../models/horario-disponible';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class HorarioService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'https://springboot-spa.onrender.com/api/horarios';
+  private apiUrl = `${environment.apiUrl}/api/horarios`;
 
   obtenerTodos(): Observable<HorarioDisponible[]> {
     return this.http.get<HorarioDisponible[]>(this.apiUrl);

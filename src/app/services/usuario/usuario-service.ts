@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../../models/usuario';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'https://springboot-spa.onrender.com/api/usuarios';
+
+  private apiUrl = `${environment.apiUrl}/api/usuarios`;
 
   obtenerTodos(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(this.apiUrl, { withCredentials: true });

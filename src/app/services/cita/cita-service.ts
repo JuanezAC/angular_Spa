@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cita } from '../../models/cita';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CitaService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'https://springboot-spa.onrender.com/api/citas';
+  private apiUrl = `${environment.apiUrl}/api/citas`;
 
   obtenerTodas(): Observable<Cita[]> {
     return this.http.get<Cita[]>(this.apiUrl, { withCredentials: true });
