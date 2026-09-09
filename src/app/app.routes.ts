@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { Home } from './components/home/home';
 import { Login } from './components/login/login';
 import { Registro } from './components/registro/registro';
 
@@ -22,7 +23,7 @@ import { AdminProfesionalesCrear } from './components/admin-profesionales-crear/
 import { SinPermisos } from './components/sin-permisos/sin-permisos';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'servicios', pathMatch: 'full' },
+  { path: '', component: Home },
 
   // USUARIO
   { path: 'login', component: Login },
@@ -43,5 +44,5 @@ export const routes: Routes = [
   { path: 'admin/citas', component: AdminCitas },
   { path: 'admin/usuarios', component: AdminUsuarios },
   { path: 'sin-permisos', component: SinPermisos },
-  { path: '**', redirectTo: 'servicios' }
+  { path: '**', redirectTo: '' }
 ];

@@ -2,6 +2,7 @@
   <nav class="navbar">
     <div class="nav-left" *ngIf="sesion$ | async as sesion">
       <!-- Rutas públicas (siempre visibles) -->
+      <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
       <a routerLink="/servicios" routerLinkActive="activo">Servicios</a>
       <a routerLink="/profesionales" routerLinkActive="activo">Profesionales</a>
       <a routerLink="/horarios" routerLinkActive="activo">Horarios</a>
@@ -21,6 +22,7 @@
     </div>
 
     <div class="nav-left" *ngIf="!(sesion$ | async)">
+      <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
       <a routerLink="/servicios" routerLinkActive="activo">Servicios</a>
       <a routerLink="/profesionales" routerLinkActive="activo">Profesionales</a>
       <a routerLink="/horarios" routerLinkActive="activo">Horarios</a>
