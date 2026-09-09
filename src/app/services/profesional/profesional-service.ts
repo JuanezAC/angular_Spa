@@ -7,7 +7,7 @@ import { Profesional } from '../../models/profesional';
 export class ProfesionalService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/profesionales';
+  private apiUrl = 'https://springboot-spa.onrender.com/api/profesionales';
 
   obtenerTodos(): Observable<Profesional[]> {
     return this.http.get<Profesional[]>(this.apiUrl, { withCredentials: true });

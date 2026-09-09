@@ -6,7 +6,7 @@ import { ProfesionalServicio } from '../../models/profesional-servicio';
 @Injectable({ providedIn: 'root' })
 export class ProSerService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/profesional-servicios';
+  private apiUrl = 'https://springboot-spa.onrender.com/api/profesional-servicios';
 
   obtenerTodos(): Observable<ProfesionalServicio[]> {
     return this.http.get<ProfesionalServicio[]>(this.apiUrl);

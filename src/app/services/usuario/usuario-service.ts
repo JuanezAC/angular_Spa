@@ -7,7 +7,7 @@ import { Usuario } from '../../models/usuario';
 export class UsuarioService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/usuarios';
+  private apiUrl = 'https://springboot-spa.onrender.com/api/usuarios';
 
   obtenerTodos(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(this.apiUrl, { withCredentials: true });

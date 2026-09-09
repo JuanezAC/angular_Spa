@@ -7,7 +7,7 @@ import { HorarioDisponible } from '../../models/horario-disponible';
 export class HorarioService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/horarios';
+  private apiUrl = 'https://springboot-spa.onrender.com/api/horarios';
 
   obtenerTodos(): Observable<HorarioDisponible[]> {
     return this.http.get<HorarioDisponible[]>(this.apiUrl);

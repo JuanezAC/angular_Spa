@@ -7,7 +7,7 @@ import { Servicio } from '../../models/servicio';
 export class ServicioService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/servicios';
+  private apiUrl = 'https://springboot-spa.onrender.com/api/servicios';
 
   obtenerTodos(): Observable<Servicio[]> {
     return this.http.get<Servicio[]>(this.apiUrl, { withCredentials: true });

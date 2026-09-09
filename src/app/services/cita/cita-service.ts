@@ -7,7 +7,7 @@ import { Cita } from '../../models/cita';
 export class CitaService {
 
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/citas';
+  private apiUrl = 'https://springboot-spa.onrender.com/api/citas';
 
   obtenerTodas(): Observable<Cita[]> {
     return this.http.get<Cita[]>(this.apiUrl, { withCredentials: true });

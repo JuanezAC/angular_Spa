@@ -6,7 +6,7 @@ import { UsuarioSesion } from '../../models/usuario-sesion';
 @Injectable({ providedIn: 'root' })
 export class SesionService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/sesion';
+  private apiUrl = 'https://springboot-spa.onrender.com/api/sesion';
 
   login(correo: string, contrasena: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { correo, contrasena }, { withCredentials: true });
