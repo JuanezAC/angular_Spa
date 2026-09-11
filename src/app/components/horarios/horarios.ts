@@ -121,8 +121,10 @@ export class Horarios {
 
   
   obtenerServiciosPorProfesional(profesionalId: number | undefined): Servicio[] {
-    if (!profesionalId) return [];
-    return this.serviciosPorProfesional[profesionalId] || [];
+    if (!profesionalId) return this.servicios;
+    const asignados = this.serviciosPorProfesional[profesionalId];
+    if (asignados && asignados.length > 0) return asignados;
+    return this.servicios;
   }
 
   verificarSesion(): void {
