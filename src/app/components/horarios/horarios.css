@@ -81,6 +81,29 @@ h1 {
   cursor: not-allowed;
 }
 
+/* Badge Reservado */
+.badge-reservado {
+  display: inline-block;
+  padding: 6px 14px;
+  background-color: #6b7280;
+  color: white;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+/* Texto de reserva (servicio/usuario) */
+.texto-reserva {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #f3f4f6;
+  color: #374151;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
 .error { 
   color: crimson; 
   font-weight: 600; 

@@ -42,16 +42,17 @@ export class Horarios {
   estado$: Observable<HorarioState>;
   textoFiltro: string = '';
 
-  // Datos para los selects
   servicios: Servicio[] = [];
   usuarios: Usuario[] = [];
   usuarioSesion: any = null;
   esAdmin: boolean = false;
 
-  // Selección por fila (mapeo por horario.id)
   servicioSeleccionado: { [key: number]: number } = {};
   usuarioSeleccionado: { [key: number]: number } = {};
-  serviciosPorProfesional: { [key: number]: Servicio[] } = {}; // Servicios disponibles por profesional
+  serviciosPorProfesional: { [key: number]: Servicio[] } = {};
+
+  citas: Cita[] = [];
+  citasPorHorario: { [key: number]: Cita } = {};
 
   constructor() {
     this.estado$ = this.cargarHorarios();
@@ -61,26 +62,21 @@ export class Horarios {
 
   recargarLista(): void {
     this.estado$ = this.cargarHorarios();
-    this.cdr.markForCheck(); // ← Fuerza a Angular a detectar el cambio
+    this.cargarCitas();
+    this.cdr.markForCheck();
   }
 
   cargarHorarios(): Observable<HorarioState> {
     return this.horarioService.obtenerTodos().pipe(
       map((data) => {
-  
-      console.log('Datos crudos del backend:', data);
-      
-      const horariosFiltrados = data.filter(h => h.disponible && h.profesional?.estado !== false);
-      console.log(' Horarios filtrados:', horariosFiltrados);
-
-      //Retorna un objeto válido: { clave: valor }
-      return { loading: false, data: horariosFiltrados, error: null };
-    }),
-    startWith({ loading: true, data: [], error: null }),
-    catchError(err => {
-      if (err.status === 401) this.router.navigate(['/login']);
-      return of({ loading: false, data: [], error: 'Error al cargar los horarios' });
-    })
+        const horariosFiltrados = data.filter(h => h.disponible && h.profesional?.estado !== false);
+        return { loading: false, data: horariosFiltrados, error: null };
+      }),
+      startWith({ loading: true, data: [], error: null }),
+      catchError(err => {
+        if (err.status === 401) this.router.navigate(['/login']);
+        return of({ loading: false, data: [], error: 'Error al cargar los horarios' });
+      })
     );
   }
 
@@ -107,7 +103,30 @@ export class Horarios {
     });
   }
 
-  
+  cargarCitas(): void {
+    const obs = this.esAdmin ? this.citaService.obtenerTodas() : this.citaService.obtenerMisCitas();
+    obs.subscribe({
+      next: (citas) => {
+        this.citas = citas;
+        this.citasPorHorario = {};
+        citas.forEach(cita => {
+          if (cita.horario?.id) {
+            this.citasPorHorario[cita.horario.id] = cita;
+          }
+        });
+      },
+      error: (err) => console.error('Error al cargar citas', err)
+    });
+  }
+
+  obtenerCitaPorHorario(horarioId: number): Cita | undefined {
+    return this.citasPorHorario[horarioId];
+  }
+
+  estaReservado(horarioId: number): boolean {
+    return !!this.citasPorHorario[horarioId];
+  }
+
   obtenerServiciosPorProfesional(profesionalId: number | undefined): Servicio[] {
     if (!profesionalId) return this.servicios;
     const asignados = this.serviciosPorProfesional[profesionalId];
@@ -124,6 +143,7 @@ export class Horarios {
         } else {
           this.esAdmin = false;
         }
+        this.cargarCitas();
         if (this.esAdmin) {
           this.usuarioService.obtenerTodos().subscribe({
             next: (data) => this.usuarios = data.filter(u => u.rol === 'CLIENTE'),
@@ -133,6 +153,7 @@ export class Horarios {
       },
       error: () => {
         this.esAdmin = false;
+        this.cargarCitas();
       }
     });
   }
@@ -152,7 +173,6 @@ export class Horarios {
     const servicioId = this.servicioSeleccionado[horario.id!];
     const usuarioId = this.usuarioSeleccionado[horario.id!] ?? this.usuarioSesion?.id;
 
-    // Validaciones
     if (!servicioId) {
       Swal.fire({ icon: 'warning', title: 'Selecciona un servicio', text: 'Debes elegir un servicio para reservar' });
       return;
@@ -167,15 +187,14 @@ export class Horarios {
       return;
     }
 
-    const observacionReserva = this.esAdmin 
-    ? 'Reserva realizada por administrador' 
+    const observacionReserva = this.esAdmin
+    ? 'Reserva realizada por administrador'
     : 'Reserva web';
 
     const citaParaEnviar: Cita = {
       fecha: horario.fecha,
       hora: horario.hora,
       observacion: observacionReserva,
-      
       usuario: { id: usuarioId } as any,
       profesional: { id: horario.profesional?.id } as any,
       servicio: { id: servicioId } as any,
@@ -184,25 +203,24 @@ export class Horarios {
 
     this.citaService.crear(citaParaEnviar).subscribe({
       next: () => {
-        Swal.fire({ 
-          icon: 'success', 
-          title: '¡Cita reservada!', 
-          text: `Reservado para el ${horario.fecha} a las ${horario.hora}` 
+        Swal.fire({
+          icon: 'success',
+          title: '¡Cita reservada!',
+          text: `Reservado para el ${horario.fecha} a las ${horario.hora}`
         }).then(() => {
-          // Recargar la lista para actualizar disponibilidad
           this.recargarLista();
         });
       },
       error: (err) => {
         if (err.status === 401) { this.router.navigate(['/login']); return; }
-        if (err.status === 403) { 
-          Swal.fire('Acceso denegado', 'Requiere rol de administrador', 'error'); 
-          return; 
+        if (err.status === 403) {
+          Swal.fire('Acceso denegado', 'Requiere rol de administrador', 'error');
+          return;
         }
-        Swal.fire({ 
-          icon: 'error', 
-          title: 'Error al reservar', 
-          text: err.error?.mensaje || 'No se pudo agendar la cita. Verifica que el horario siga disponible.' 
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al reservar',
+          text: err.error?.mensaje || 'No se pudo agendar la cita. Verifica que el horario siga disponible.'
         });
       }
     });
