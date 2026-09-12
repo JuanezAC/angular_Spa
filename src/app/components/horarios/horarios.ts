@@ -55,6 +55,7 @@ export class Horarios {
 
   constructor() {
     this.estado$ = this.cargarHorarios();
+    this.cargarDatosAuxiliares();
     this.verificarSesion();
   }
 
@@ -84,39 +85,26 @@ export class Horarios {
   }
 
   cargarDatosAuxiliares(): void {
-    // Cargar servicios para el select (público)
     this.servicioService.obtenerTodos().subscribe({
       next: (data) => this.servicios = data,
       error: (err) => console.error('Error al cargar servicios', err)
     });
 
-    // Cargar asignaciones profesional-servicio y agrupar en objeto
     this.proSerService.obtenerTodos().subscribe({
       next: (asignaciones: ProfesionalServicio[]) => {
         asignaciones.forEach(asp => {
           const proId = asp.profesional?.id;
           const servicio = asp.servicio as Servicio;
-          
           if (proId && servicio) {
-            // Si no existe el array para este profesional, lo creamos
             if (!this.serviciosPorProfesional[proId]) {
               this.serviciosPorProfesional[proId] = [];
             }
-            // Agregamos el servicio al array del profesional
             this.serviciosPorProfesional[proId].push(servicio);
           }
         });
       },
       error: (err) => console.error('Error al cargar asignaciones pro-ser', err)
     });
-
-    // Cargar usuarios solo si es admin
-    if (this.esAdmin) {
-      this.usuarioService.obtenerTodos().subscribe({
-        next: (data) => this.usuarios = data.filter(u => u.rol === 'CLIENTE'),
-        error: (err) => console.error('Error al cargar usuarios', err)
-      });
-    }
   }
 
   
@@ -136,11 +124,15 @@ export class Horarios {
         } else {
           this.esAdmin = false;
         }
-        this.cargarDatosAuxiliares();
+        if (this.esAdmin) {
+          this.usuarioService.obtenerTodos().subscribe({
+            next: (data) => this.usuarios = data.filter(u => u.rol === 'CLIENTE'),
+            error: (err) => console.error('Error al cargar usuarios', err)
+          });
+        }
       },
       error: () => {
         this.esAdmin = false;
-        this.cargarDatosAuxiliares();
       }
     });
   }
