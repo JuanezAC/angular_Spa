@@ -58,7 +58,6 @@ export class Horarios {
   constructor() {
     this.cargarDatosAuxiliares();
     this.verificarSesion();
-    this.cargarCitasYHorarios();
   }
 
   recargarLista(): void {
@@ -129,6 +128,7 @@ export class Horarios {
   }
 
   verificarSesion(): void {
+    this.estado$ = this.cargarHorarios();
     this.sesionService.obtenerSesion().subscribe({
       next: (sesion) => {
         if (sesion) {
@@ -147,6 +147,7 @@ export class Horarios {
       },
       error: () => {
         this.esAdmin = false;
+        this.cargarCitasYHorarios();
       }
     });
   }
