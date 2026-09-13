@@ -1,7 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SesionService } from './services/sesion/sesion-service';
+import { EventosService } from './services/eventos/eventos-service';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +11,24 @@ import { SesionService } from './services/sesion/sesion-service';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   private router = inject(Router);
   private sesionService = inject(SesionService);
+  private eventosService = inject(EventosService);
 
   sesion$ = this.sesionService.sesion$;
 
   ngOnInit(): void {
     this.sesionService.refrescarSesion();
+    this.eventosService.conectar();
+  }
+
+  ngOnDestroy(): void {
+    this.eventosService.desconectar();
   }
 
   cerrarSesion(): void {
+    this.eventosService.desconectar();
     this.sesionService.logout().subscribe({
       next: () => {
         this.router.navigate(['/login']);

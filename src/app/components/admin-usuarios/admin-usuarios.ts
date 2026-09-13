@@ -1,14 +1,15 @@
-import { Component, inject, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario/usuario-service';
 import { Usuario } from '../../models/usuario';
-import { Observable, catchError, map, of, startWith } from 'rxjs';
+import { Observable, catchError, map, of, startWith, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AdminUsuariosCrear } from '../admin-usuarios-crear/admin-usuarios-crear';
 import { AdminUsuariosEditar } from '../admin-usuarios-editar/admin-usuarios-editar';
 import { SesionService } from '../../services/sesion/sesion-service';
+import { EventosService } from '../../services/eventos/eventos-service';
 
 interface UsuarioState {
   loading: boolean;
@@ -23,14 +24,16 @@ interface UsuarioState {
   templateUrl: './admin-usuarios.html',
   styleUrl: './admin-usuarios.css'
 })
-export class AdminUsuarios implements OnInit {
+export class AdminUsuarios implements OnInit, OnDestroy {
   private usuarioService = inject(UsuarioService);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private sesionService = inject(SesionService);
+  private eventosService = inject(EventosService);
 
   estado$!: Observable<UsuarioState>;
   textoFiltro: string = '';
+  private sub = new Subscription();
 
   modalCrearAbierto = false;
   modalEditarAbierto = false;
@@ -45,9 +48,16 @@ export class AdminUsuarios implements OnInit {
           return;
         }
         this.estado$ = this.cargarUsuarios();
+        this.sub.add(this.eventosService.onUsuarios().subscribe(() => {
+          this.recargarLista();
+        }));
       },
       error: () => this.router.navigate(['/login'])
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   cargarUsuarios(): Observable<UsuarioState> {

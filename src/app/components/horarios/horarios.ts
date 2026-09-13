@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HorarioService } from '../../services/horario/horario-service';
@@ -10,11 +10,12 @@ import { HorarioDisponible } from '../../models/horario-disponible';
 import { Cita } from '../../models/cita';
 import { Servicio } from '../../models/servicio';
 import { Usuario } from '../../models/usuario';
-import { Observable, catchError, map, of, startWith } from 'rxjs';
+import { Observable, catchError, map, of, startWith, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ProSerService } from '../../services/proSer/pro-ser-service';
 import { ProfesionalServicio } from '../../models/profesional-servicio';
+import { EventosService } from '../../services/eventos/eventos-service';
 
 interface HorarioState {
   loading: boolean;
@@ -29,7 +30,7 @@ interface HorarioState {
   templateUrl: './horarios.html',
   styleUrl: './horarios.css'
 })
-export class Horarios implements OnInit {
+export class Horarios implements OnInit, OnDestroy {
   private horarioService = inject(HorarioService);
   private citaService = inject(CitaService);
   private servicioService = inject(ServicioService);
@@ -38,9 +39,11 @@ export class Horarios implements OnInit {
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private proSerService = inject(ProSerService);
+  private eventosService = inject(EventosService);
 
   estado$!: Observable<HorarioState>;
   textoFiltro: string = '';
+  private sub = new Subscription();
 
   servicios: Servicio[] = [];
   usuarios: Usuario[] = [];
@@ -58,6 +61,9 @@ export class Horarios implements OnInit {
   ngOnInit(): void {
     this.cargarDatosAuxiliares();
     this.estado$ = this.cargarHorariosDisponibles();
+    this.sub.add(this.eventosService.onHorarios().subscribe(() => {
+      this.recargarLista();
+    }));
     this.sesionService.obtenerSesion().subscribe({
       next: (sesion) => {
         if (sesion) {
@@ -133,6 +139,10 @@ export class Horarios implements OnInit {
       h.profesional?.nombre?.toLowerCase().includes(f) ||
       h.profesional?.especialidad?.toLowerCase().includes(f)
     );
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   reservar(horario: HorarioDisponible): void {

@@ -1,13 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfesionalService } from '../../services/profesional/profesional-service';
 import { ProSerService } from '../../services/proSer/pro-ser-service';
 import { Profesional } from '../../models/profesional';
 import { ProfesionalServicio } from '../../models/profesional-servicio';
-import { Observable, catchError, map, of, startWith, switchMap } from 'rxjs';
+import { Observable, catchError, map, of, startWith, switchMap, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Servicio } from '../../models/servicio';
+import { EventosService } from '../../services/eventos/eventos-service';
 
 interface ProfesionalState {
   loading: boolean;
@@ -22,16 +23,28 @@ interface ProfesionalState {
   templateUrl: './profesionales.html',
   styleUrl: './profesionales.css'
 })
-export class Profesionales {
+export class Profesionales implements OnInit, OnDestroy {
   private profesionalService = inject(ProfesionalService);
   private proSerService = inject(ProSerService);
   private router = inject(Router);
+  private eventosService = inject(EventosService);
 
   estado$: Observable<ProfesionalState>;
   textoFiltro: string = '';
+  private sub = new Subscription();
 
   constructor() {
     this.estado$ = this.cargarProfesionales();
+  }
+
+  ngOnInit(): void {
+    this.sub.add(this.eventosService.onProfesionales().subscribe(() => {
+      this.estado$ = this.cargarProfesionales();
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   cargarProfesionales(): Observable<ProfesionalState> {
@@ -45,7 +58,7 @@ export class Profesionales {
             
             asignaciones.forEach(asp => {
               const proId = asp.profesional?.id;
-              const servicio = asp.servicio; // El backend ya serializa el objeto Servicio
+              const servicio = asp.servicio;
               if (proId && servicio) {
                 if (!proSerMap.has(proId)) proSerMap.set(proId, []);
                 proSerMap.get(proId)!.push(servicio as Servicio);

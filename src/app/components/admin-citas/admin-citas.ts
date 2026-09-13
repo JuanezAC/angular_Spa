@@ -1,12 +1,13 @@
-import { Component, inject, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CitaService } from '../../services/cita/cita-service';
 import { Cita } from '../../models/cita';
-import { Observable, catchError, map, of, startWith } from 'rxjs';
+import { Observable, catchError, map, of, startWith, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SesionService } from '../../services/sesion/sesion-service';
+import { EventosService } from '../../services/eventos/eventos-service';
 
 interface CitaState {
   loading: boolean;
@@ -21,14 +22,16 @@ interface CitaState {
   templateUrl: './admin-citas.html',
   styleUrl: './admin-citas.css'
 })
-export class AdminCitas implements OnInit {
+export class AdminCitas implements OnInit, OnDestroy {
   private citaService = inject(CitaService);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private sesionService = inject(SesionService);
+  private eventosService = inject(EventosService);
 
   estado$!: Observable<CitaState>;
   textoFiltro: string = '';
+  private sub = new Subscription();
 
   ngOnInit(): void {
     this.sesionService.obtenerSesion().subscribe({
@@ -39,9 +42,16 @@ export class AdminCitas implements OnInit {
           return;
         }
         this.estado$ = this.cargarCitas();
+        this.sub.add(this.eventosService.onCitas().subscribe(() => {
+          this.recargarLista();
+        }));
       },
       error: () => this.router.navigate(['/login'])
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   cargarCitas(): Observable<CitaState> {

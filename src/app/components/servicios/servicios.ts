@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServicioService } from '../../services/servicio/servicio-service';
 import { Servicio } from '../../models/servicio';
-import { Observable, catchError, map, of, startWith } from 'rxjs';
+import { Observable, catchError, map, of, startWith, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { EventosService } from '../../services/eventos/eventos-service';
 
 interface ServicioState {
   loading: boolean;
@@ -19,15 +20,27 @@ interface ServicioState {
   templateUrl: './servicios.html',
   styleUrl: './servicios.css'
 })
-export class Servicios {
+export class Servicios implements OnInit, OnDestroy {
   private servicioService = inject(ServicioService);
   private router = inject(Router);
+  private eventosService = inject(EventosService);
 
   estado$: Observable<ServicioState>;
   textoFiltro: string = '';
+  private sub = new Subscription();
 
   constructor() {
     this.estado$ = this.cargarServicios();
+  }
+
+  ngOnInit(): void {
+    this.sub.add(this.eventosService.onServicios().subscribe(() => {
+      this.estado$ = this.cargarServicios();
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   cargarServicios(): Observable<ServicioState> {

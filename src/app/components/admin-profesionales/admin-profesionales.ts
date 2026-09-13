@@ -1,14 +1,15 @@
-import { Component, inject, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfesionalService } from '../../services/profesional/profesional-service';
 import { Profesional } from '../../models/profesional';
-import { Observable, catchError, map, of, startWith } from 'rxjs';
+import { Observable, catchError, map, of, startWith, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AdminProfesionalesCrear } from '../admin-profesionales-crear/admin-profesionales-crear';
 import { AdminProfesionalesEditar } from '../admin-profesionales-editar/admin-profesionales-editar';
 import { SesionService } from '../../services/sesion/sesion-service';
+import { EventosService } from '../../services/eventos/eventos-service';
 
 interface ProfesionalState {
   loading: boolean;
@@ -23,14 +24,16 @@ interface ProfesionalState {
   templateUrl: './admin-profesionales.html',
   styleUrl: './admin-profesionales.css'
 })
-export class AdminProfesionales implements OnInit {
+export class AdminProfesionales implements OnInit, OnDestroy {
   private profesionalService = inject(ProfesionalService);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private sesionService = inject(SesionService);
+  private eventosService = inject(EventosService);
 
   estado$!: Observable<ProfesionalState>;
   textoFiltro: string = '';
+  private sub = new Subscription();
 
   modalCrearAbierto = false;
   modalEditarAbierto = false;
@@ -45,9 +48,16 @@ export class AdminProfesionales implements OnInit {
           return;
         }
         this.estado$ = this.cargarProfesionales();
+        this.sub.add(this.eventosService.onProfesionales().subscribe(() => {
+          this.recargarLista();
+        }));
       },
       error: () => this.router.navigate(['/login'])
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   cargarProfesionales(): Observable<ProfesionalState> {

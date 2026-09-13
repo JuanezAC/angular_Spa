@@ -1,11 +1,12 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CitaService } from '../../services/cita/cita-service';
 import { Cita } from '../../models/cita';
-import { Observable, catchError, map, of, startWith } from 'rxjs';
+import { Observable, catchError, map, of, startWith, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { EventosService } from '../../services/eventos/eventos-service';
 
 interface CitaState {
   loading: boolean;
@@ -20,16 +21,28 @@ interface CitaState {
   templateUrl: './mis-citas.html',
   styleUrl: './mis-citas.css'
 })
-export class MisCitas {
+export class MisCitas implements OnInit, OnDestroy {
   private citaService = inject(CitaService);
   private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef); // ← NUEVO: Para recargar vista
+  private cdr = inject(ChangeDetectorRef);
+  private eventosService = inject(EventosService);
 
   estado$: Observable<CitaState>;
   textoFiltro: string = '';
+  private sub = new Subscription();
 
   constructor() {
     this.estado$ = this.cargarMisCitas();
+  }
+
+  ngOnInit(): void {
+    this.sub.add(this.eventosService.onCitas().subscribe(() => {
+      this.recargarLista();
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   cargarMisCitas(): Observable<CitaState> {

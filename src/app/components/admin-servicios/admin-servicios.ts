@@ -1,14 +1,15 @@
-import { Component, inject, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServicioService } from '../../services/servicio/servicio-service';
 import { Servicio } from '../../models/servicio';
-import { Observable, catchError, map, of, startWith } from 'rxjs';
+import { Observable, catchError, map, of, startWith, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AdminServiciosEditar } from '../admin-servicios-editar/admin-servicios-editar';
 import { AdminServiciosCrear } from '../admin-servicios-crear/admin-servicios-crear';
 import { SesionService } from '../../services/sesion/sesion-service';
+import { EventosService } from '../../services/eventos/eventos-service';
 
 interface ServicioState {
   loading: boolean;
@@ -24,14 +25,16 @@ interface ServicioState {
   templateUrl: './admin-servicios.html',
   styleUrl: './admin-servicios.css'
 })
-export class AdminServicios implements OnInit {
+export class AdminServicios implements OnInit, OnDestroy {
   private servicioService = inject(ServicioService);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private sesionService = inject(SesionService);
+  private eventosService = inject(EventosService);
 
   estado$!: Observable<ServicioState>;
   textoFiltro: string = '';
+  private sub = new Subscription();
 
   modalCrearAbierto = false;
   modalEditarAbierto = false;
@@ -46,9 +49,16 @@ export class AdminServicios implements OnInit {
           return;
         }
         this.estado$ = this.cargarServicios();
+        this.sub.add(this.eventosService.onServicios().subscribe(() => {
+          this.recargarLista();
+        }));
       },
       error: () => this.router.navigate(['/login'])
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   cargarServicios(): Observable<ServicioState> {
