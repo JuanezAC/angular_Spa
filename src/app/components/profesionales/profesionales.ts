@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfesionalService } from '../../services/profesional/profesional-service';
@@ -28,6 +28,7 @@ export class Profesionales implements OnInit, OnDestroy {
   private proSerService = inject(ProSerService);
   private router = inject(Router);
   private eventosService = inject(EventosService);
+  private cdr = inject(ChangeDetectorRef);
 
   estado$: Observable<ProfesionalState>;
   textoFiltro: string = '';
@@ -40,6 +41,7 @@ export class Profesionales implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub.add(this.eventosService.onProfesionales().subscribe(() => {
       this.estado$ = this.cargarProfesionales();
+      this.cdr.markForCheck();
     }));
   }
 

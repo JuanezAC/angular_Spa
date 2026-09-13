@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServicioService } from '../../services/servicio/servicio-service';
@@ -24,6 +24,7 @@ export class Servicios implements OnInit, OnDestroy {
   private servicioService = inject(ServicioService);
   private router = inject(Router);
   private eventosService = inject(EventosService);
+  private cdr = inject(ChangeDetectorRef);
 
   estado$: Observable<ServicioState>;
   textoFiltro: string = '';
@@ -36,6 +37,7 @@ export class Servicios implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub.add(this.eventosService.onServicios().subscribe(() => {
       this.estado$ = this.cargarServicios();
+      this.cdr.markForCheck();
     }));
   }
 
