@@ -61,8 +61,19 @@ export class AdminProfesionalesEditar implements OnChanges, OnInit {
     const correo = this.profesionalEditando.correo.trim();
     const telefono = this.profesionalEditando.telefono.trim();
 
-    if (!nombre || !especialidad || !correo || !telefono) {
-      Swal.fire('Campos obligatorios', 'Todos los campos son requeridos', 'warning'); return;
+    if (!telefono) {
+      Swal.fire('Campo obligatorio', 'El número de teléfono es obligatorio', 'warning');
+      return;
+    }
+
+    if (!/^[0-9]+$/.test(telefono)) {
+      Swal.fire('Teléfono inválido', 'El número de teléfono solo puede contener números', 'warning');
+      return;
+    }
+
+    if (!nombre || !especialidad || !correo) {
+      Swal.fire('Campos obligatorios', 'Nombre, especialidad y correo son obligatorios', 'warning');
+      return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
