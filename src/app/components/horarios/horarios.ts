@@ -51,36 +51,49 @@ export class Horarios {
   // Selección por fila (mapeo por horario.id)
   servicioSeleccionado: { [key: number]: number } = {};
   usuarioSeleccionado: { [key: number]: number } = {};
-  serviciosPorProfesional: { [key: number]: Servicio[] } = {}; // Servicios disponibles por profesional
+  serviciosPorProfesional: { [key: number]: Servicio[] } = {};
+
+  horariosOcupados: Set<number> = new Set();
 
   constructor() {
-    this.estado$ = this.cargarHorarios();
     this.cargarDatosAuxiliares();
     this.verificarSesion();
+    this.cargarCitasYHorarios();
   }
 
   recargarLista(): void {
-    this.estado$ = this.cargarHorarios();
-    this.cdr.markForCheck(); // ← Fuerza a Angular a detectar el cambio
+    this.cargarCitasYHorarios();
+    this.cdr.markForCheck();
+  }
+
+  cargarCitasYHorarios(): void {
+    const obs = this.esAdmin ? this.citaService.obtenerTodas() : this.citaService.obtenerMisCitas();
+    obs.subscribe({
+      next: (citas) => {
+        this.horariosOcupados.clear();
+        citas.forEach(c => {
+          if (c.horario?.id) this.horariosOcupados.add(c.horario.id);
+        });
+        this.estado$ = this.cargarHorarios();
+      },
+      error: (err) => {
+        console.error('Error al cargar citas', err);
+        this.estado$ = this.cargarHorarios();
+      }
+    });
   }
 
   cargarHorarios(): Observable<HorarioState> {
     return this.horarioService.obtenerTodos().pipe(
       map((data) => {
-  
-      console.log('Datos crudos del backend:', data);
-      
-      const horariosFiltrados = data.filter(h => h.disponible && h.profesional?.estado !== false);
-      console.log(' Horarios filtrados:', horariosFiltrados);
-
-      //Retorna un objeto válido: { clave: valor }
-      return { loading: false, data: horariosFiltrados, error: null };
-    }),
-    startWith({ loading: true, data: [], error: null }),
-    catchError(err => {
-      if (err.status === 401) this.router.navigate(['/login']);
-      return of({ loading: false, data: [], error: 'Error al cargar los horarios' });
-    })
+        const horariosFiltrados = data.filter(h => h.disponible && h.profesional?.estado !== false && !this.horariosOcupados.has(h.id!));
+        return { loading: false, data: horariosFiltrados, error: null };
+      }),
+      startWith({ loading: true, data: [], error: null }),
+      catchError(err => {
+        if (err.status === 401) this.router.navigate(['/login']);
+        return of({ loading: false, data: [], error: 'Error al cargar los horarios' });
+      })
     );
   }
 
@@ -124,6 +137,7 @@ export class Horarios {
         } else {
           this.esAdmin = false;
         }
+        this.cargarCitasYHorarios();
         if (this.esAdmin) {
           this.usuarioService.obtenerTodos().subscribe({
             next: (data) => this.usuarios = data.filter(u => u.rol === 'CLIENTE'),
