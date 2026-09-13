@@ -59,8 +59,8 @@ export class Horarios implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cargarDatosAuxiliares();
-    this.estado$ = this.cargarHorariosDisponibles();
+    this.cargarServicios();
+    this.cargarAsignacionesYHorarios();
     this.sub.add(this.eventosService.onHorarios().subscribe(() => {
       this.recargarLista();
     }));
@@ -100,26 +100,38 @@ export class Horarios implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  cargarDatosAuxiliares(): void {
+  cargarServicios(): void {
     this.servicioService.obtenerTodos().subscribe({
       next: (data) => this.servicios = data,
       error: (err) => console.error('Error al cargar servicios', err)
     });
+  }
 
+  cargarAsignacionesYHorarios(): void {
     this.proSerService.obtenerTodos().subscribe({
       next: (asignaciones: ProfesionalServicio[]) => {
-        asignaciones.forEach(asp => {
-          const proId = asp.profesional?.id;
-          const servicio = asp.servicio as Servicio;
-          if (proId && servicio) {
-            if (!this.serviciosPorProfesional[proId]) {
-              this.serviciosPorProfesional[proId] = [];
-            }
-            this.serviciosPorProfesional[proId].push(servicio);
-          }
-        });
+        this.poblarServiciosPorProfesional(asignaciones);
+        this.estado$ = this.cargarHorariosDisponibles();
+        this.cdr.markForCheck();
       },
-      error: (err) => console.error('Error al cargar asignaciones pro-ser', err)
+      error: (err) => {
+        console.error('Error al cargar asignaciones pro-ser', err);
+        this.estado$ = this.cargarHorariosDisponibles();
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  private poblarServiciosPorProfesional(asignaciones: ProfesionalServicio[]): void {
+    asignaciones.forEach(asp => {
+      const proId = asp.profesional?.id;
+      const servicio = asp.servicio as Servicio;
+      if (proId && servicio) {
+        if (!this.serviciosPorProfesional[proId]) {
+          this.serviciosPorProfesional[proId] = [];
+        }
+        this.serviciosPorProfesional[proId].push(servicio);
+      }
     });
   }
 
