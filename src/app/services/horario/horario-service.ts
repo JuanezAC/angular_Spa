@@ -14,6 +14,10 @@ export class HorarioService {
     return this.http.get<HorarioDisponible[]>(this.apiUrl);
   }
 
+  obtenerDisponibles(): Observable<HorarioDisponible[]> {
+    return this.http.get<HorarioDisponible[]>(`${this.apiUrl}/disponibles`);
+  }
+
   obtenerPorProfesional(id: number): Observable<HorarioDisponible[]> {
     return this.http.get<HorarioDisponible[]>(`${this.apiUrl}/profesional/${id}`);
   }
