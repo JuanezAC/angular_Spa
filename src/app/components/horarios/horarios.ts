@@ -53,7 +53,7 @@ export class Horarios {
   usuarioSeleccionado: { [key: number]: number } = {};
   serviciosPorProfesional: { [key: number]: Servicio[] } = {};
 
-  horariosOcupados: Set<number> = new Set();
+  horariosOcupados: Set<string> = new Set();
 
   constructor() {
     this.cargarDatosAuxiliares();
@@ -71,7 +71,8 @@ export class Horarios {
       next: (citas) => {
         this.horariosOcupados.clear();
         citas.forEach(c => {
-          if (c.horario?.id) this.horariosOcupados.add(c.horario.id);
+          const clave = `${c.fecha}_${c.hora}_${c.profesional?.id}`;
+          this.horariosOcupados.add(clave);
         });
         this.estado$ = this.cargarHorarios();
       },
@@ -85,7 +86,11 @@ export class Horarios {
   cargarHorarios(): Observable<HorarioState> {
     return this.horarioService.obtenerTodos().pipe(
       map((data) => {
-        const horariosFiltrados = data.filter(h => h.disponible && h.profesional?.estado !== false && !this.horariosOcupados.has(h.id!));
+        const horariosFiltrados = data.filter(h => {
+          if (!h.disponible || h.profesional?.estado === false) return false;
+          const clave = `${h.fecha}_${h.hora}_${h.profesional?.id}`;
+          return !this.horariosOcupados.has(clave);
+        });
         return { loading: false, data: horariosFiltrados, error: null };
       }),
       startWith({ loading: true, data: [], error: null }),
