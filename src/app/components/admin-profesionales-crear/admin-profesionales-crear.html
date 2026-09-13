@@ -3,7 +3,7 @@
   <div class="campo"><label>Nombre</label><input name="nombre" [(ngModel)]="profesionalNuevo.nombre" required /></div>
   <div class="campo"><label>Especialidad</label><input name="especialidad" [(ngModel)]="profesionalNuevo.especialidad" required /></div>
   <div class="campo"><label>Correo</label><input name="correo" type="email" [(ngModel)]="profesionalNuevo.correo" required /></div>
-  <div class="campo"><label>Teléfono</label><input name="telefono" [(ngModel)]="profesionalNuevo.telefono" required /></div>
+  <div class="campo"><label>Teléfono</label><input name="telefono" [(ngModel)]="profesionalNuevo.telefono" pattern="[0-9]+" inputmode="numeric" required (input)="profesionalNuevo.telefono = profesionalNuevo.telefono?.replace(/[^0-9]/g, '')" /></div>
   <div class="campo checkbox">
     <label><input type="checkbox" [(ngModel)]="profesionalNuevo.estado" name="estado" /> Activo</label>
   </div>
