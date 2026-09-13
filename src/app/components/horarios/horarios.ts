@@ -39,7 +39,7 @@ export class Horarios {
   private cdr = inject(ChangeDetectorRef);
   private proSerService = inject(ProSerService);
 
-  estado$: Observable<HorarioState>;
+  estado$!: Observable<HorarioState>;
   textoFiltro: string = '';
 
   // Datos para los selects
