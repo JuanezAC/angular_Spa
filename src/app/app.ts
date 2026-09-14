@@ -17,6 +17,7 @@ export class App implements OnInit, OnDestroy {
   private eventosService = inject(EventosService);
 
   sesion$ = this.sesionService.sesion$;
+  menuAbierto = false;
 
   ngOnInit(): void {
     this.sesionService.refrescarSesion();
@@ -27,7 +28,12 @@ export class App implements OnInit, OnDestroy {
     this.eventosService.desconectar();
   }
 
+  cerrarMenu(): void {
+    this.menuAbierto = false;
+  }
+
   cerrarSesion(): void {
+    this.cerrarMenu();
     this.eventosService.desconectar();
     this.sesionService.logout().subscribe({
       next: () => {

@@ -1,84 +1,254 @@
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #f8fafc; /* Fondo general claro */
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  background-color: #f8fafc;
 }
 
-/* NAVBAR */
+/* ========== NAVBAR ========== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #3b82f6; /* Navbar claro */
-  padding: 12px 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Sombra suave para separar del contenido */
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+  padding: 0 24px;
+  height: 60px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
-.navbar a {
-  color: #ffff; /* Texto oscuro para buen contraste */
+/* Brand / Logo */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1001;
+}
+
+.brand-text {
+  color: #e2e8f0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ========== HAMBURGER BUTTON ========== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.hamburger:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.barra {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background-color: #e2e8f0;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Animación hamburger → X */
+.hamburger.abierto .barra:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.hamburger.abierto .barra:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.abierto .barra:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* ========== NAV LINKS (Desktop) ========== */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-links a {
+  color: #cbd5e1;
   text-decoration: none;
-  margin-right: 15px;
+  font-size: 0.9rem;
   font-weight: 500;
-  padding: 6px 10px;
+  padding: 8px 14px;
   border-radius: 6px;
   transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap;
 }
 
-.navbar a:hover {
-  background-color: #b2c5dc; /* Fondo oscuro al hover */
-  color: #0f172a; /* Texto claro al hover */
-  text-decoration: none;
+.nav-links a:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
 }
 
-/* Estado activo de la ruta */
 .activo {
-  background-color: #ffff;
-  color: #334155 !important;
+  background-color: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
   font-weight: 600;
 }
 
-.nav-left, .nav-right {
+.separador {
+  color: rgba(255, 255, 255, 0.25);
+  user-select: none;
+  margin: 0 4px;
+}
+
+/* User section */
+.nav-user {
   display: flex;
   align-items: center;
-}
-
-/* Botón de logout (opcional pero funcional con app.ts) */
-.btn-logout {
-  background: none;
-  border: 1px solid #cbd5e1;
-  color: #475569;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  margin-left: 8px;
-  transition: all 0.2s;
-}
-.btn-logout:hover {
-  background-color: #fee2e2;
-  border-color: #f87171;
-  color: #dc2626;
-}
-
-main {
-  padding: 24px;
-  min-height: calc(100vh - 100px);
-}
-
-hr {
-  margin: 0;
-  border: none;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.separador {
-  color: #ccc;
-  user-select: none;
+  gap: 12px;
+  margin-left: 12px;
+  padding-left: 16px;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .user-name {
-  color: #ffff;
-  margin-right: 12px;
+  color: #e2e8f0;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.btn-logout {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #cbd5e1;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-logout:hover {
+  background-color: rgba(220, 38, 38, 0.2);
+  border-color: #f87171;
+  color: #fca5a5;
+}
+
+/* ========== MAIN ========== */
+main {
+  padding: 24px;
+  min-height: calc(100vh - 60px);
+}
+
+/* ========== RESPONSIVE — Tablet / Mobile (max-width: 768px) ========== */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+    height: 56px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .brand-text {
+    font-size: 1.15rem;
+  }
+
+  /* Nav links: drawer lateral izquierdo */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1e3a5f 0%, #162d4a 100%);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 72px 0 24px 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    z-index: 1000;
+  }
+
+  .nav-links.abierto {
+    transform: translateX(0);
+  }
+
+  .nav-links a {
+    padding: 14px 24px;
+    font-size: 1rem;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .separador.desktop-only {
+    display: none;
+  }
+
+  .nav-user {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin-left: 0;
+    padding: 12px 24px;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin-top: 8px;
+  }
+
+  .user-name {
+    padding: 8px 0;
+    color: #94a3b8;
+    font-size: 0.85rem;
+  }
+
+  .btn-logout {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    border-color: rgba(255, 255, 255, 0.15);
+    padding: 10px;
+  }
+
+  /* Overlay oscuro detrás del menú */
+  .nav-links.abierto::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 280px;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+  }
+
+  main {
+    padding: 16px;
+  }
+}
+
+/* ========== Desktop (min-width: 769px) — ocultar overlay ========== */
+@media (min-width: 769px) {
+  .nav-links.abierto::before {
+    display: none;
+  }
 }

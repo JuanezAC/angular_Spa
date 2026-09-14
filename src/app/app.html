@@ -1,50 +1,57 @@
 <header>
   <nav class="navbar">
-    <div class="nav-left" *ngIf="sesion$ | async as sesion">
-      <!-- Rutas públicas (siempre visibles) -->
-      <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
-      <a routerLink="/servicios" routerLinkActive="activo">Servicios</a>
-      <a routerLink="/profesionales" routerLinkActive="activo">Profesionales</a>
-      <a routerLink="/horarios" routerLinkActive="activo">Horarios</a>
-      <a routerLink="/mis-citas" routerLinkActive="activo">Mis citas</a>
+    <div class="nav-brand">
+      <button
+        type="button"
+        class="hamburger"
+        [class.abierto]="menuAbierto"
+        (click)="menuAbierto = !menuAbierto"
+        aria-label="Menú de navegación">
+        <span class="barra"></span>
+        <span class="barra"></span>
+        <span class="barra"></span>
+      </button>
+      <span class="brand-text">Spa Relax</span>
+    </div>
 
-      <span class="separador">|</span>
+    <!-- Links de navegación -->
+    <div class="nav-links" [class.abierto]="menuAbierto" *ngIf="sesion$ | async as sesion">
+      <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}" (click)="cerrarMenu()">Inicio</a>
+      <a routerLink="/servicios" routerLinkActive="activo" (click)="cerrarMenu()">Servicios</a>
+      <a routerLink="/profesionales" routerLinkActive="activo" (click)="cerrarMenu()">Profesionales</a>
+      <a routerLink="/horarios" routerLinkActive="activo" (click)="cerrarMenu()">Horarios</a>
+      <a routerLink="/mis-citas" routerLinkActive="activo" (click)="cerrarMenu()">Mis citas</a>
 
       <!-- Sección Admin: SOLO si es ADMIN -->
       <ng-container *ngIf="sesion.rol === 'ADMIN'">
-        <a routerLink="/admin/servicios" routerLinkActive="activo">Admin Servicios</a>
-        <a routerLink="/admin/profesionales" routerLinkActive="activo">Admin Profesionales</a>
-        <a routerLink="/admin/horarios" routerLinkActive="activo">Admin Horarios</a>
-        <a routerLink="/admin/citas" routerLinkActive="activo">Admin Citas</a>
-        <a routerLink="/admin/usuarios" routerLinkActive="activo">Admin Usuarios</a>
-        <span class="separador">|</span>
+        <span class="separador desktop-only">|</span>
+        <a routerLink="/admin/servicios" routerLinkActive="activo" (click)="cerrarMenu()">Admin Servicios</a>
+        <a routerLink="/admin/profesionales" routerLinkActive="activo" (click)="cerrarMenu()">Admin Profesionales</a>
+        <a routerLink="/admin/horarios" routerLinkActive="activo" (click)="cerrarMenu()">Admin Horarios</a>
+        <a routerLink="/admin/citas" routerLinkActive="activo" (click)="cerrarMenu()">Admin Citas</a>
+        <a routerLink="/admin/usuarios" routerLinkActive="activo" (click)="cerrarMenu()">Admin Usuarios</a>
       </ng-container>
-    </div>
 
-    <div class="nav-left" *ngIf="!(sesion$ | async)">
-      <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
-      <a routerLink="/servicios" routerLinkActive="activo">Servicios</a>
-      <a routerLink="/profesionales" routerLinkActive="activo">Profesionales</a>
-      <a routerLink="/horarios" routerLinkActive="activo">Horarios</a>
-    </div>
-
-    <div class="nav-right">
-      <!-- Si HAY sesión activa -->
-      <ng-container *ngIf="sesion$ | async as sesion; else noLogueado">
+      <div class="nav-user">
         <span class="user-name">{{ sesion.nombre }}</span>
         <button type="button" class="btn-logout" (click)="cerrarSesion()">Cerrar sesión</button>
-      </ng-container>
+      </div>
+    </div>
 
-      <!-- Si NO hay sesión activa -->
-      <ng-template #noLogueado>
-        <a routerLink="/login" routerLinkActive="activo">Login</a>
-        <a routerLink="/registro" routerLinkActive="activo">Registro</a>
-      </ng-template>
+    <div class="nav-links" [class.abierto]="menuAbierto" *ngIf="!(sesion$ | async)">
+      <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}" (click)="cerrarMenu()">Inicio</a>
+      <a routerLink="/servicios" routerLinkActive="activo" (click)="cerrarMenu()">Servicios</a>
+      <a routerLink="/profesionales" routerLinkActive="activo" (click)="cerrarMenu()">Profesionales</a>
+      <a routerLink="/horarios" routerLinkActive="activo" (click)="cerrarMenu()">Horarios</a>
+
+      <div class="nav-user">
+        <a routerLink="/login" routerLinkActive="activo" (click)="cerrarMenu()">Login</a>
+        <a routerLink="/registro" routerLinkActive="activo" (click)="cerrarMenu()">Registro</a>
+      </div>
     </div>
   </nav>
 </header>
 
-<hr>
 <main>
   <router-outlet></router-outlet>
 </main>
