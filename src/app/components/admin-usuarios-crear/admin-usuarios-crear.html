@@ -1,22 +1,43 @@
-<h2>Crear Usuario</h2>
-<form (ngSubmit)="guardarUsuario()">
-  <div class="campo"><label>Nombre</label><input name="nombre" [(ngModel)]="usuarioNuevo.nombre" required /></div>
-  <div class="campo"><label>Correo</label><input name="correo" type="email" [(ngModel)]="usuarioNuevo.correo" required /></div>
-  <div class="campo"><label>Contraseña</label><input name="contrasena" type="password" [(ngModel)]="usuarioNuevo.contrasena" required /></div>
-  <div class="campo">
-    <label>Rol</label>
-    <select name="rol" [(ngModel)]="usuarioNuevo.rol" required>
-      <option value="CLIENTE">Cliente</option>
-      <option value="ADMIN">Administrador</option>
-      <option value="PROFESIONAL">Profesional</option>
-    </select>
+<div class="form-panel">
+  <div class="form-header">
+    <h2>Crear Usuario</h2>
+    <p class="form-subtitle">Registra un nuevo usuario en el sistema</p>
   </div>
-  <div class="acciones">
-    <button type="submit">
-      <i data-lucide="save" style="width:16px;height:16px"></i> Guardar
-    </button>
-    <button type="button" (click)="cerrar()">
-      <i data-lucide="x" style="width:16px;height:16px"></i> Cancelar
-    </button>
-  </div>
-</form>
+
+  <form (ngSubmit)="guardarUsuario()" class="form-body">
+    <div class="form-section">
+      <div class="form-group">
+        <label class="form-label">Nombre <span class="required">*</span></label>
+        <input name="nombre" [(ngModel)]="usuarioNuevo.nombre" class="form-input" placeholder="Nombre completo" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Correo <span class="required">*</span></label>
+        <input name="correo" type="email" [(ngModel)]="usuarioNuevo.correo" class="form-input" placeholder="correo@ejemplo.com" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Contraseña <span class="required">*</span></label>
+        <input name="contrasena" type="password" [(ngModel)]="usuarioNuevo.contrasena" class="form-input" placeholder="Contraseña segura" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Rol <span class="required">*</span></label>
+        <select name="rol" [(ngModel)]="usuarioNuevo.rol" class="form-select" required>
+          <option value="CLIENTE">Cliente</option>
+          <option value="ADMIN">Administrador</option>
+          <option value="PROFESIONAL">Profesional</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-ghost" (click)="cerrar()">
+        <i data-lucide="x" style="width:16px;height:16px"></i> Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary">
+        <i data-lucide="save" style="width:16px;height:16px"></i> Guardar
+      </button>
+    </div>
+  </form>
+</div>

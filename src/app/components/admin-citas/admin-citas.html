@@ -1,66 +1,114 @@
-<h1>Gestión de Citas (Admin)</h1>
-<hr>
+<div class="admin-page">
+  <div class="page-header">
+    <h1>Citas</h1>
+    <p>Gestiona las citas agendadas en Spa Relax</p>
 
-<div class="filtro">
-  <input 
-    type="text" 
-    [(ngModel)]="textoFiltro" 
-    placeholder="Buscar por fecha, hora, usuario, profesional, servicio u observación" 
-  />
-</div>
-<!--Pone el estado segun sea necesario-->
-<div *ngIf="estado$ | async as estado">
-  
-  <div *ngIf="estado.loading">
-    <p>Cargando citas...</p>
-  </div>
-  
-  <div *ngIf="estado.error" class="error">
-    <p>{{ estado.error }}</p>
+    <div class="header-actions">
+      <input
+        type="text"
+        [(ngModel)]="textoFiltro"
+        placeholder="Buscar por fecha, hora, usuario, profesional, servicio u observación"
+      />
+    </div>
   </div>
 
-  <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length === 0">
-    <p>No hay citas registradas o no coinciden con tu búsqueda.</p>
-  </div>
+  <div *ngIf="estado$ | async as estado">
 
-  <!--Crea la tabla si el estado es diferente de cargando, error y tiene mas de 0 citas-->
-  <!-- TABLA HORIZONTAL -->
-  <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length > 0">
-    <table class="tabla-citas">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Usuario</th>
-          <th>Profesional</th>
-          <th>Servicio</th>
-          <th>Observación</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!--Recorre citas filtradas y crea una lista segun encuente-->
-        <tr *ngFor="let cita of filtrarCitas(estado.data)">
-          <td>{{ cita.id }}</td>
-          <td>{{ cita.fecha }}</td>
-          <td>{{ cita.hora }}</td>
-          <td>{{ cita.usuario.nombre || 'No disponible' }}</td>
-          <td>{{ cita.profesional.nombre || 'No disponible' }}</td>
-          <td>{{ cita.servicio.nombre || 'No disponible' }}</td>
-          <td>{{ cita.observacion || '-' }}</td>
-          
-          <!-- BOTÓN CANCELAR -->
-          <td>
-            <button 
-              type="button" 
+    <div *ngIf="estado.loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando citas...</p>
+    </div>
+
+    <div *ngIf="estado.error" class="error-state">
+      <p>{{ estado.error }}</p>
+    </div>
+
+    <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length === 0" class="empty-state">
+      <p>No hay citas registradas o no coinciden con tu búsqueda.</p>
+    </div>
+
+    <!-- TABLA DESKTOP -->
+    <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length > 0" class="table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Usuario</th>
+            <th>Profesional</th>
+            <th>Servicio</th>
+            <th>Observación</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cita of filtrarCitas(estado.data)">
+            <td>{{ cita.id }}</td>
+            <td>{{ cita.fecha }}</td>
+            <td>{{ cita.hora }}</td>
+            <td>{{ cita.usuario?.nombre || 'No disponible' }}</td>
+            <td>{{ cita.profesional?.nombre || 'No disponible' }}</td>
+            <td>{{ cita.servicio?.nombre || 'No disponible' }}</td>
+            <td>{{ cita.observacion || '-' }}</td>
+            <td class="table-actions">
+              <button
+                type="button"
+                (click)="cancelarCita(cita)"
+                class="btn btn-danger btn-sm">
+                <i data-lucide="x" style="width:14px;height:14px"></i> Cancelar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TARJETAS MOBILE -->
+    <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length > 0" class="mobile-cards">
+      <div class="cards-grid">
+        <div *ngFor="let cita of filtrarCitas(estado.data)" class="entity-card">
+          <div class="card-body">
+            <div class="card-title">Cita #{{ cita.id }}</div>
+
+            <div class="card-info">
+              <div class="info-row">
+                <i data-lucide="user" style="width:14px;height:14px"></i>
+                <span>{{ cita.usuario?.nombre || 'No disponible' }}</span>
+              </div>
+              <div class="info-row">
+                <i data-lucide="briefcase" style="width:14px;height:14px"></i>
+                <span>{{ cita.servicio?.nombre || 'No disponible' }}</span>
+              </div>
+              <div class="info-row">
+                <i data-lucide="sparkles" style="width:14px;height:14px"></i>
+                <span>{{ cita.profesional?.nombre || 'No disponible' }}</span>
+              </div>
+              <div class="info-row">
+                <i data-lucide="calendar" style="width:14px;height:14px"></i>
+                <span>{{ cita.fecha }}</span>
+              </div>
+              <div class="info-row">
+                <i data-lucide="clock" style="width:14px;height:14px"></i>
+                <span>{{ cita.hora }}</span>
+              </div>
+              <div class="info-row" *ngIf="cita.observacion">
+                <i data-lucide="message-square" style="width:14px;height:14px"></i>
+                <span>{{ cita.observacion }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button
+              type="button"
               (click)="cancelarCita(cita)"
-              class="btn-cancelar">
+              class="btn btn-danger btn-sm">
               <i data-lucide="x" style="width:14px;height:14px"></i> Cancelar
             </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

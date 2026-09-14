@@ -1,25 +1,44 @@
-<h2>Editar Usuario</h2>
-<form (ngSubmit)="guardarCambios()">
-  <div class="campo"><label>Nombre</label><input name="nombre" [(ngModel)]="usuarioEditando.nombre" required /></div>
-  <div class="campo"><label>Correo</label><input name="correo" type="email" [(ngModel)]="usuarioEditando.correo" required /></div>
-  <div class="campo">
-    <label>Nueva Contraseña <small style="color:#6b7280; font-weight:400">(dejar vacío para mantener la actual)</small></label>
-    <input name="contrasena" type="password" [(ngModel)]="contrasenaNueva" />
+<div class="form-panel">
+  <div class="form-header">
+    <h2>Editar Usuario</h2>
+    <p class="form-subtitle">Actualiza la información del usuario</p>
   </div>
-  <div class="campo">
-    <label>Rol</label>
-    <select name="rol" [(ngModel)]="usuarioEditando.rol" required>
-      <option value="CLIENTE">Cliente</option>
-      <option value="ADMIN">Administrador</option>
-      <option value="PROFESIONAL">Profesional</option>
-    </select>
-  </div>
-  <div class="acciones">
-    <button type="submit">
-      <i data-lucide="save" style="width:16px;height:16px"></i> Actualizar
-    </button>
-    <button type="button" (click)="cerrar()">
-      <i data-lucide="x" style="width:16px;height:16px"></i> Cancelar
-    </button>
-  </div>
-</form>
+
+  <form (ngSubmit)="guardarCambios()" class="form-body">
+    <div class="form-section">
+      <div class="form-group">
+        <label class="form-label">Nombre <span class="required">*</span></label>
+        <input name="nombre" [(ngModel)]="usuarioEditando.nombre" class="form-input" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Correo <span class="required">*</span></label>
+        <input name="correo" type="email" [(ngModel)]="usuarioEditando.correo" class="form-input" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Nueva Contraseña</label>
+        <input name="contrasena" type="password" [(ngModel)]="contrasenaNueva" class="form-input" />
+        <p class="form-hint">Dejar vacío para mantener la actual</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Rol <span class="required">*</span></label>
+        <select name="rol" [(ngModel)]="usuarioEditando.rol" class="form-select" required>
+          <option value="CLIENTE">Cliente</option>
+          <option value="ADMIN">Administrador</option>
+          <option value="PROFESIONAL">Profesional</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-ghost" (click)="cerrar()">
+        <i data-lucide="x" style="width:16px;height:16px"></i> Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary">
+        <i data-lucide="save" style="width:16px;height:16px"></i> Actualizar
+      </button>
+    </div>
+  </form>
+</div>

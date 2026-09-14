@@ -55,12 +55,9 @@ export class AdminCitas implements OnInit, OnDestroy {
   }
 
   cargarCitas(): Observable<CitaState> {
-    return this.citaService.obtenerTodas().pipe( // ← OBTENER TODAS, no solo las del usuario
-     //Guarda los datos y quita el login
+    return this.citaService.obtenerTodas().pipe(
       map(data => ({ loading: false, data, error: null })),
-      //Al iniciar muestra que esta cargando
       startWith({ loading: true, data: [], error: null }),
-      //Si existe un error muestra que no ah iniciado sesion, es un usuario o otro error
       catchError(err => {
         if (err.status === 401) this.router.navigate(['/login']);
         if (err.status === 403) this.router.navigate(['/sin-permisos']);
@@ -68,18 +65,15 @@ export class AdminCitas implements OnInit, OnDestroy {
       })
     );
   }
-  //Recarga las citas y fuerza actualizaciones
+
   recargarLista(): void {
     this.estado$ = this.cargarCitas();
     this.cdr.markForCheck();
   }
 
   filtrarCitas(citas: Cita[]): Cita[] {
-    //Si esta vacio muestra todo
     if (!this.textoFiltro.trim()) return citas;
-    //Retorna lo agregado a minusculas
     const f = this.textoFiltro.toLowerCase();
-    //Retorna lo encontrado
     return citas.filter(c =>
       c.fecha?.toString().includes(f) ||
       c.hora?.toString().includes(f) ||
@@ -89,39 +83,33 @@ export class AdminCitas implements OnInit, OnDestroy {
       c.observacion?.toLowerCase().includes(f)
     );
   }
-  //Verifica el id de la cita si no muestra error con imagenes
+
   cancelarCita(cita: Cita): void {
     if (!cita.id) {
       Swal.fire({ icon: 'error', title: 'Error', text: 'No se encontró el ID de la cita' });
       return;
     }
-    //Se asegura que el usuario este consciente de lo que hara mostrando o que borrara
     Swal.fire({
       title: '¿Cancelar esta cita?',
       html: `
-        <p><b>Usuario:</b> ${cita.usuario?.nombre || 'N/A'}</p>
-        <p><b>Profesional:</b> ${cita.profesional?.nombre || 'N/A'}</p>
-        <p><b>Servicio:</b> ${cita.servicio?.nombre || 'N/A'}</p>
-        <p><b>Fecha/Hora:</b> ${cita.fecha} a las ${cita.hora}</p>
-        <p style="color: #dc2626; font-weight: bold; margin-top: 8px;">⚠️ Esta acción liberará el horario para nuevas reservas.</p>
+        <p style="margin:6px 0"><b>Usuario:</b> ${cita.usuario?.nombre || 'N/A'}</p>
+        <p style="margin:6px 0"><b>Profesional:</b> ${cita.profesional?.nombre || 'N/A'}</p>
+        <p style="margin:6px 0"><b>Servicio:</b> ${cita.servicio?.nombre || 'N/A'}</p>
+        <p style="margin:6px 0"><b>Fecha/Hora:</b> ${cita.fecha} a las ${cita.hora}</p>
+        <p style="color: var(--color-error); font-weight: bold; margin-top: 12px;">Esta acción liberará el horario para nuevas reservas.</p>
       `,
       icon: 'warning',
       showCancelButton: true,
-      //Confirma y borra
       confirmButtonText: 'Sí, cancelar cita',
-      //Retorna
       cancelButtonText: 'No, mantener',
-      confirmButtonColor: '#dc2626'
+      confirmButtonColor: 'var(--color-error)'
     }).then(res => {
-      //Si se borra
       if (res.isConfirmed) {
-        //Elimina
         this.citaService.eliminar(cita.id!).subscribe({
           next: () => {
             Swal.fire({ icon: 'success', title: 'Cancelada', text: 'La cita fue cancelada correctamente' });
-            this.recargarLista(); // ← Recarga con patrón de clase
+            this.recargarLista();
           },
-          //Muestra errores
           error: (err) => {
             if (err.status === 401) { this.router.navigate(['/login']); return; }
             if (err.status === 403) {

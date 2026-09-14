@@ -1,51 +1,121 @@
-<h1>Gestión de Usuarios</h1>
-<div class="acciones-top">
-  <button type="button" (click)="abrirModalCrear()" class="btn-crear">
-    <i data-lucide="plus" style="width:16px;height:16px"></i> Crear nuevo
-  </button>
-  <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre, correo o rol" />
-</div>
-<hr>
+<div class="admin-page">
+  <div class="page-header">
+    <h1>Usuarios</h1>
+    <p>Gestiona los usuarios registrados en Spa Relax</p>
 
-<div *ngIf="estado$ | async as estado">
-  <div *ngIf="estado.loading"><p>Cargando...</p></div>
-  <div *ngIf="estado.error" class="error"><p>{{ estado.error }}</p></div>
-  <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0">
-    <p>No hay usuarios registrados.</p>
+    <div class="header-actions">
+      <input
+        type="text"
+        [(ngModel)]="textoFiltro"
+        placeholder="Buscar por nombre, correo o rol"
+      />
+      <button type="button" (click)="abrirModalCrear()" class="btn btn-primary btn-sm">
+        <i data-lucide="plus" style="width:16px;height:16px"></i> Crear usuario
+      </button>
+    </div>
   </div>
 
-  <table *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0" class="tabla-admin">
-    <thead>
-      <tr>
-        <th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Fecha Registro</th><th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let usuario of filtrar(estado.data)">
-        <td>{{ usuario.id }}</td>
-        <td>{{ usuario.nombre }}</td>
-        <td>{{ usuario.correo }}</td>
-        <td>
-          <span class="badge-rol" [ngClass]="{
-            'rol-admin': usuario.rol === 'ADMIN',
-            'rol-cliente': usuario.rol === 'CLIENTE',
-            'rol-profesional': usuario.rol === 'PROFESIONAL'
-          }">
-            {{ usuario.rol }}
-          </span>
-        </td>
-        <td>{{ usuario.fechaRegistro | date:'dd/MM/yyyy' }}</td>
-        <td class="acciones-tabla">
-          <button type="button" (click)="abrirModalEditar(usuario)" class="btn-editar">
-            <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
-          </button>
-          <button type="button" (click)="eliminar(usuario)" class="btn-eliminar">
-            <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="estado$ | async as estado">
+
+    <div *ngIf="estado.loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando usuarios...</p>
+    </div>
+
+    <div *ngIf="estado.error" class="error-state">
+      <p>{{ estado.error }}</p>
+    </div>
+
+    <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0" class="empty-state">
+      <p>No hay usuarios registrados.</p>
+    </div>
+
+    <!-- TABLA DESKTOP -->
+    <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0" class="table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Fecha Registro</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of filtrar(estado.data)">
+            <td>{{ usuario.id }}</td>
+            <td>{{ usuario.nombre }}</td>
+            <td>{{ usuario.correo }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'badge-warning': usuario.rol === 'ADMIN',
+                'badge-success': usuario.rol === 'CLIENTE',
+                'badge-neutral': usuario.rol === 'PROFESIONAL'
+              }">
+                {{ usuario.rol }}
+              </span>
+            </td>
+            <td>{{ usuario.fechaRegistro | date:'dd/MM/yyyy' }}</td>
+            <td class="table-actions">
+              <button type="button" (click)="abrirModalEditar(usuario)" class="btn btn-ghost btn-sm">
+                <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
+              </button>
+              <button type="button" (click)="eliminar(usuario)" class="btn btn-danger btn-sm">
+                <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TARJETAS MOBILE -->
+    <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0" class="mobile-cards">
+      <div class="cards-grid">
+        <div *ngFor="let usuario of filtrar(estado.data)" class="entity-card">
+          <div class="card-body">
+            <div class="card-title">Usuario #{{ usuario.id }}</div>
+
+            <div class="card-badge">
+              <span class="badge" [ngClass]="{
+                'badge-warning': usuario.rol === 'ADMIN',
+                'badge-success': usuario.rol === 'CLIENTE',
+                'badge-neutral': usuario.rol === 'PROFESIONAL'
+              }">
+                {{ usuario.rol }}
+              </span>
+            </div>
+
+            <div class="card-info">
+              <div class="info-row">
+                <i data-lucide="user" style="width:14px;height:14px"></i>
+                <span>{{ usuario.nombre }}</span>
+              </div>
+              <div class="info-row">
+                <i data-lucide="mail" style="width:14px;height:14px"></i>
+                <span>{{ usuario.correo }}</span>
+              </div>
+              <div class="info-row">
+                <i data-lucide="calendar" style="width:14px;height:14px"></i>
+                <span>{{ usuario.fechaRegistro | date:'dd/MM/yyyy' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button type="button" (click)="abrirModalEditar(usuario)" class="btn btn-ghost btn-sm">
+              <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
+            </button>
+            <button type="button" (click)="eliminar(usuario)" class="btn btn-danger btn-sm">
+              <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- MODAL CREAR -->
