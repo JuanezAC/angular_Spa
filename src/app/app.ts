@@ -3,11 +3,12 @@ import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/rou
 import { CommonModule } from '@angular/common';
 import { SesionService } from './services/sesion/sesion-service';
 import { EventosService } from './services/eventos/eventos-service';
+import { Footer } from './components/footer/footer';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

@@ -11,10 +11,12 @@
         <span class="barra"></span>
         <span class="barra"></span>
       </button>
-      <span class="brand-text">Spa Relax</span>
+      <a routerLink="/" class="brand-link">
+        <img src="images/Logo.png" alt="Spa Relax" class="nav-logo" />
+      </a>
     </div>
 
-    <!-- Links de navegación -->
+    <!-- Links con sesión -->
     <div class="nav-links" [class.abierto]="menuAbierto" *ngIf="sesion$ | async as sesion">
       <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}" (click)="cerrarMenu()">Inicio</a>
       <a routerLink="/servicios" routerLinkActive="activo" (click)="cerrarMenu()">Servicios</a>
@@ -22,7 +24,6 @@
       <a routerLink="/horarios" routerLinkActive="activo" (click)="cerrarMenu()">Horarios</a>
       <a routerLink="/mis-citas" routerLinkActive="activo" (click)="cerrarMenu()">Mis citas</a>
 
-      <!-- Sección Admin: SOLO si es ADMIN -->
       <ng-container *ngIf="sesion.rol === 'ADMIN'">
         <span class="separador desktop-only">|</span>
         <a routerLink="/admin/servicios" routerLinkActive="activo" (click)="cerrarMenu()">Admin Servicios</a>
@@ -38,6 +39,7 @@
       </div>
     </div>
 
+    <!-- Links sin sesión -->
     <div class="nav-links" [class.abierto]="menuAbierto" *ngIf="!(sesion$ | async)">
       <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{exact: true}" (click)="cerrarMenu()">Inicio</a>
       <a routerLink="/servicios" routerLinkActive="activo" (click)="cerrarMenu()">Servicios</a>
@@ -45,8 +47,8 @@
       <a routerLink="/horarios" routerLinkActive="activo" (click)="cerrarMenu()">Horarios</a>
 
       <div class="nav-user">
-        <a routerLink="/login" routerLinkActive="activo" (click)="cerrarMenu()">Login</a>
-        <a routerLink="/registro" routerLinkActive="activo" (click)="cerrarMenu()">Registro</a>
+        <a routerLink="/login" routerLinkActive="activo" (click)="cerrarMenu()">Iniciar sesión</a>
+        <a routerLink="/registro" routerLinkActive="activo" class="btn-register" (click)="cerrarMenu()">Registrarse</a>
       </div>
     </div>
   </nav>
@@ -55,3 +57,5 @@
 <main>
   <router-outlet></router-outlet>
 </main>
+
+<app-footer></app-footer>

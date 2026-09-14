@@ -1,34 +1,130 @@
+<!-- ========== HERO ========== -->
 <section class="hero">
-  <div class="hero-content">
-    <h1>Bienvenido a <span>Spa Relax</span></h1>
-    <p>Tu lugar de descanso y bienestar. Reserva tus citas con los mejores profesionales.</p>
+  <div class="hero-bg">
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
+  </div>
+  <div class="container hero-content">
+    <span class="hero-badge">Bienestar & Relajación</span>
+    <h1>Tu momento de <span class="text-accent">paz</span> comienza aquí</h1>
+    <p class="hero-subtitle">Reserva servicios de masaje, tratamientos faciales y cuidado personal con los mejores profesionales.</p>
     <div class="hero-actions">
-      <a routerLink="/servicios" class="btn-primary">Ver servicios</a>
-      <a routerLink="/registro" class="btn-secondary">Crear cuenta</a>
+      <a routerLink="/servicios" class="btn btn-primary btn-lg">
+        <i data-lucide="sparkles" style="width:18px;height:18px"></i>
+        Ver servicios
+      </a>
+      <a routerLink="/registro" class="btn btn-secondary btn-lg">
+        Crear cuenta
+      </a>
     </div>
   </div>
 </section>
 
-<section class="features">
-  <div class="feature">
-    <div class="feature-icon">💆</div>
-    <h3>Servicios premium</h3>
-    <p>Masajes, faciales, tratamientos corporales y mas. Todo lo que necesitas para relajarte.</p>
-  </div>
-  <div class="feature">
-    <div class="feature-icon">👩‍⚕️</div>
-    <h3>Profesionales certificados</h3>
-    <p>Nuestro equipo cuenta con anos de experiencia y certificaciones internacionales.</p>
-  </div>
-  <div class="feature">
-    <div class="feature-icon">📅</div>
-    <h3>Reserva facil</h3>
-    <p>Elige tu servicio, profesional y horario en solo unos clics.</p>
+<!-- ========== FEATURES ========== -->
+<section class="section features-section">
+  <div class="container">
+    <h2 class="section-title">¿Por qué elegirnos?</h2>
+    <p class="section-subtitle">Una experiencia diseñada para tu bienestar completo</p>
+
+    <div class="features-grid">
+      <div class="card feature-card">
+        <div class="card-icon">
+          <i data-lucide="flower-2"></i>
+        </div>
+        <h3 class="card-title">Servicios premium</h3>
+        <p class="card-text">Masajes relajantes, faciales rejuvenecedores, tratamientos corporales y más. Todo lo que necesitas para desconectarte.</p>
+      </div>
+
+      <div class="card feature-card">
+        <div class="card-icon">
+          <i data-lucide="users"></i>
+        </div>
+        <h3 class="card-title">Profesionales certificados</h3>
+        <p class="card-text">Nuestro equipo cuenta con años de experiencia y certificaciones internacionales en bienestar y estética.</p>
+      </div>
+
+      <div class="card feature-card">
+        <div class="card-icon">
+          <i data-lucide="calendar-check"></i>
+        </div>
+        <h3 class="card-title">Reserva fácil</h3>
+        <p class="card-text">Elige tu servicio, profesional y horario en solo unos clics. Reserva desde cualquier dispositivo.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="cta">
-  <h2>Empieza tu experiencia ahora</h2>
-  <p>Registrate gratis y reserva tu primera cita</p>
-  <a routerLink="/registro" class="btn-primary">Registrarme</a>
+<!-- ========== CÓMO RESERVAR ========== -->
+<section class="section process-section section-alt">
+  <div class="container">
+    <h2 class="section-title">¿Cómo reservar?</h2>
+    <p class="section-subtitle">Cuatro pasos sencillos para tu experiencia de bienestar</p>
+
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="step-number">01</div>
+        <div class="step-icon">
+          <i data-lucide="sparkles"></i>
+        </div>
+        <h4>Elige tu servicio</h4>
+        <p>Explora nuestros tratamientos y selecciona el que más se adapte a tus necesidades.</p>
+      </div>
+
+      <div class="process-connector">
+        <i data-lucide="chevron-right"></i>
+      </div>
+
+      <div class="process-step">
+        <div class="step-number">02</div>
+        <div class="step-icon">
+          <i data-lucide="user"></i>
+        </div>
+        <h4>Selecciona profesional</h4>
+        <p>Elige el profesional que prefieras según su especialidad y disponibilidad.</p>
+      </div>
+
+      <div class="process-connector">
+        <i data-lucide="chevron-right"></i>
+      </div>
+
+      <div class="process-step">
+        <div class="step-number">03</div>
+        <div class="step-icon">
+          <i data-lucide="calendar"></i>
+        </div>
+        <h4>Elige horario</h4>
+        <p>Selecciona la fecha y hora que mejor se ajuste a tu agenda.</p>
+      </div>
+
+      <div class="process-connector">
+        <i data-lucide="chevron-right"></i>
+      </div>
+
+      <div class="process-step">
+        <div class="step-number">04</div>
+        <div class="step-icon">
+          <i data-lucide="check-circle"></i>
+        </div>
+        <h4>Confirma tu cita</h4>
+        <p>Revisa los detalles y confirma. ¡Listo para disfrutar!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="section cta-section">
+  <div class="container cta-content">
+    <h2>Empieza tu experiencia de bienestar</h2>
+    <p>Regístrate gratis y reserva tu primera cita en Spa Relax</p>
+    <div class="cta-actions">
+      <a routerLink="/registro" class="btn btn-primary btn-lg">
+        <i data-lucide="user-plus" style="width:18px;height:18px"></i>
+        Registrarme
+      </a>
+      <a routerLink="/servicios" class="btn btn-ghost btn-lg">
+        Ver servicios
+      </a>
+    </div>
+  </div>
 </section>

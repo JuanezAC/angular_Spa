@@ -1,10 +1,8 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-  background-color: #f8fafc;
-}
+/* ============================================
+   APP SHELL — Navbar + Layout
+   ============================================ */
 
-/* ========== NAVBAR ========== */
+/* ---------- Header / Navbar ---------- */
 header {
   position: sticky;
   top: 0;
@@ -15,28 +13,36 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
-  padding: 0 24px;
-  height: 60px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  background: var(--color-primary-dark);
+  padding: 0 var(--space-xl);
+  height: var(--navbar-height);
+  width: 100%;
 }
 
-/* Brand / Logo */
+/* Brand */
 .nav-brand {
   display: flex;
   align-items: center;
   gap: 12px;
   z-index: 1001;
+  flex-shrink: 0;
+}
+
+.nav-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 
 .brand-text {
-  color: #e2e8f0;
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  font-family: var(--font-heading);
+  color: #e8e4dc;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
-/* ========== HAMBURGER BUTTON ========== */
+/* Hamburger */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -46,8 +52,8 @@ header {
   border: none;
   cursor: pointer;
   padding: 8px;
-  border-radius: 6px;
-  transition: background-color 0.2s;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
 }
 
 .hamburger:hover {
@@ -58,12 +64,11 @@ header {
   display: block;
   width: 22px;
   height: 2.5px;
-  background-color: #e2e8f0;
+  background-color: #e8e4dc;
   border-radius: 2px;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Animación hamburger → X */
 .hamburger.abierto .barra:nth-child(1) {
   transform: translateY(7.5px) rotate(45deg);
 }
@@ -74,39 +79,40 @@ header {
   transform: translateY(-7.5px) rotate(-45deg);
 }
 
-/* ========== NAV LINKS (Desktop) ========== */
+/* Nav Links */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .nav-links a {
-  color: #cbd5e1;
+  color: #c5c0b8;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
   padding: 8px 14px;
-  border-radius: 6px;
-  transition: background-color 0.2s, color 0.2s;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
   white-space: nowrap;
 }
 
 .nav-links a:hover {
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
 }
 
-.activo {
-  background-color: rgba(255, 255, 255, 0.18) !important;
-  color: #ffffff !important;
+.nav-links a.activo {
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
   font-weight: 600;
 }
 
 .separador {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.2);
   user-select: none;
-  margin: 0 4px;
+  margin: 0 6px;
+  font-size: 0.85rem;
 }
 
 /* User section */
@@ -116,46 +122,46 @@ header {
   gap: 12px;
   margin-left: 12px;
   padding-left: 16px;
-  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .user-name {
-  color: #e2e8f0;
+  color: #d4cfc6;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   white-space: nowrap;
 }
 
 .btn-logout {
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #cbd5e1;
-  padding: 6px 14px;
-  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #c5c0b8;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 500;
   font-size: 0.85rem;
-  transition: all 0.2s;
+  font-family: var(--font-body);
+  transition: all var(--transition-fast);
   white-space: nowrap;
 }
 
 .btn-logout:hover {
-  background-color: rgba(220, 38, 38, 0.2);
-  border-color: #f87171;
-  color: #fca5a5;
+  background-color: rgba(192, 57, 43, 0.2);
+  border-color: rgba(192, 57, 43, 0.4);
+  color: #f5a9a0;
 }
 
-/* ========== MAIN ========== */
+/* ---------- Main ---------- */
 main {
-  padding: 24px;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - var(--navbar-height));
 }
 
-/* ========== RESPONSIVE — Tablet / Mobile (max-width: 768px) ========== */
+/* ---------- Responsive — Mobile ---------- */
 @media (max-width: 768px) {
   .navbar {
-    padding: 0 16px;
-    height: 56px;
+    padding: 0 var(--space-md);
+    height: 60px;
   }
 
   .hamburger {
@@ -166,21 +172,24 @@ main {
     font-size: 1.15rem;
   }
 
-  /* Nav links: drawer lateral izquierdo */
+  .nav-logo {
+    height: 34px;
+  }
+
   .nav-links {
     position: fixed;
     top: 0;
     left: 0;
     width: 280px;
     height: 100vh;
-    background: linear-gradient(180deg, #1e3a5f 0%, #162d4a 100%);
+    background: var(--color-primary-dark);
     flex-direction: column;
     align-items: stretch;
     gap: 0;
     padding: 72px 0 24px 0;
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
     overflow-y: auto;
     z-index: 1000;
   }
@@ -196,10 +205,6 @@ main {
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
-  .nav-links a:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-  }
-
   .separador.desktop-only {
     display: none;
   }
@@ -211,13 +216,13 @@ main {
     margin-left: 0;
     padding: 12px 24px;
     border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 8px;
   }
 
   .user-name {
     padding: 8px 0;
-    color: #94a3b8;
+    color: #94a396;
     font-size: 0.85rem;
   }
 
@@ -225,11 +230,11 @@ main {
     margin-left: 0;
     width: 100%;
     text-align: center;
-    border-color: rgba(255, 255, 255, 0.15);
-    padding: 10px;
+    border-color: rgba(255, 255, 255, 0.12);
+    padding: 12px;
   }
 
-  /* Overlay oscuro detrás del menú */
+  /* Overlay */
   .nav-links.abierto::before {
     content: '';
     position: fixed;
@@ -237,16 +242,11 @@ main {
     left: 280px;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.45);
     z-index: -1;
-  }
-
-  main {
-    padding: 16px;
   }
 }
 
-/* ========== Desktop (min-width: 769px) — ocultar overlay ========== */
 @media (min-width: 769px) {
   .nav-links.abierto::before {
     display: none;
