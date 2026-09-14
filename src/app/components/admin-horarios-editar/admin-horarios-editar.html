@@ -1,19 +1,46 @@
-<h2>Editar Horario</h2>
-<form (ngSubmit)="guardarCambios()">
-  <div class="campo">
-    <label>Profesional</label>
-    <select name="profesional" [(ngModel)]="profesionalId" required>
-      <option [ngValue]="null">Seleccionar profesional</option>
-      <option *ngFor="let p of profesionales" [ngValue]="p.id">{{ p.nombre }} ({{ p.especialidad }})</option>
-    </select>
+<div class="form-panel">
+  <div class="form-header">
+    <h2>Editar Horario</h2>
+    <p class="form-subtitle">Actualiza la informacion del horario</p>
   </div>
-  <div class="campo"><label>Fecha</label><input type="date" name="fecha" [(ngModel)]="fecha" required /></div>
-  <div class="campo"><label>Hora</label><input type="time" name="hora" [(ngModel)]="hora" required /></div>
-  <div class="campo checkbox">
-    <label><input type="checkbox" [(ngModel)]="disponible" name="disponible" /> Disponible</label>
-  </div>
-  <div class="acciones">
-    <button type="submit">Actualizar</button>
-    <button type="button" (click)="cerrar()">Cancelar</button>
-  </div>
-</form>
+
+  <form (ngSubmit)="guardarCambios()" class="form-body">
+    <div class="form-section">
+      <div class="form-group">
+        <label class="form-label">Profesional</label>
+        <select name="profesional" [(ngModel)]="profesionalId" class="form-select" required>
+          <option [ngValue]="null">Seleccionar profesional</option>
+          <option *ngFor="let p of profesionales" [ngValue]="p.id">{{ p.nombre }} ({{ p.especialidad }})</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Fecha</label>
+          <input type="date" name="fecha" [(ngModel)]="fecha" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hora</label>
+          <input type="time" name="hora" [(ngModel)]="hora" class="form-input" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="toggle-label">
+          <input type="checkbox" [(ngModel)]="disponible" name="disponible" class="toggle-input" />
+          <span class="toggle-switch"></span>
+          <span class="toggle-text">{{ disponible ? 'Disponible' : 'No disponible' }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-ghost" (click)="cerrar()">
+        <i data-lucide="x" style="width:16px;height:16px"></i> Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary">
+        <i data-lucide="save" style="width:16px;height:16px"></i> Actualizar
+      </button>
+    </div>
+  </form>
+</div>

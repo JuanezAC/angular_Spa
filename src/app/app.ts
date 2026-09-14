@@ -3,6 +3,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/rou
 import { CommonModule } from '@angular/common';
 import { SesionService } from './services/sesion/sesion-service';
 import { EventosService } from './services/eventos/eventos-service';
+import { LucideService } from './services/lucide/lucide-service';
 import { Footer } from './components/footer/footer';
 
 @Component({
@@ -16,6 +17,7 @@ export class App implements OnInit, OnDestroy {
   private router = inject(Router);
   private sesionService = inject(SesionService);
   private eventosService = inject(EventosService);
+  private lucideService = inject(LucideService);
 
   sesion$ = this.sesionService.sesion$;
   menuAbierto = false;
@@ -23,10 +25,12 @@ export class App implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sesionService.refrescarSesion();
     this.eventosService.conectar();
+    this.lucideService.init();
   }
 
   ngOnDestroy(): void {
     this.eventosService.desconectar();
+    this.lucideService.ngOnDestroy();
   }
 
   cerrarMenu(): void {
