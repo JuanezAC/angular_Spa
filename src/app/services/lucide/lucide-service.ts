@@ -5,15 +5,13 @@ declare const lucide: any;
 @Injectable({ providedIn: 'root' })
 export class LucideService implements OnDestroy {
   private observer: MutationObserver | null = null;
-  private refreshing = false;
+  private debounceTimer: any = null;
 
   init(): void {
-    this.refresh();
+    this.runIcons();
 
     this.observer = new MutationObserver(() => {
-      if (!this.refreshing) {
-        this.refresh();
-      }
+      this.scheduleRun();
     });
 
     this.observer.observe(document.body, {
@@ -22,22 +20,21 @@ export class LucideService implements OnDestroy {
     });
   }
 
-  refresh(): void {
-    this.refreshing = true;
-    this.observer?.disconnect();
+  private scheduleRun(): void {
+    if (this.debounceTimer) clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+      this.runIcons();
+    }, 100);
+  }
+
+  private runIcons(): void {
     try {
       lucide.createIcons();
     } catch {}
-    setTimeout(() => {
-      this.refreshing = false;
-      this.observer?.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-    }, 50);
   }
 
   ngOnDestroy(): void {
+    if (this.debounceTimer) clearTimeout(this.debounceTimer);
     this.observer?.disconnect();
     this.observer = null;
   }
