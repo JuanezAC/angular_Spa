@@ -48,14 +48,14 @@
         <div class="card-body">
           <div class="professional-info">
             <div class="pro-avatar">
-              <img *ngIf="horario.profesional?.imagenUrl && !hasImageError(horario.profesional?.id)" [src]="horario.profesional.imagenUrl" (error)="onImageError(horario.profesional?.id)" [alt]="horario.profesional.nombre" />
-              <div *ngIf="!horario.profesional?.imagenUrl || hasImageError(horario.profesional?.id)" class="avatar-placeholder">
+              <img *ngIf="horario.profesional.imagenUrl && !hasImageError(horario.profesional.id)" [src]="horario.profesional.imagenUrl" (error)="onImageError(horario.profesional.id)" [alt]="horario.profesional.nombre" />
+              <div *ngIf="!horario.profesional.imagenUrl || hasImageError(horario.profesional.id)" class="avatar-placeholder">
                 <i data-lucide="user"></i>
               </div>
             </div>
             <div class="pro-details">
-              <h3 class="pro-name">{{ horario.profesional?.nombre || 'No disponible' }}</h3>
-              <p class="pro-specialty">{{ horario.profesional?.especialidad || '-' }}</p>
+              <h3 class="pro-name">{{ horario.profesional.nombre || 'No disponible' }}</h3>
+              <p class="pro-specialty">{{ horario.profesional.especialidad || '-' }}</p>
             </div>
           </div>
 
@@ -66,7 +66,7 @@
                 [(ngModel)]="servicioSeleccionado[horario.id!]"
                 class="form-select">
                 <option [ngValue]="null">-- Elegir servicio --</option>
-                <option *ngFor="let s of obtenerServiciosPorProfesional(horario.profesional?.id)" [ngValue]="s.id">
+                <option *ngFor="let s of obtenerServiciosPorProfesional(horario.profesional.id)" [ngValue]="s.id">
                   {{ s.nombre }} ({{ s.duracion }} min) - ${{ s.precio | number:'1.2-2' }}
                 </option>
               </select>
