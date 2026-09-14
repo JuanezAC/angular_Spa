@@ -5,27 +5,13 @@ declare const lucide: any;
 @Injectable({ providedIn: 'root' })
 export class LucideService implements OnDestroy {
   private observer: MutationObserver | null = null;
+  private refreshing = false;
 
   init(): void {
     this.refresh();
 
-    this.observer = new MutationObserver((mutations) => {
-      let hasNewIcons = false;
-      for (const mutation of mutations) {
-        if (mutation.type === 'childList') {
-          for (const node of Array.from(mutation.addedNodes)) {
-            if (node.nodeType === 1) {
-              const el = node as HTMLElement;
-              if (el.matches?.('[data-lucide]') || el.querySelector?.('[data-lucide]')) {
-                hasNewIcons = true;
-                break;
-              }
-            }
-          }
-        }
-        if (hasNewIcons) break;
-      }
-      if (hasNewIcons) {
+    this.observer = new MutationObserver(() => {
+      if (!this.refreshing) {
         this.refresh();
       }
     });
@@ -37,9 +23,18 @@ export class LucideService implements OnDestroy {
   }
 
   refresh(): void {
+    this.refreshing = true;
+    this.observer?.disconnect();
     try {
       lucide.createIcons();
     } catch {}
+    setTimeout(() => {
+      this.refreshing = false;
+      this.observer?.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    }, 50);
   }
 
   ngOnDestroy(): void {
