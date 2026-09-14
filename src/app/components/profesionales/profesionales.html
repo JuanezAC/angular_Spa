@@ -35,9 +35,10 @@
     <div class="cards-grid" *ngIf="!estado.loading && !estado.error && filtrarProfesionales(estado.data).length > 0">
       <div class="pro-card" *ngFor="let profesional of filtrarProfesionales(estado.data)">
         <div class="card-image">
-          <img *ngIf="profesional.imagenUrl" [src]="profesional.imagenUrl" (error)="profesional.imagenUrl = ''" [alt]="profesional.nombre" />
-          <div *ngIf="!profesional.imagenUrl" class="card-image-placeholder">
+          <img *ngIf="profesional.imagenUrl && !hasImageError(profesional.id)" [src]="profesional.imagenUrl" (error)="onImageError(profesional.id)" [alt]="profesional.nombre" />
+          <div class="card-image-placeholder" *ngIf="!profesional.imagenUrl || hasImageError(profesional.id)">
             <i data-lucide="user"></i>
+            <span class="placeholder-name">{{ profesional.nombre }}</span>
           </div>
           <span class="card-badge" [class.badge-active]="profesional.estado" [class.badge-inactive]="!profesional.estado">
             {{ profesional.estado ? 'Activo' : 'Inactivo' }}

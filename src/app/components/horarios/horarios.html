@@ -48,8 +48,8 @@
         <div class="card-body">
           <div class="professional-info">
             <div class="pro-avatar">
-              <img *ngIf="horario.profesional?.imagenUrl" [src]="horario.profesional.imagenUrl" (error)="horario.profesional.imagenUrl = ''" [alt]="horario.profesional.nombre" />
-              <div *ngIf="!horario.profesional?.imagenUrl" class="avatar-placeholder">
+              <img *ngIf="horario.profesional?.imagenUrl && !hasImageError(horario.profesional?.id)" [src]="horario.profesional.imagenUrl" (error)="onImageError(horario.profesional?.id)" [alt]="horario.profesional.nombre" />
+              <div *ngIf="!horario.profesional?.imagenUrl || hasImageError(horario.profesional?.id)" class="avatar-placeholder">
                 <i data-lucide="user"></i>
               </div>
             </div>

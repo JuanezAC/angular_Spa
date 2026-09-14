@@ -109,15 +109,25 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--color-background) 0%, var(--color-background-alt) 100%);
-  color: var(--color-border);
+  gap: 8px;
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .card-image-placeholder i {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
+  opacity: 0.7;
+}
+
+.placeholder-name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 0.85;
 }
 
 .card-badge {

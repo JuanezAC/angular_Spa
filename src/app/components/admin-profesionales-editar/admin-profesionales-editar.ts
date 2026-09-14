@@ -28,14 +28,23 @@ export class AdminProfesionalesEditar implements OnChanges, OnInit {
   profesionalEditando: Profesional = { nombre: '', especialidad: '', correo: '', telefono: '', estado: false, imagenUrl: '' };
   serviciosDisponibles: Servicio[] = [];
   serviciosSeleccionados: number[] = [];
+  imagenError = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['profesional'] && this.profesional) {
-      this.profesionalEditando = { ...this.profesional };
+      this.profesionalEditando = {
+        ...this.profesional,
+        imagenUrl: this.profesional.imagenUrl || ''
+      };
+      this.imagenError = false;
     }
   }
 
   ngOnInit(): void { this.cargarServiciosYAsignaciones(); }
+
+  onImagenUrlChange(): void {
+    this.imagenError = false;
+  }
 
   cargarServiciosYAsignaciones(): void {
     this.servicioService.obtenerTodos().subscribe(async (servicios) => {
@@ -61,40 +70,23 @@ export class AdminProfesionalesEditar implements OnChanges, OnInit {
     const correo = this.profesionalEditando.correo.trim();
     const telefono = this.profesionalEditando.telefono.trim();
 
-    if (!telefono) {
-      Swal.fire('Campo obligatorio', 'El número de teléfono es obligatorio', 'warning');
-      return;
-    }
-
-    if (!/^[0-9]+$/.test(telefono)) {
-      Swal.fire('Teléfono inválido', 'El número de teléfono solo puede contener números', 'warning');
-      return;
-    }
-
-    if (!nombre || !especialidad || !correo) {
-      Swal.fire('Campos obligatorios', 'Nombre, especialidad y correo son obligatorios', 'warning');
-      return;
-    }
+    if (!telefono) { Swal.fire('Campo obligatorio', 'El numero de telefono es obligatorio', 'warning'); return; }
+    if (!/^[0-9]+$/.test(telefono)) { Swal.fire('Telefono invalido', 'El numero de telefono solo puede contener numeros', 'warning'); return; }
+    if (!nombre || !especialidad || !correo) { Swal.fire('Campos obligatorios', 'Nombre, especialidad y correo son obligatorios', 'warning'); return; }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(correo)) {
-      Swal.fire('Correo inválido', 'Ingresa un correo electrónico válido', 'warning'); return;
-    }
-
-    if (this.serviciosSeleccionados.length === 0) {
-      Swal.fire('Servicios requeridos', 'Debe asignar al menos un servicio al profesional', 'warning'); return;
-    }
+    if (!emailRegex.test(correo)) { Swal.fire('Correo invalido', 'Ingresa un correo electronico valido', 'warning'); return; }
+    if (this.serviciosSeleccionados.length === 0) { Swal.fire('Servicios requeridos', 'Debe asignar al menos un servicio al profesional', 'warning'); return; }
 
     try {
-      // 1. Actualizar datos del profesional
       await firstValueFrom(this.profesionalService.editar(id, {
-        id, nombre, especialidad, correo, telefono, estado: this.profesionalEditando.estado, imagenUrl: (this.profesionalEditando.imagenUrl || '').trim()
+        id, nombre, especialidad, correo, telefono, estado: this.profesionalEditando.estado,
+        imagenUrl: (this.profesionalEditando.imagenUrl || '').trim()
       }));
 
-      // 2. Sincronizar asignaciones (borrar antiguas + crear nuevas)
       await this.sincronizarAsignaciones(id);
 
-      Swal.fire('Éxito', 'Profesional y servicios actualizados', 'success');
+      Swal.fire('Exito', 'Profesional y servicios actualizados', 'success');
       this.profesionalEditado.emit();
     } catch (err: any) {
       Swal.fire('Error', err.error?.mensaje || 'Error al actualizar', 'error');
@@ -103,11 +95,7 @@ export class AdminProfesionalesEditar implements OnChanges, OnInit {
 
   async sincronizarAsignaciones(profesionalId: number): Promise<void> {
     const actuales = await firstValueFrom(this.proSerService.obtenerPorProfesional(profesionalId));
-    
-    // Eliminar todas las existentes
     await Promise.all(actuales.map(a => firstValueFrom(this.proSerService.eliminar(a.id!))));
-    
-    // Crear las nuevas seleccionadas
     const nuevas = this.serviciosSeleccionados.map(serId => ({
       profesional: { id: profesionalId }, servicio: { id: serId }
     }));

@@ -1,31 +1,79 @@
-<h2>Editar Profesional</h2>
-<form (ngSubmit)="guardarCambios()">
-  <div class="campo"><label>Nombre</label><input name="nombre" [(ngModel)]="profesionalEditando.nombre" required /></div>
-  <div class="campo"><label>Especialidad</label><input name="especialidad" [(ngModel)]="profesionalEditando.especialidad" required /></div>
-  <div class="campo"><label>Correo</label><input name="correo" type="email" [(ngModel)]="profesionalEditando.correo" required /></div>
-  <div class="campo"><label>Teléfono</label><input name="telefono" [(ngModel)]="profesionalEditando.telefono" pattern="[0-9]+" inputmode="numeric" required (input)="profesionalEditando.telefono = profesionalEditando.telefono.replace(/[^0-9]/g, '')" /></div>
-  <div class="campo"><label>URL de imagen (opcional)</label><input name="imagenUrl" type="url" [(ngModel)]="profesionalEditando.imagenUrl" placeholder="https://ejemplo.com/foto.jpg" />
-    <div *ngIf="profesionalEditando.imagenUrl" class="imagen-preview">
-      <img [src]="profesionalEditando.imagenUrl" (error)="profesionalEditando.imagenUrl = ''" alt="Vista previa" />
-    </div>
-  </div>
-  <div class="campo checkbox">
-    <label><input type="checkbox" [(ngModel)]="profesionalEditando.estado" name="estado" /> Activo</label>
+<div class="form-panel">
+  <div class="form-header">
+    <h2>Editar Profesional</h2>
+    <p class="form-subtitle">Actualiza la informacion del profesional</p>
   </div>
 
-  <!-- ✅ LISTA DE SERVICIOS -->
-  <div class="campo">
-    <label>Servicios asignados</label>
-    <div class="servicios-lista">
-      <label *ngFor="let s of serviciosDisponibles" class="servicio-item">
-        <input type="checkbox" [checked]="serviciosSeleccionados.includes(s.id!)" (change)="toggleServicio(s.id!)">
-        <span>{{ s.nombre }} ({{ s.duracion }} min)</span>
-      </label>
-    </div>
-  </div>
+  <form (ngSubmit)="guardarCambios()" class="form-body">
+    <div class="form-section">
+      <h3 class="section-label">Informacion personal</h3>
 
-  <div class="acciones">
-    <button type="submit">Actualizar</button>
-    <button type="button" (click)="cerrar()">Cancelar</button>
-  </div>
-</form>
+      <div class="form-group">
+        <label class="form-label" for="nombre">Nombre <span class="required">*</span></label>
+        <input id="nombre" name="nombre" class="form-input" [(ngModel)]="profesionalEditando.nombre" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="especialidad">Especialidad <span class="required">*</span></label>
+        <input id="especialidad" name="especialidad" class="form-input" [(ngModel)]="profesionalEditando.especialidad" required />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="correo">Correo <span class="required">*</span></label>
+          <input id="correo" name="correo" type="email" class="form-input" [(ngModel)]="profesionalEditando.correo" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="telefono">Telefono <span class="required">*</span></label>
+          <input id="telefono" name="telefono" class="form-input" [(ngModel)]="profesionalEditando.telefono" pattern="[0-9]+" inputmode="numeric" required (input)="profesionalEditando.telefono = profesionalEditando.telefono.replace(/[^0-9]/g, '')" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Estado</label>
+        <label class="toggle-label">
+          <input type="checkbox" [(ngModel)]="profesionalEditando.estado" name="estado" class="toggle-input" />
+          <span class="toggle-switch"></span>
+          <span class="toggle-text">{{ profesionalEditando.estado ? 'Activo' : 'Inactivo' }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="section-label">Foto del profesional</h3>
+
+      <div class="form-group">
+        <label class="form-label" for="imagenUrl">URL de imagen (opcional)</label>
+        <input id="imagenUrl" name="imagenUrl" type="url" class="form-input" [(ngModel)]="profesionalEditando.imagenUrl" placeholder="https://ejemplo.com/foto.jpg" (ngModelChange)="onImagenUrlChange()" />
+        <p class="form-hint">Deja vacio para eliminar la foto actual</p>
+      </div>
+
+      <div class="image-preview-area" *ngIf="profesionalEditando.imagenUrl && !imagenError">
+        <img [src]="profesionalEditando.imagenUrl" (error)="imagenError = true" alt="Vista previa" class="preview-img" />
+        <span class="preview-label">Vista previa</span>
+      </div>
+
+      <div class="image-preview-placeholder" *ngIf="!profesionalEditando.imagenUrl || imagenError">
+        <i data-lucide="user" style="width:32px;height:32px"></i>
+        <span>Sin foto</span>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="section-label">Servicios asignados</h3>
+
+      <div class="services-checklist">
+        <label *ngFor="let s of serviciosDisponibles" class="check-item">
+          <input type="checkbox" [checked]="serviciosSeleccionados.includes(s.id!)" (change)="toggleServicio(s.id!)" class="check-input" />
+          <span class="check-text">{{ s.nombre }} <span class="check-meta">({{ s.duracion }} min)</span></span>
+        </label>
+        <p class="form-hint" *ngIf="serviciosDisponibles.length === 0">No hay servicios disponibles</p>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-ghost" (click)="cerrar()">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    </div>
+  </form>
+</div>

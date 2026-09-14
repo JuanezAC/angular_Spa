@@ -1,32 +1,58 @@
-<div class="modal-content">
-  <h2>Crear Servicio</h2>
-  <form (ngSubmit)="guardarServicio()">
-    <div class="campo">
-      <label>Nombre</label>
-      <input name="nombre" [(ngModel)]="servicioNuevo.nombre" required />
-    </div>
-    <div class="campo">
-      <label>Descripción</label>
-      <input name="descripcion" [(ngModel)]="servicioNuevo.descripcion" />
-    </div>
-    <div class="campo">
-      <label>Duración (min)</label>
-      <input name="duracion" type="number" [(ngModel)]="servicioNuevo.duracion" required />
-    </div>
-    <div class="campo">
-      <label>Precio</label>
-      <input name="precio" type="number" [(ngModel)]="servicioNuevo.precio" step="0.01" required />
-    </div>
-    <div class="campo">
-      <label>URL de imagen (opcional)</label>
-      <input name="imagenUrl" type="url" [(ngModel)]="servicioNuevo.imagenUrl" placeholder="https://ejemplo.com/imagen.jpg" />
-      <div *ngIf="servicioNuevo.imagenUrl" class="imagen-preview">
-        <img [src]="servicioNuevo.imagenUrl" (error)="servicioNuevo.imagenUrl = ''" alt="Vista previa" />
+<div class="form-panel">
+  <div class="form-header">
+    <h2>Crear Servicio</h2>
+    <p class="form-subtitle">Registra un nuevo servicio para Spa Relax</p>
+  </div>
+
+  <form (ngSubmit)="guardarServicio()" class="form-body">
+    <div class="form-section">
+      <h3 class="section-label">Informacion basica</h3>
+
+      <div class="form-group">
+        <label class="form-label" for="nombre">Nombre <span class="required">*</span></label>
+        <input id="nombre" name="nombre" class="form-input" [(ngModel)]="servicioNuevo.nombre" placeholder="Ej: Masaje relajante" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="descripcion">Descripcion</label>
+        <textarea id="descripcion" name="descripcion" class="form-input form-textarea" [(ngModel)]="servicioNuevo.descripcion" placeholder="Describe el servicio..." rows="3"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="duracion">Duracion (min) <span class="required">*</span></label>
+          <input id="duracion" name="duracion" type="number" class="form-input" [(ngModel)]="servicioNuevo.duracion" min="1" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="precio">Precio (COP) <span class="required">*</span></label>
+          <input id="precio" name="precio" type="number" class="form-input" [(ngModel)]="servicioNuevo.precio" min="0" step="1000" required />
+        </div>
       </div>
     </div>
-    <div class="acciones">
-      <button type="submit">Guardar</button>
-      <button type="button" (click)="cerrar()">Cancelar</button>
+
+    <div class="form-section">
+      <h3 class="section-label">Imagen del servicio</h3>
+
+      <div class="form-group">
+        <label class="form-label" for="imagenUrl">URL de imagen (opcional)</label>
+        <input id="imagenUrl" name="imagenUrl" type="url" class="form-input" [(ngModel)]="servicioNuevo.imagenUrl" placeholder="https://ejemplo.com/imagen.jpg" />
+        <p class="form-hint">Pega la URL de una imagen representativa del servicio</p>
+      </div>
+
+      <div class="image-preview-area" *ngIf="servicioNuevo.imagenUrl && !imagenError">
+        <img [src]="servicioNuevo.imagenUrl" (error)="imagenError = true" alt="Vista previa" class="preview-img" />
+        <span class="preview-label">Vista previa</span>
+      </div>
+
+      <div class="image-preview-placeholder" *ngIf="!servicioNuevo.imagenUrl || imagenError">
+        <i data-lucide="image" style="width:32px;height:32px"></i>
+        <span>Sin imagen</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-ghost" (click)="cerrar()">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Crear servicio</button>
     </div>
   </form>
 </div>

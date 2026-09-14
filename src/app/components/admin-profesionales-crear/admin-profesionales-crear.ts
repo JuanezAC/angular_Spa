@@ -27,12 +27,17 @@ export class AdminProfesionalesCrear implements OnInit {
   profesionalNuevo: Profesional = { nombre: '', especialidad: '', correo: '', telefono: '', estado: true, imagenUrl: '' };
   serviciosDisponibles: Servicio[] = [];
   serviciosSeleccionados: number[] = [];
+  imagenError = false;
 
   ngOnInit(): void {
     this.servicioService.obtenerTodos().subscribe({
       next: (data) => this.serviciosDisponibles = data,
       error: () => Swal.fire('Error', 'No se pudieron cargar los servicios', 'error')
     });
+  }
+
+  onImagenUrlChange(): void {
+    this.imagenError = false;
   }
 
   toggleServicio(id: number): void {
@@ -46,51 +51,30 @@ export class AdminProfesionalesCrear implements OnInit {
     const correo = this.profesionalNuevo.correo.trim();
     const telefono = this.profesionalNuevo.telefono.trim();
 
-    if (!telefono) {
-      Swal.fire('Campo obligatorio', 'El número de teléfono es obligatorio', 'warning');
-      return;
-    }
-
-    if (!/^[0-9]+$/.test(telefono)) {
-      Swal.fire('Teléfono inválido', 'El número de teléfono solo puede contener números', 'warning');
-      return;
-    }
-
-    if (!nombre || !especialidad || !correo) {
-      Swal.fire('Campos obligatorios', 'Nombre, especialidad y correo son obligatorios', 'warning');
-      return;
-    }
+    if (!telefono) { Swal.fire('Campo obligatorio', 'El numero de telefono es obligatorio', 'warning'); return; }
+    if (!/^[0-9]+$/.test(telefono)) { Swal.fire('Telefono invalido', 'El numero de telefono solo puede contener numeros', 'warning'); return; }
+    if (!nombre || !especialidad || !correo) { Swal.fire('Campos obligatorios', 'Nombre, especialidad y correo son obligatorios', 'warning'); return; }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(correo)) {
-      Swal.fire('Correo inválido', 'Ingresa un correo electrónico válido', 'warning');
-      return;
-    }
-
-    if (this.serviciosSeleccionados.length === 0) {
-      Swal.fire('Servicios requeridos', 'Debe asignar al menos un servicio al profesional', 'warning');
-      return;
-    }
+    if (!emailRegex.test(correo)) { Swal.fire('Correo invalido', 'Ingresa un correo electronico valido', 'warning'); return; }
+    if (this.serviciosSeleccionados.length === 0) { Swal.fire('Servicios requeridos', 'Debe asignar al menos un servicio al profesional', 'warning'); return; }
 
     try {
-      // ✅ 1. Crear profesional con type assertion para que TypeScript sepa que tiene 'id'
       const creado = await firstValueFrom(
         this.profesionalService.crear({
           nombre, especialidad, correo, telefono, estado: this.profesionalNuevo.estado, imagenUrl: (this.profesionalNuevo.imagenUrl || '').trim()
         })
-      ) as { id: number }; // ← AGREGAR ESTO: le dice a TS que la respuesta tiene un 'id: number'
+      ) as { id: number };
 
-      // ✅ 2. Asignar servicios seleccionados (ahora creado.id sí existe para TS)
       if (creado.id && this.serviciosSeleccionados.length > 0) {
         const asignaciones = this.serviciosSeleccionados.map(serId => ({
-          profesional: { id: creado.id },
-          servicio: { id: serId }
+          profesional: { id: creado.id }, servicio: { id: serId }
         }));
         await Promise.all(asignaciones.map(a => firstValueFrom(this.proSerService.guardar(a))));
       }
 
       this.limpiarFormulario();
-      Swal.fire('Éxito', 'Profesional y servicios asignados correctamente', 'success');
+      Swal.fire('Exito', 'Profesional y servicios asignados correctamente', 'success');
       this.profesionalCreado.emit();
     } catch (err: any) {
       Swal.fire('Error', err.error?.mensaje || 'Error al crear profesional', 'error');
@@ -100,6 +84,7 @@ export class AdminProfesionalesCrear implements OnInit {
   limpiarFormulario(): void {
     this.profesionalNuevo = { nombre: '', especialidad: '', correo: '', telefono: '', estado: true, imagenUrl: '' };
     this.serviciosSeleccionados = [];
+    this.imagenError = false;
   }
 
   cerrar(): void { this.cancelar.emit(); }

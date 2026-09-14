@@ -29,6 +29,7 @@ export class Servicios implements OnInit, OnDestroy {
   estado$: Observable<ServicioState>;
   textoFiltro: string = '';
   private sub = new Subscription();
+  imagenesConError: Set<number> = new Set();
 
   constructor() {
     this.estado$ = this.cargarServicios();
@@ -64,5 +65,13 @@ export class Servicios implements OnInit, OnDestroy {
       s.descripcion?.toLowerCase().includes(f) ||
       s.id?.toString().includes(f)
     );
+  }
+
+  onImageError(id: number | undefined): void {
+    if (id !== undefined) this.imagenesConError.add(id);
+  }
+
+  hasImageError(id: number | undefined): boolean {
+    return id !== undefined && this.imagenesConError.has(id);
   }
 }

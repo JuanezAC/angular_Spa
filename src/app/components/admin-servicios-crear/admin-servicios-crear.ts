@@ -13,14 +13,11 @@ import { Servicio } from '../../models/servicio';
   styleUrl: './admin-servicios-crear.css',
 })
 export class AdminServiciosCrear {
-  // 🔹 Inyección del servicio
   private servicioService = inject(ServicioService);
 
-  // 🔹 @Output: Avisar al padre cuando termine
   @Output() servicioCreado = new EventEmitter<void>();
   @Output() cancelar = new EventEmitter<void>();
 
-  // 🔹 Objeto que representa el formulario
   servicioNuevo: Servicio = {
     nombre: '',
     descripcion: '',
@@ -29,33 +26,27 @@ export class AdminServiciosCrear {
     imagenUrl: ''
   };
 
-  // 🔹 Guardar: valida, llama al servicio, resetea formulario y emite evento
+  imagenError = false;
+
+  onImagenUrlChange(): void {
+    this.imagenError = false;
+  }
+
   guardarServicio(): void {
     const nombre = this.servicioNuevo.nombre.trim();
     const descripcion = (this.servicioNuevo.descripcion || '').trim();
     const duracion = this.servicioNuevo.duracion;
     const precio = this.servicioNuevo.precio;
 
-    // Validaciones
     if (!nombre || !duracion || precio <= 0) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Campos obligatorios',
-        text: 'Nombre, duración y precio son obligatorios'
-      });
+      Swal.fire({ icon: 'warning', title: 'Campos obligatorios', text: 'Nombre, duracion y precio son obligatorios' });
       return;
     }
-
     if (duracion <= 0) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Duración inválida',
-        text: 'La duración debe ser mayor a 0 minutos'
-      });
+      Swal.fire({ icon: 'warning', title: 'Duracion invalida', text: 'La duracion debe ser mayor a 0 minutos' });
       return;
     }
 
-    // Construir objeto limpio para enviar
     const servicioParaGuardar: Servicio = {
       nombre,
       descripcion,
@@ -66,44 +57,21 @@ export class AdminServiciosCrear {
 
     this.servicioService.crear(servicioParaGuardar).subscribe({
       next: () => {
-        // 🔹 Resetear formulario
-        this.servicioNuevo = {
-          nombre: '',
-          descripcion: '',
-          duracion: 30,
-          precio: 0,
-          imagenUrl: ''
-        };
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Servicio creado',
-          text: 'El servicio se guardó correctamente'
-        });
-
-        // 🔹 Avisar al padre: "ya creé el servicio, recarga la lista"
+        this.servicioNuevo = { nombre: '', descripcion: '', duracion: 30, precio: 0, imagenUrl: '' };
+        this.imagenError = false;
+        Swal.fire({ icon: 'success', title: 'Servicio creado', text: 'El servicio se guardo correctamente' });
         this.servicioCreado.emit();
       },
       error: (err) => {
-        // Manejo de errores 401/403 (aunque en admin debería estar autenticado)
         if (err.status === 401 || err.status === 403) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Acceso denegado',
-            text: 'No tienes permisos para realizar esta acción'
-          });
+          Swal.fire({ icon: 'error', title: 'Acceso denegado', text: 'No tienes permisos para realizar esta accion' });
           return;
         }
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: err.error?.mensaje || 'Ocurrió un error al crear el servicio'
-        });
+        Swal.fire({ icon: 'error', title: 'Error', text: err.error?.mensaje || 'Ocurrio un error al crear el servicio' });
       }
     });
   }
 
-  // 🔹 Cerrar/Cancelar: avisa al padre sin guardar
   cerrar(): void {
     this.cancelar.emit();
   }

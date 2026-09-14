@@ -33,6 +33,7 @@ export class Profesionales implements OnInit, OnDestroy {
   estado$: Observable<ProfesionalState>;
   textoFiltro: string = '';
   private sub = new Subscription();
+  imagenesConError: Set<number> = new Set();
 
   constructor() {
     this.estado$ = this.cargarProfesionales();
@@ -53,11 +54,11 @@ export class Profesionales implements OnInit, OnDestroy {
     return this.profesionalService.obtenerTodos().pipe(
       switchMap(profesionales => {
         if (!profesionales?.length) return of(profesionales);
-        
+
         return this.proSerService.obtenerTodos().pipe(
           map((asignaciones: ProfesionalServicio[]) => {
             const proSerMap = new Map<number, Servicio[]>();
-            
+
             asignaciones.forEach(asp => {
               const proId = asp.profesional?.id;
               const servicio = asp.servicio;
@@ -93,8 +94,11 @@ export class Profesionales implements OnInit, OnDestroy {
     );
   }
 
-  obtenerNombresServicios(servicios: Servicio[] | undefined): string {
-    if (!servicios || servicios.length === 0) return 'Sin servicios asignados';
-    return servicios.map(s => s.nombre).join(', ');
+  onImageError(id: number | undefined): void {
+    if (id !== undefined) this.imagenesConError.add(id);
+  }
+
+  hasImageError(id: number | undefined): boolean {
+    return id !== undefined && this.imagenesConError.has(id);
   }
 }

@@ -53,6 +53,7 @@ export class Horarios implements OnInit, OnDestroy {
   servicioSeleccionado: { [key: number]: number } = {};
   usuarioSeleccionado: { [key: number]: number } = {};
   serviciosPorProfesional: { [key: number]: Servicio[] } = {};
+  imagenesConError: Set<number> = new Set();
 
   constructor() {
     this.estado$ = of({ loading: true, data: [], error: null });
@@ -155,6 +156,14 @@ export class Horarios implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  onImageError(id: number | undefined): void {
+    if (id !== undefined) this.imagenesConError.add(id);
+  }
+
+  hasImageError(id: number | undefined): boolean {
+    return id !== undefined && this.imagenesConError.has(id);
   }
 
   reservar(horario: HorarioDisponible): void {

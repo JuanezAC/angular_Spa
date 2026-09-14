@@ -35,9 +35,11 @@
     <div class="cards-grid" *ngIf="!estado.loading && !estado.error && filtrarServicios(estado.data).length > 0">
       <div class="service-card" *ngFor="let servicio of filtrarServicios(estado.data)">
         <div class="card-image">
-          <img *ngIf="servicio.imagenUrl" [src]="servicio.imagenUrl" (error)="servicio.imagenUrl = ''" [alt]="servicio.nombre" />
-          <div *ngIf="!servicio.imagenUrl" class="card-image-placeholder">
+          <img *ngIf="servicio.imagenUrl && !hasImageError(servicio.id)" [src]="servicio.imagenUrl" (error)="onImageError(servicio.id)" [alt]="servicio.nombre" />
+          <div class="card-image-placeholder" *ngIf="!servicio.imagenUrl || hasImageError(servicio.id)">
             <i data-lucide="sparkles"></i>
+            <span class="placeholder-brand">Spa Relax</span>
+            <span class="placeholder-type">Servicio</span>
           </div>
         </div>
         <div class="card-body">
