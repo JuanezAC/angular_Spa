@@ -1,4 +1,5 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServicioService } from '../../services/servicio/servicio-service';
 import Swal from 'sweetalert2';
@@ -7,7 +8,7 @@ import { Servicio } from '../../models/servicio';
 @Component({
   selector: 'app-admin-servicios-crear',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-servicios-crear.html',
   styleUrl: './admin-servicios-crear.css',
 })
@@ -24,7 +25,8 @@ export class AdminServiciosCrear {
     nombre: '',
     descripcion: '',
     duracion: 30,
-    precio: 0
+    precio: 0,
+    imagenUrl: ''
   };
 
   // 🔹 Guardar: valida, llama al servicio, resetea formulario y emite evento
@@ -58,7 +60,8 @@ export class AdminServiciosCrear {
       nombre,
       descripcion,
       duracion,
-      precio
+      precio,
+      imagenUrl: (this.servicioNuevo.imagenUrl || '').trim()
     };
 
     this.servicioService.crear(servicioParaGuardar).subscribe({
@@ -68,7 +71,8 @@ export class AdminServiciosCrear {
           nombre: '',
           descripcion: '',
           duracion: 30,
-          precio: 0
+          precio: 0,
+          imagenUrl: ''
         };
 
         Swal.fire({

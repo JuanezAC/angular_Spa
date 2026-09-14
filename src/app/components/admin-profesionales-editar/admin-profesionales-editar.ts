@@ -25,7 +25,7 @@ export class AdminProfesionalesEditar implements OnChanges, OnInit {
   @Output() profesionalEditado = new EventEmitter<void>();
   @Output() cancelar = new EventEmitter<void>();
 
-  profesionalEditando: Profesional = { nombre: '', especialidad: '', correo: '', telefono: '', estado: false };
+  profesionalEditando: Profesional = { nombre: '', especialidad: '', correo: '', telefono: '', estado: false, imagenUrl: '' };
   serviciosDisponibles: Servicio[] = [];
   serviciosSeleccionados: number[] = [];
 
@@ -88,7 +88,7 @@ export class AdminProfesionalesEditar implements OnChanges, OnInit {
     try {
       // 1. Actualizar datos del profesional
       await firstValueFrom(this.profesionalService.editar(id, {
-        id, nombre, especialidad, correo, telefono, estado: this.profesionalEditando.estado
+        id, nombre, especialidad, correo, telefono, estado: this.profesionalEditando.estado, imagenUrl: (this.profesionalEditando.imagenUrl || '').trim()
       }));
 
       // 2. Sincronizar asignaciones (borrar antiguas + crear nuevas)

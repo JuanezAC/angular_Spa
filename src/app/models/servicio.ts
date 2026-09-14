@@ -4,4 +4,5 @@ export interface Servicio {
     descripcion?: string;
     duracion: number;
     precio: number;
+    imagenUrl?: string;
 }

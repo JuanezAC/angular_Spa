@@ -1,42 +1,58 @@
-<h1>Gestión de Profesionales</h1>
-<div class="acciones-top">
-  <button type="button" (click)="abrirModalCrear()" class="btn-crear">Crear nuevo</button>
-  <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre, especialidad o correo" />
-</div>
-<hr>
-
-<div *ngIf="estado$ | async as estado">
-  <div *ngIf="estado.loading"><p>Cargando...</p></div>
-  <div *ngIf="estado.error" class="error"><p>{{ estado.error }}</p></div>
-  <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0">
-    <p>No hay profesionales registrados.</p>
+<div class="admin-page">
+  <div class="page-header">
+    <h1>Gestión de Profesionales</h1>
+    <div class="header-actions">
+      <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre, especialidad o correo" class="search-input" />
+      <button type="button" (click)="abrirModalCrear()" class="btn btn-primary">
+        <i data-lucide="plus" style="width:16px;height:16px"></i> Crear nuevo
+      </button>
+    </div>
   </div>
 
-  <table *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0" class="tabla-admin">
-    <thead>
-      <tr>
-        <th>ID</th><th>Nombre</th><th>Especialidad</th><th>Correo</th><th>Teléfono</th><th>Estado</th><th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let p of filtrar(estado.data)">
-        <td>{{ p.id }}</td>
-        <td>{{ p.nombre }}</td>
-        <td>{{ p.especialidad }}</td>
-        <td>{{ p.correo }}</td>
-        <td>{{ p.telefono }}</td>
-        <td>
-          <span class="badge" [class.activo]="p.estado" [class.inactivo]="!p.estado">
+  <div *ngIf="estado$ | async as estado">
+    <div *ngIf="estado.loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando profesionales...</p>
+    </div>
+    <div *ngIf="estado.error" class="error-state">
+      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+      <p>{{ estado.error }}</p>
+    </div>
+    <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0" class="empty-state">
+      <i data-lucide="users" style="width:40px;height:40px"></i>
+      <p>No hay profesionales registrados.</p>
+    </div>
+
+    <div class="cards-grid" *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0">
+      <div class="entity-card" *ngFor="let p of filtrar(estado.data)">
+        <div class="card-image">
+          <img *ngIf="p.imagenUrl" [src]="p.imagenUrl" (error)="p.imagenUrl = ''" [alt]="p.nombre" />
+          <div *ngIf="!p.imagenUrl" class="card-image-placeholder">
+            <i data-lucide="user"></i>
+          </div>
+          <span class="card-badge" [class.badge-success]="p.estado" [class.badge-neutral]="!p.estado">
             {{ p.estado ? 'Activo' : 'Inactivo' }}
           </span>
-        </td>
-        <td class="acciones-tabla">
-          <button type="button" (click)="abrirModalEditar(p)" class="btn-editar">Editar</button>
-          <button type="button" (click)="eliminar(p)" class="btn-eliminar">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">{{ p.nombre }}</h3>
+          <p class="card-specialty">{{ p.especialidad }}</p>
+          <div class="card-contact">
+            <span class="contact-item"><i data-lucide="mail" style="width:13px;height:13px"></i> {{ p.correo }}</span>
+            <span class="contact-item"><i data-lucide="phone" style="width:13px;height:13px"></i> {{ p.telefono }}</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button type="button" (click)="abrirModalEditar(p)" class="btn btn-ghost btn-sm">
+            <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
+          </button>
+          <button type="button" (click)="eliminar(p)" class="btn btn-danger btn-sm">
+            <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL CREAR -->

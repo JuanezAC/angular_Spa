@@ -17,6 +17,13 @@
       <label>Precio</label>
       <input name="precio" type="number" [(ngModel)]="servicioNuevo.precio" step="0.01" required />
     </div>
+    <div class="campo">
+      <label>URL de imagen (opcional)</label>
+      <input name="imagenUrl" type="url" [(ngModel)]="servicioNuevo.imagenUrl" placeholder="https://ejemplo.com/imagen.jpg" />
+      <div *ngIf="servicioNuevo.imagenUrl" class="imagen-preview">
+        <img [src]="servicioNuevo.imagenUrl" (error)="servicioNuevo.imagenUrl = ''" alt="Vista previa" />
+      </div>
+    </div>
     <div class="acciones">
       <button type="submit">Guardar</button>
       <button type="button" (click)="cerrar()">Cancelar</button>

@@ -1,4 +1,5 @@
 import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServicioService } from '../../services/servicio/servicio-service';
 import { Servicio } from '../../models/servicio';
@@ -7,7 +8,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-admin-servicios-editar',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-servicios-editar.html',
   styleUrl: './admin-servicios-editar.css'
 })
@@ -27,7 +28,8 @@ export class AdminServiciosEditar implements OnChanges {
     nombre: '',
     descripcion: '',
     duracion: 30,
-    precio: 0
+    precio: 0,
+    imagenUrl: ''
   };
 
   // 🔹 ngOnChanges: Se ejecuta cuando el padre pasa un nuevo servicio
@@ -39,7 +41,8 @@ export class AdminServiciosEditar implements OnChanges {
         nombre: this.servicio.nombre,
         descripcion: this.servicio.descripcion || '',
         duracion: this.servicio.duracion,
-        precio: this.servicio.precio
+        precio: this.servicio.precio,
+        imagenUrl: this.servicio.imagenUrl || ''
       };
     }
   }
@@ -66,7 +69,7 @@ export class AdminServiciosEditar implements OnChanges {
       return;
     }
 
-    const actualizado: Servicio = { id, nombre, descripcion, duracion, precio };
+    const actualizado: Servicio = { id, nombre, descripcion, duracion, precio, imagenUrl: (this.servicioEditando.imagenUrl || '').trim() };
 
     this.servicioService.editar(id, actualizado).subscribe({
       next: () => {

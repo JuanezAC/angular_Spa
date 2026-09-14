@@ -4,6 +4,11 @@
   <div class="campo"><label>Especialidad</label><input name="especialidad" [(ngModel)]="profesionalEditando.especialidad" required /></div>
   <div class="campo"><label>Correo</label><input name="correo" type="email" [(ngModel)]="profesionalEditando.correo" required /></div>
   <div class="campo"><label>Teléfono</label><input name="telefono" [(ngModel)]="profesionalEditando.telefono" pattern="[0-9]+" inputmode="numeric" required (input)="profesionalEditando.telefono = profesionalEditando.telefono.replace(/[^0-9]/g, '')" /></div>
+  <div class="campo"><label>URL de imagen (opcional)</label><input name="imagenUrl" type="url" [(ngModel)]="profesionalEditando.imagenUrl" placeholder="https://ejemplo.com/foto.jpg" />
+    <div *ngIf="profesionalEditando.imagenUrl" class="imagen-preview">
+      <img [src]="profesionalEditando.imagenUrl" (error)="profesionalEditando.imagenUrl = ''" alt="Vista previa" />
+    </div>
+  </div>
   <div class="campo checkbox">
     <label><input type="checkbox" [(ngModel)]="profesionalEditando.estado" name="estado" /> Activo</label>
   </div>

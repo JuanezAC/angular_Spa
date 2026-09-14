@@ -24,7 +24,7 @@ export class AdminProfesionalesCrear implements OnInit {
   @Output() profesionalCreado = new EventEmitter<void>();
   @Output() cancelar = new EventEmitter<void>();
 
-  profesionalNuevo: Profesional = { nombre: '', especialidad: '', correo: '', telefono: '', estado: true };
+  profesionalNuevo: Profesional = { nombre: '', especialidad: '', correo: '', telefono: '', estado: true, imagenUrl: '' };
   serviciosDisponibles: Servicio[] = [];
   serviciosSeleccionados: number[] = [];
 
@@ -76,7 +76,7 @@ export class AdminProfesionalesCrear implements OnInit {
       // ✅ 1. Crear profesional con type assertion para que TypeScript sepa que tiene 'id'
       const creado = await firstValueFrom(
         this.profesionalService.crear({
-          nombre, especialidad, correo, telefono, estado: this.profesionalNuevo.estado
+          nombre, especialidad, correo, telefono, estado: this.profesionalNuevo.estado, imagenUrl: (this.profesionalNuevo.imagenUrl || '').trim()
         })
       ) as { id: number }; // ← AGREGAR ESTO: le dice a TS que la respuesta tiene un 'id: number'
 
@@ -98,7 +98,7 @@ export class AdminProfesionalesCrear implements OnInit {
   }
 
   limpiarFormulario(): void {
-    this.profesionalNuevo = { nombre: '', especialidad: '', correo: '', telefono: '', estado: true };
+    this.profesionalNuevo = { nombre: '', especialidad: '', correo: '', telefono: '', estado: true, imagenUrl: '' };
     this.serviciosSeleccionados = [];
   }
 

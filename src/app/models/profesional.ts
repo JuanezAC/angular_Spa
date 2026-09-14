@@ -9,8 +9,9 @@ export interface Profesional {
     correo: string;
     telefono: string;
     estado: boolean;
+    imagenUrl?: string;
 
     horarios?: HorarioDisponible[];
     citas?: Cita[];
-    servicios?: Servicio[]; // 👈 Tipado estricto (ya no usamos 'any')
+    servicios?: Servicio[];
 }

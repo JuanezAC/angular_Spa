@@ -1,42 +1,59 @@
-<h1>Gestión de Servicios</h1>
-<div class="acciones-top">
-  <!-- 🔹 BOTÓN QUE ABRE MODAL CREAR -->
-  <button type="button" (click)="abrirModalCrear()" class="btn-crear">Crear nuevo</button>
-  <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre o descripción" />
-</div>
-<hr>
-
-<div *ngIf="estado$ | async as estado">
-  <div *ngIf="estado.loading"><p>Cargando...</p></div>
-  <div *ngIf="estado.error" class="error"><p>{{ estado.error }}</p></div>
-
-  <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0">
-    <p>No hay servicios registrados.</p>
+<div class="admin-page">
+  <div class="page-header">
+    <h1>Gestión de Servicios</h1>
+    <div class="header-actions">
+      <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre o descripción" class="search-input" />
+      <button type="button" (click)="abrirModalCrear()" class="btn btn-primary">
+        <i data-lucide="plus" style="width:16px;height:16px"></i> Crear nuevo
+      </button>
+    </div>
   </div>
 
-  <table *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0" class="tabla-admin">
-    <thead>
-      <tr>
-        <th>ID</th><th>Nombre</th><th>Descripción</th><th>Duración</th><th>Precio</th><th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let s of filtrar(estado.data)">
-        <td>{{ s.id }}</td>
-        <td>{{ s.nombre }}</td>
-        <td>{{ s.descripcion || '-' }}</td>
-        <td>{{ s.duracion }} min</td>
-        <td>${{ s.precio | number:'1.2-2' }}</td>
-        <td class="acciones-tabla">
-          <button type="button" (click)="abrirModalEditar(s)" class="btn-editar">Editar</button>
-          <button type="button" (click)="eliminar(s)" class="btn-eliminar">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="estado$ | async as estado">
+    <div *ngIf="estado.loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando servicios...</p>
+    </div>
+    <div *ngIf="estado.error" class="error-state">
+      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+      <p>{{ estado.error }}</p>
+    </div>
+
+    <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0" class="empty-state">
+      <i data-lucide="sparkles" style="width:40px;height:40px"></i>
+      <p>No hay servicios registrados.</p>
+    </div>
+
+    <div class="cards-grid" *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length > 0">
+      <div class="entity-card" *ngFor="let s of filtrar(estado.data)">
+        <div class="card-image">
+          <img *ngIf="s.imagenUrl" [src]="s.imagenUrl" (error)="s.imagenUrl = ''" [alt]="s.nombre" />
+          <div *ngIf="!s.imagenUrl" class="card-image-placeholder">
+            <i data-lucide="sparkles"></i>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">{{ s.nombre }}</h3>
+          <p class="card-text">{{ s.descripcion || 'Sin descripción' }}</p>
+          <div class="card-meta">
+            <span class="meta-item"><i data-lucide="clock" style="width:14px;height:14px"></i> {{ s.duracion }} min</span>
+            <span class="meta-item price">${{ s.precio | number:'1.2-2' }}</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button type="button" (click)="abrirModalEditar(s)" class="btn btn-ghost btn-sm">
+            <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
+          </button>
+          <button type="button" (click)="eliminar(s)" class="btn btn-danger btn-sm">
+            <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- 🔹 MODAL CREAR (con componente hijo) -->
+<!-- MODAL CREAR -->
 <div *ngIf="modalCrearAbierto" class="overlay" (click)="cerrarModalCrear()">
   <div class="modal" (click)="$event.stopPropagation()">
     <app-admin-servicios-crear
@@ -46,7 +63,7 @@
   </div>
 </div>
 
-<!-- 🔹 MODAL EDITAR (con componente hijo) -->
+<!-- MODAL EDITAR -->
 <div *ngIf="modalEditarAbierto" class="overlay" (click)="cerrarModalEditar()">
   <div class="modal" (click)="$event.stopPropagation()">
     <app-admin-servicios-editar
