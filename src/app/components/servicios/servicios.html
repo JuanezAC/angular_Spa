@@ -1,47 +1,59 @@
-<h1>Lista de servicios</h1>
-<hr>
-
-<div class="filtro">
-  <input 
-    type="text" 
-    [(ngModel)]="textoFiltro" 
-    placeholder="Buscar por nombre o descripción" 
-  />
-</div>
-
-<div *ngIf="estado$ | async as estado">
-  
-  <div *ngIf="estado.loading">
-    <p>Cargando servicios...</p>
-  </div>
-  
-  <div *ngIf="estado.error" class="error">
-    <p>{{ estado.error }}</p>
+<div class="public-page">
+  <div class="page-header">
+    <h1>Nuestros Servicios</h1>
+    <p class="page-subtitle">Descubre la variedad de tratamientos que ofrecemos para tu bienestar</p>
   </div>
 
-  <div *ngIf="!estado.loading && !estado.error && filtrarServicios(estado.data).length === 0">
-    <p>No hay servicios disponibles para mostrar.</p>
+  <div class="filtro">
+    <div class="search-wrapper">
+      <i data-lucide="search" class="search-icon"></i>
+      <input
+        type="text"
+        [(ngModel)]="textoFiltro"
+        placeholder="Buscar por nombre o descripcion"
+        class="search-input"
+      />
+    </div>
   </div>
 
-  <!-- TABLA HORIZONTAL -->
-  <div *ngIf="!estado.loading && !estado.error && filtrarServicios(estado.data).length > 0">
-    <table class="tabla-servicios">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Duración</th>
-          <th>Precio</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let servicio of filtrarServicios(estado.data)">
-          <td>{{ servicio.nombre }}</td>
-          <td>{{ servicio.descripcion || 'Sin descripción' }}</td>
-          <td>{{ servicio.duracion }} min</td>
-          <td>COP ${{ servicio.precio | number:'1.2-2' }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div *ngIf="estado$ | async as estado">
+    <div *ngIf="estado.loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando servicios...</p>
+    </div>
+
+    <div *ngIf="estado.error" class="error-state">
+      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+      <p>{{ estado.error }}</p>
+    </div>
+
+    <div *ngIf="!estado.loading && !estado.error && filtrarServicios(estado.data).length === 0" class="empty-state">
+      <i data-lucide="sparkles" style="width:40px;height:40px"></i>
+      <p>No hay servicios disponibles para mostrar.</p>
+    </div>
+
+    <div class="cards-grid" *ngIf="!estado.loading && !estado.error && filtrarServicios(estado.data).length > 0">
+      <div class="service-card" *ngFor="let servicio of filtrarServicios(estado.data)">
+        <div class="card-image">
+          <img *ngIf="servicio.imagenUrl" [src]="servicio.imagenUrl" (error)="servicio.imagenUrl = ''" [alt]="servicio.nombre" />
+          <div *ngIf="!servicio.imagenUrl" class="card-image-placeholder">
+            <i data-lucide="sparkles"></i>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">{{ servicio.nombre }}</h3>
+          <p class="card-description">{{ servicio.descripcion || 'Sin descripcion disponible' }}</p>
+          <div class="card-details">
+            <div class="detail-item">
+              <i data-lucide="clock" style="width:16px;height:16px"></i>
+              <span>{{ servicio.duracion }} min</span>
+            </div>
+            <div class="detail-item price">
+              <span>COP ${{ servicio.precio | number:'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
