@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
@@ -25,6 +25,7 @@ const _origSwalFire = Swal.fire.bind(Swal);
 })
 export class App implements OnInit, OnDestroy {
   private router = inject(Router);
+  private ngZone = inject(NgZone);
   private sesionService = inject(SesionService);
   private eventosService = inject(EventosService);
   private lucideService = inject(LucideService);
@@ -38,13 +39,15 @@ export class App implements OnInit, OnDestroy {
     this.eventosService.conectar();
     this.lucideService.init();
 
+    this.esHome = this.router.url === '/' || this.router.url === '';
+
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event) => {
-      this.esHome = event.urlAfterRedirects === '/';
+      this.ngZone.run(() => {
+        this.esHome = event.urlAfterRedirects === '/';
+      });
     });
-
-    this.esHome = this.router.url === '/';
   }
 
   ngOnDestroy(): void {
