@@ -1,17 +1,1 @@
-/* Admin usuarios - enhanced error state */
-.error-state {
-  background: var(--color-error-bg);
-  border-radius: var(--radius-lg);
-  padding: var(--space-2xl);
-}
-
-.error-state p {
-  color: var(--color-error);
-  font-weight: 600;
-}
-
-@media (max-width: 768px) {
-  .error-state {
-    padding: var(--space-lg);
-  }
-}
+/* Admin usuarios (duplicates now in global styles.css) */

@@ -36,7 +36,7 @@ header {
 
 .brand-text {
   font-family: var(--font-heading);
-  color: #e8e4dc;
+  color: var(--color-on-dark-muted);
   font-size: 1.35rem;
   font-weight: 600;
   letter-spacing: 0.3px;
@@ -57,14 +57,14 @@ header {
 }
 
 .hamburger:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-surface-10);
 }
 
 .barra {
   display: block;
   width: 22px;
   height: 2.5px;
-  background-color: #e8e4dc;
+  background-color: var(--color-on-dark-muted);
   border-radius: 2px;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
@@ -87,7 +87,7 @@ header {
 }
 
 .nav-links a {
-  color: #c5c0b8;
+  color: var(--color-on-dark-text);
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -98,18 +98,18 @@ header {
 }
 
 .nav-links a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background-color: var(--color-surface-10);
+  color: var(--color-on-dark);
 }
 
 .nav-links a.activo {
-  background-color: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
+  background-color: var(--color-surface-14);
+  color: var(--color-on-dark);
   font-weight: 600;
 }
 
 .separador {
-  color: rgba(255, 255, 255, 0.2);
+  color: var(--color-surface-20);
   user-select: none;
   margin: 0 6px;
   font-size: 0.85rem;
@@ -122,11 +122,11 @@ header {
   gap: 12px;
   margin-left: 12px;
   padding-left: 16px;
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid var(--color-surface-12);
 }
 
 .user-name {
-  color: #d4cfc6;
+  color: var(--color-on-dark-subtle);
   font-weight: 500;
   font-size: 0.88rem;
   white-space: nowrap;
@@ -134,8 +134,8 @@ header {
 
 .btn-logout {
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #c5c0b8;
+  border: 1px solid var(--color-surface-20);
+  color: var(--color-on-dark-text);
   padding: 7px 16px;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -147,9 +147,9 @@ header {
 }
 
 .btn-logout:hover {
-  background-color: rgba(192, 57, 43, 0.2);
-  border-color: rgba(192, 57, 43, 0.4);
-  color: #f5a9a0;
+  background-color: var(--color-error-subtle-bg);
+  border-color: var(--color-error-subtle-border);
+  color: var(--color-error-light);
 }
 
 /* ---------- Main ---------- */
@@ -202,7 +202,7 @@ main {
     padding: 14px 24px;
     font-size: 1rem;
     border-radius: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid var(--color-surface-6);
   }
 
   .separador.desktop-only {
@@ -216,13 +216,13 @@ main {
     margin-left: 0;
     padding: 12px 24px;
     border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--color-surface-10);
     margin-top: 8px;
   }
 
   .user-name {
     padding: 8px 0;
-    color: #94a396;
+    color: var(--color-text-light);
     font-size: 0.85rem;
   }
 
@@ -230,7 +230,7 @@ main {
     margin-left: 0;
     width: 100%;
     text-align: center;
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: var(--color-surface-12);
     padding: 12px;
   }
 
@@ -242,7 +242,7 @@ main {
     left: 280px;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.45);
+    background: var(--color-overlay-dark);
     z-index: -1;
   }
 }

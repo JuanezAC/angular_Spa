@@ -1,15 +1,3 @@
-/* Admin citas - enhanced error state */
-.error-state {
-  background: var(--color-error-bg);
-  border-radius: var(--radius-lg);
-  padding: var(--space-2xl);
-}
-
-.error-state p {
-  color: var(--color-error);
-  font-weight: 600;
-}
-
 /* Admin citas - header layout (no button) */
 .admin-page .header-actions {
   justify-content: flex-start;
@@ -18,10 +6,4 @@
 /* Badge in card */
 .card-badge .badge {
   display: inline-flex;
-}
-
-@media (max-width: 768px) {
-  .error-state {
-    padding: var(--space-lg);
-  }
 }

@@ -1,10 +1,1 @@
-/* Horarios form - responsive */
-@media (max-width: 540px) {
-  .form-actions {
-    flex-direction: column-reverse;
-  }
-
-  .form-actions .btn {
-    width: 100%;
-  }
-}
+/* Horarios form - unique styles (duplicates now in global styles.css) */

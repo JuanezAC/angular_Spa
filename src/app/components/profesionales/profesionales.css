@@ -43,7 +43,7 @@
   justify-content: center;
   gap: 8px;
   background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-surface-90);
 }
 
 .card-image-placeholder i {
