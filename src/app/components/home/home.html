@@ -25,14 +25,16 @@
 
     <div class="hero-right">
       <div class="hero-carousel">
-        <div class="carousel-track">
-          <img
-            *ngFor="let img of carouselImages; let i = index"
-            [src]="img"
-            alt="Spa Relax"
-            class="carousel-slide"
-            [class.active]="i === carouselIndex"
-          />
+        <div class="carousel-viewport">
+          <div class="carousel-track">
+            <img
+              *ngFor="let img of carouselImages; let i = index"
+              [src]="img"
+              alt="Spa Relax"
+              class="carousel-slide"
+              [ngStyle]="getSlideStyle(i)"
+            />
+          </div>
         </div>
         <button type="button" class="carousel-btn carousel-prev" (click)="prev()" aria-label="Anterior">
           <i data-lucide="chevron-left"></i>
@@ -40,16 +42,6 @@
         <button type="button" class="carousel-btn carousel-next" (click)="next()" aria-label="Siguiente">
           <i data-lucide="chevron-right"></i>
         </button>
-        <div class="carousel-dots">
-          <button
-            *ngFor="let img of carouselImages; let i = index"
-            type="button"
-            class="carousel-dot"
-            [class.active]="i === carouselIndex"
-            (click)="goTo(i)"
-            [attr.aria-label]="'Imagen ' + (i + 1)">
-          </button>
-        </div>
       </div>
     </div>
   </div>

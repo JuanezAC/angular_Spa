@@ -117,7 +117,7 @@
   color: #ffffff;
 }
 
-/* ---------- Hero Right — Carousel ---------- */
+/* ---------- Hero Right — Coverflow Carousel ---------- */
 .hero-right {
   display: flex;
   justify-content: center;
@@ -128,30 +128,31 @@
   position: relative;
   width: 100%;
   max-width: 480px;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-xl);
+}
+
+.carousel-viewport {
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 20px 0;
 }
 
 .carousel-track {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carousel-slide {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  width: 55%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
-
-.carousel-slide.active {
-  opacity: 1;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+  will-change: transform, opacity;
 }
 
 .carousel-btn {
@@ -170,7 +171,7 @@
   align-items: center;
   justify-content: center;
   transition: all var(--transition-fast);
-  z-index: 2;
+  z-index: 20;
 }
 
 .carousel-btn:hover {
@@ -184,37 +185,11 @@
 }
 
 .carousel-prev {
-  left: 12px;
+  left: -16px;
 }
 
 .carousel-next {
-  right: 12px;
-}
-
-.carousel-dots {
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 2;
-}
-
-.carousel-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.4);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: all var(--transition-fast);
-}
-
-.carousel-dot.active {
-  background: #ffffff;
-  width: 24px;
+  right: -16px;
 }
 
 /* ---------- Features ---------- */
@@ -425,14 +400,12 @@
     height: 120px;
   }
 
-  .hero-logo-wrapper {
-    padding: var(--space-md) var(--space-lg);
+  .carousel-track {
+    height: 220px;
   }
 
-  .hero-carousel {
-    max-width: 100%;
-    aspect-ratio: 16 / 10;
-    border-radius: var(--radius-lg);
+  .carousel-slide {
+    width: 60%;
   }
 
   .carousel-btn {
@@ -444,6 +417,14 @@
   .carousel-btn :global(svg) {
     width: 16px;
     height: 16px;
+  }
+
+  .carousel-prev {
+    left: -8px;
+  }
+
+  .carousel-next {
+    right: -8px;
   }
 
   .features-grid {

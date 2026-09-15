@@ -29,9 +29,7 @@ export class Home implements OnInit, OnDestroy {
   }
 
   startAutoplay(): void {
-    this.autoplayTimer = setInterval(() => {
-      this.next();
-    }, 5000);
+    this.autoplayTimer = setInterval(() => this.next(), 4000);
   }
 
   stopAutoplay(): void {
@@ -49,9 +47,29 @@ export class Home implements OnInit, OnDestroy {
     this.carouselIndex = (this.carouselIndex - 1 + this.carouselImages.length) % this.carouselImages.length;
   }
 
-  goTo(index: number): void {
-    this.carouselIndex = index;
-    this.stopAutoplay();
-    this.startAutoplay();
+  getSlideStyle(i: number): { [klass: string]: any } {
+    const total = this.carouselImages.length;
+    let offset = i - this.carouselIndex;
+
+    if (offset > Math.floor(total / 2)) offset -= total;
+    if (offset < -Math.floor(total / 2)) offset += total;
+
+    const absOffset = Math.abs(offset);
+    const isVisible = absOffset <= 1;
+
+    if (!isVisible) {
+      return { opacity: 0, transform: `translateX(${offset > 0 ? 120 : -120}%) scale(0.7)`, zIndex: 0, pointerEvents: 'none' as const };
+    }
+
+    const scale = offset === 0 ? 1 : 0.78;
+    const translateX = offset * 42;
+    const zIndex = 10 - absOffset;
+    const opacity = offset === 0 ? 1 : 0.7;
+
+    return {
+      transform: `translateX(${translateX}%) scale(${scale})`,
+      zIndex,
+      opacity
+    };
   }
 }
