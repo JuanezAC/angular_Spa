@@ -1420,3 +1420,8 @@ img {
     padding: 0 var(--space-lg) var(--space-lg);
   }
 }
+
+/* ---------- SweetAlert2 above modals ---------- */
+.swal2-container {
+  z-index: 10000 !important;
+}
