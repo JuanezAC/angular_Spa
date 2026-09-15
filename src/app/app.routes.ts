@@ -3,6 +3,8 @@ import { Routes } from '@angular/router';
 import { Home } from './components/home/home';
 import { Login } from './components/login/login';
 import { Registro } from './components/registro/registro';
+import { SinPermisos } from './components/sin-permisos/sin-permisos';
+import { authGuard, adminGuard } from './guards/auth.guard';
 
 // USUARIO
 import { Servicios } from './components/servicios/servicios';
@@ -20,29 +22,31 @@ import { AdminServiciosEditar } from './components/admin-servicios-editar/admin-
 import { AdminServiciosCrear } from './components/admin-servicios-crear/admin-servicios-crear';
 import { AdminProfesionalesEditar } from './components/admin-profesionales-editar/admin-profesionales-editar';
 import { AdminProfesionalesCrear } from './components/admin-profesionales-crear/admin-profesionales-crear';
-import { SinPermisos } from './components/sin-permisos/sin-permisos';
 
 export const routes: Routes = [
   { path: '', component: Home },
 
-  // USUARIO
+  // PUBLIC
   { path: 'login', component: Login },
   { path: 'registro', component: Registro },
+  { path: 'sin-permisos', component: SinPermisos },
+
+  // USER (auth required)
   { path: 'servicios', component: Servicios },
   { path: 'profesionales', component: Profesionales },
   { path: 'horarios', component: Horarios },
-  { path: 'mis-citas', component: MisCitas },
+  { path: 'mis-citas', component: MisCitas, canActivate: [authGuard] },
 
-  // ADMIN
-  { path: 'admin/servicios', component: AdminServicios },
-  { path: 'admin/servicios/crear', component: AdminServiciosCrear },
-  { path: 'admin/servicios/editar/:id', component: AdminServiciosEditar },
-  { path: 'admin/profesionales/crear', component: AdminProfesionalesCrear }, // Opcional si solo usas modal
-  { path: 'admin/profesionales/editar/:id', component: AdminProfesionalesEditar }, // Opcional si solo usas modal
-  { path: 'admin/profesionales', component: AdminProfesionales },
-  { path: 'admin/horarios', component: AdminHorarios },
-  { path: 'admin/citas', component: AdminCitas },
-  { path: 'admin/usuarios', component: AdminUsuarios },
-  { path: 'sin-permisos', component: SinPermisos },
+  // ADMIN (admin role required)
+  { path: 'admin/servicios', component: AdminServicios, canActivate: [adminGuard] },
+  { path: 'admin/servicios/crear', component: AdminServiciosCrear, canActivate: [adminGuard] },
+  { path: 'admin/servicios/editar/:id', component: AdminServiciosEditar, canActivate: [adminGuard] },
+  { path: 'admin/profesionales', component: AdminProfesionales, canActivate: [adminGuard] },
+  { path: 'admin/profesionales/crear', component: AdminProfesionalesCrear, canActivate: [adminGuard] },
+  { path: 'admin/profesionales/editar/:id', component: AdminProfesionalesEditar, canActivate: [adminGuard] },
+  { path: 'admin/horarios', component: AdminHorarios, canActivate: [adminGuard] },
+  { path: 'admin/citas', component: AdminCitas, canActivate: [adminGuard] },
+  { path: 'admin/usuarios', component: AdminUsuarios, canActivate: [adminGuard] },
+
   { path: '**', redirectTo: '' }
 ];
