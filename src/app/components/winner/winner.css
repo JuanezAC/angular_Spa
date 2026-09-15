@@ -1,0 +1,120 @@
+.winner-page {
+  min-height: calc(100vh - var(--navbar-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl) var(--space-lg);
+  background: linear-gradient(160deg, var(--color-background) 0%, var(--color-secondary-light) 50%, var(--color-background) 100%);
+}
+
+.winner-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-3xl) var(--space-2xl);
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  animation: winnerFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes winnerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.winner-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-lg);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  animation: winnerPulse 2s ease-in-out infinite;
+}
+
+.winner-icon :global(i),
+.winner-icon :global(svg) {
+  width: 40px;
+  height: 40px;
+}
+
+.winner-icon-error {
+  background: linear-gradient(135deg, var(--color-text-secondary) 0%, var(--color-text-light) 100%);
+  animation: none;
+}
+
+@keyframes winnerPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74, 114, 86, 0.3); }
+  50% { box-shadow: 0 0 0 12px rgba(74, 114, 86, 0); }
+}
+
+.winner-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  background: var(--color-success-bg);
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-lg);
+}
+
+.winner-not-found .winner-badge {
+  display: none;
+}
+
+.winner-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.winner-subtitle {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  font-weight: 500;
+  margin-bottom: var(--space-lg);
+}
+
+.winner-message {
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 400px;
+  margin: 0 auto var(--space-lg);
+}
+
+.winner-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-lg);
+}
+
+.winner-footer-text {
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-bottom: var(--space-xl);
+}
+
+.winner-btn {
+  text-decoration: none;
+}
