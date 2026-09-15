@@ -5,9 +5,9 @@
 /* ---------- CSS Variables ---------- */
 :root {
   /* Colors */
-  --color-primary: #6F8068;
-  --color-primary-dark: #35483B;
-  --color-primary-light: #8a9e82;
+  --color-primary: #6B7D3A;
+  --color-primary-dark: #4A5728;
+  --color-primary-light: #8BA05A;
   --color-background: #F7F3EA;
   --color-surface: #FFFFFF;
   --color-secondary: #E8DDCC;
@@ -20,12 +20,12 @@
   --color-border-light: #ece7dd;
   --color-error: #c0392b;
   --color-error-bg: #fdf2f2;
-  --color-success: #6F8068;
-  --color-success-bg: #f0f5ee;
+  --color-success: #6B7D3A;
+  --color-success-bg: #f0f3ea;
   --color-warning: #B99A63;
   --color-warning-bg: #faf6ed;
   --color-warning-text: #8a7040;
-  --color-active: #48a369;
+  --color-active: #5C8A3C;
 
   /* Dark theme (navbar, footer, hero) */
   --color-on-dark: #ffffff;
@@ -35,13 +35,13 @@
   --color-on-dark-faint: #b0aaa0;
   --color-on-dark-faintest: #a09a90;
   --color-on-dark-dim: #7a756c;
-  --color-dark-mid: #2a4435;
-  --color-dark-deep: #1e3528;
+  --color-dark-mid: #2D3A1C;
+  --color-dark-deep: #1E2812;
   --color-error-light: #f5a9a0;
 
   /* Primary tints */
-  --color-primary-tint-4: rgba(111, 128, 104, 0.04);
-  --color-primary-tint-12: rgba(111, 128, 104, 0.12);
+  --color-primary-tint-4: rgba(107, 125, 58, 0.04);
+  --color-primary-tint-12: rgba(107, 125, 58, 0.12);
 
   /* Surface tints (for dark bg) */
   --color-surface-6: rgba(255, 255, 255, 0.06);
@@ -60,8 +60,8 @@
   /* Overlay / Badge tints */
   --overlay-bg: rgba(41, 53, 45, 0.5);
   --color-preview-label-bg: rgba(41, 53, 45, 0.7);
-  --color-active-bg: rgba(72, 163, 105, 0.15);
-  --color-active-border: rgba(72, 163, 105, 0.25);
+  --color-active-bg: rgba(92, 138, 60, 0.15);
+  --color-active-border: rgba(92, 138, 60, 0.25);
   --color-inactive-bg: rgba(220, 38, 38, 0.1);
   --color-inactive-border: rgba(220, 38, 38, 0.2);
   --color-error-subtle-bg: rgba(192, 57, 43, 0.2);
@@ -106,7 +106,7 @@
   --max-width: 1200px;
 
   /* Focus / Interactive */
-  --focus-shadow: 0 0 0 3px rgba(111, 128, 104, 0.15);
+  --focus-shadow: 0 0 0 3px rgba(107, 125, 58, 0.15);
 }
 
 /* ---------- Reset & Base ---------- */
