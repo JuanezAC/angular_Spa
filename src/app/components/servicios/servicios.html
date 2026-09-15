@@ -23,12 +23,12 @@
     </div>
 
     <div *ngIf="estado.error" class="error-state">
-      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+      <i data-lucide="alert-circle"></i>
       <p>{{ estado.error }}</p>
     </div>
 
     <div *ngIf="!estado.loading && !estado.error && filtrarServicios(estado.data).length === 0" class="empty-state">
-      <i data-lucide="sparkles" style="width:40px;height:40px"></i>
+      <i data-lucide="sparkles"></i>
       <p>No hay servicios disponibles para mostrar.</p>
     </div>
 
@@ -47,7 +47,7 @@
           <p class="card-description">{{ servicio.descripcion || 'Sin descripcion disponible' }}</p>
           <div class="card-details">
             <div class="detail-item">
-              <i data-lucide="clock" style="width:16px;height:16px"></i>
+              <i data-lucide="clock"></i>
               <span>{{ servicio.duracion }} min</span>
             </div>
             <div class="detail-item price">

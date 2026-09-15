@@ -1,10 +1,10 @@
 <div class="admin-page">
   <div class="page-header">
-    <h1>Gestión de Horarios</h1>
+    <h1>GestiÃ³n de Horarios</h1>
     <div class="header-actions">
       <input [(ngModel)]="textoFiltro" placeholder="Buscar por fecha, hora o profesional" class="search-input" />
       <button type="button" (click)="abrirModalCrear()" class="btn btn-primary">
-        <i data-lucide="plus" style="width:16px;height:16px"></i> Crear nuevo
+        <i data-lucide="plus"></i> Crear nuevo
       </button>
     </div>
   </div>
@@ -15,11 +15,11 @@
       <p>Cargando horarios...</p>
     </div>
     <div *ngIf="estado.error" class="error-state">
-      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+      <i data-lucide="alert-circle"></i>
       <p>{{ estado.error }}</p>
     </div>
     <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0" class="empty-state">
-      <i data-lucide="calendar-clock" style="width:40px;height:40px"></i>
+      <i data-lucide="calendar-clock"></i>
       <p>No hay horarios registrados.</p>
     </div>
 
@@ -27,7 +27,7 @@
       <div class="entity-card" *ngFor="let h of filtrar(estado.data)">
         <div class="card-header">
           <div class="card-header-icon">
-            <i data-lucide="calendar" style="width:20px;height:20px"></i>
+            <i data-lucide="calendar"></i>
           </div>
           <span class="card-badge" [class.badge-success]="h.disponible" [class.badge-neutral]="!h.disponible">
             {{ h.disponible ? 'Disponible' : 'No disponible' }}
@@ -36,26 +36,26 @@
         <div class="card-body">
           <h3 class="card-title">{{ h.fecha }}</h3>
           <p class="card-time">
-            <i data-lucide="clock" style="width:16px;height:16px"></i>
+            <i data-lucide="clock"></i>
             {{ h.hora }}
           </p>
           <div class="card-info">
             <div class="info-row">
-              <i data-lucide="user" style="width:14px;height:14px"></i>
+              <i data-lucide="user"></i>
               <span>{{ h.profesional.nombre || 'N/A' }}</span>
             </div>
             <div class="info-row">
-              <i data-lucide="briefcase" style="width:14px;height:14px"></i>
+              <i data-lucide="briefcase"></i>
               <span>{{ h.profesional.especialidad || 'N/A' }}</span>
             </div>
           </div>
         </div>
         <div class="card-actions">
           <button type="button" (click)="abrirModalEditar(h)" class="btn btn-ghost btn-sm">
-            <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
+            <i data-lucide="pencil"></i> Editar
           </button>
           <button type="button" (click)="eliminar(h)" class="btn btn-danger btn-sm">
-            <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
+            <i data-lucide="trash-2"></i> Eliminar
           </button>
         </div>
       </div>

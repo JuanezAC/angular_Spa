@@ -23,12 +23,12 @@
     </div>
 
     <div *ngIf="estado.error" class="error-state">
-      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+      <i data-lucide="alert-circle"></i>
       <p>{{ estado.error }}</p>
     </div>
 
     <div *ngIf="!estado.loading && !estado.error && filtrarHorarios(estado.data).length === 0" class="empty-state">
-      <i data-lucide="calendar-x" style="width:40px;height:40px"></i>
+      <i data-lucide="calendar-x"></i>
       <p>No hay horarios disponibles para mostrar.</p>
     </div>
 
@@ -36,11 +36,11 @@
       <div class="schedule-card" *ngFor="let horario of filtrarHorarios(estado.data)">
         <div class="card-top">
           <div class="card-date">
-            <i data-lucide="calendar" style="width:18px;height:18px"></i>
+            <i data-lucide="calendar"></i>
             <span>{{ horario.fecha }}</span>
           </div>
           <div class="card-time-badge">
-            <i data-lucide="clock" style="width:14px;height:14px"></i>
+            <i data-lucide="clock"></i>
             <span>{{ horario.hora }}</span>
           </div>
         </div>
@@ -91,7 +91,7 @@
             type="button"
             (click)="reservar(horario)"
             class="btn btn-primary btn-reserve">
-            <i data-lucide="calendar-check" style="width:16px;height:16px"></i>
+            <i data-lucide="calendar-check"></i>
             Reservar
           </button>
         </div>

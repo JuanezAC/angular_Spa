@@ -256,6 +256,73 @@ img {
   flex-shrink: 0;
 }
 
+.btn-sm svg,
+.btn-sm i[data-lucide] {
+  width: 14px;
+  height: 14px;
+}
+
+.btn-lg svg,
+.btn-lg i[data-lucide] {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Icon Sizes by Context ---------- */
+.info-row i {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.card-time-badge i {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.meta-item i {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.card-contact .contact-item i {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.card-date i {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.card-time i {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.error-state i {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.empty-state i {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.image-preview-placeholder i {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
 /* ---------- Cards ---------- */
 .card {
   background: var(--color-surface);

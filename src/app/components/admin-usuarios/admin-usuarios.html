@@ -10,7 +10,7 @@
         placeholder="Buscar por nombre, correo o rol"
       />
       <button type="button" (click)="abrirModalCrear()" class="btn btn-primary btn-sm">
-        <i data-lucide="plus" style="width:16px;height:16px"></i> Crear usuario
+        <i data-lucide="plus"></i> Crear usuario
       </button>
     </div>
   </div>
@@ -23,10 +23,12 @@
     </div>
 
     <div *ngIf="estado.error" class="error-state">
+      <i data-lucide="alert-circle"></i>
       <p>{{ estado.error }}</p>
     </div>
 
     <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0" class="empty-state">
+      <i data-lucide="users"></i>
       <p>No hay usuarios registrados.</p>
     </div>
 
@@ -60,10 +62,10 @@
             <td>{{ usuario.fechaRegistro | date:'dd/MM/yyyy' }}</td>
             <td class="table-actions">
               <button type="button" (click)="abrirModalEditar(usuario)" class="btn btn-ghost btn-sm">
-                <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
+                <i data-lucide="pencil"></i> Editar
               </button>
               <button type="button" (click)="eliminar(usuario)" class="btn btn-danger btn-sm">
-                <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
+                <i data-lucide="trash-2"></i> Eliminar
               </button>
             </td>
           </tr>
@@ -90,25 +92,25 @@
 
             <div class="card-info">
               <div class="info-row">
-                <i data-lucide="user" style="width:14px;height:14px"></i>
+                <i data-lucide="user"></i>
                 <span>{{ usuario.nombre }}</span>
               </div>
               <div class="info-row">
-                <i data-lucide="mail" style="width:14px;height:14px"></i>
+                <i data-lucide="mail"></i>
                 <span>{{ usuario.correo }}</span>
               </div>
               <div class="info-row">
-                <i data-lucide="calendar" style="width:14px;height:14px"></i>
+                <i data-lucide="calendar"></i>
                 <span>{{ usuario.fechaRegistro | date:'dd/MM/yyyy' }}</span>
               </div>
             </div>
           </div>
           <div class="card-actions">
             <button type="button" (click)="abrirModalEditar(usuario)" class="btn btn-ghost btn-sm">
-              <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
+              <i data-lucide="pencil"></i> Editar
             </button>
             <button type="button" (click)="eliminar(usuario)" class="btn btn-danger btn-sm">
-              <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
+              <i data-lucide="trash-2"></i> Eliminar
             </button>
           </div>
         </div>

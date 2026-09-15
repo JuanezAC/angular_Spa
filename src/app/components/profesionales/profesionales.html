@@ -23,12 +23,12 @@
     </div>
 
     <div *ngIf="estado.error" class="error-state">
-      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+      <i data-lucide="alert-circle"></i>
       <p>{{ estado.error }}</p>
     </div>
 
     <div *ngIf="!estado.loading && !estado.error && filtrarProfesionales(estado.data).length === 0" class="empty-state">
-      <i data-lucide="users" style="width:40px;height:40px"></i>
+      <i data-lucide="users"></i>
       <p>No hay profesionales disponibles para mostrar.</p>
     </div>
 

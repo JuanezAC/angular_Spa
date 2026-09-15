@@ -1,10 +1,10 @@
 <div class="admin-page">
   <div class="page-header">
-    <h1>Gestión de Profesionales</h1>
+    <h1>GestiÃ³n de Profesionales</h1>
     <div class="header-actions">
       <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre, especialidad o correo" class="search-input" />
       <button type="button" (click)="abrirModalCrear()" class="btn btn-primary">
-        <i data-lucide="plus" style="width:16px;height:16px"></i> Crear nuevo
+        <i data-lucide="plus"></i> Crear nuevo
       </button>
     </div>
   </div>
@@ -15,11 +15,11 @@
       <p>Cargando profesionales...</p>
     </div>
     <div *ngIf="estado.error" class="error-state">
-      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+      <i data-lucide="alert-circle"></i>
       <p>{{ estado.error }}</p>
     </div>
     <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0" class="empty-state">
-      <i data-lucide="users" style="width:40px;height:40px"></i>
+      <i data-lucide="users"></i>
       <p>No hay profesionales registrados.</p>
     </div>
 
@@ -38,16 +38,16 @@
           <h3 class="card-title">{{ p.nombre }}</h3>
           <p class="card-specialty">{{ p.especialidad }}</p>
           <div class="card-contact">
-            <span class="contact-item"><i data-lucide="mail" style="width:13px;height:13px"></i> {{ p.correo }}</span>
-            <span class="contact-item"><i data-lucide="phone" style="width:13px;height:13px"></i> {{ p.telefono }}</span>
+            <span class="contact-item"><i data-lucide="mail"></i> {{ p.correo }}</span>
+            <span class="contact-item"><i data-lucide="phone"></i> {{ p.telefono }}</span>
           </div>
         </div>
         <div class="card-actions">
           <button type="button" (click)="abrirModalEditar(p)" class="btn btn-ghost btn-sm">
-            <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
+            <i data-lucide="pencil"></i> Editar
           </button>
           <button type="button" (click)="eliminar(p)" class="btn btn-danger btn-sm">
-            <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
+            <i data-lucide="trash-2"></i> Eliminar
           </button>
         </div>
       </div>

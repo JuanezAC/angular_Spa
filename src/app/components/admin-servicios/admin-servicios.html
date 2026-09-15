@@ -1,10 +1,10 @@
 <div class="admin-page">
   <div class="page-header">
-    <h1>Gestión de Servicios</h1>
+    <h1>GestiÃ³n de Servicios</h1>
     <div class="header-actions">
-      <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre o descripción" class="search-input" />
+      <input [(ngModel)]="textoFiltro" placeholder="Buscar por nombre o descripciÃ³n" class="search-input" />
       <button type="button" (click)="abrirModalCrear()" class="btn btn-primary">
-        <i data-lucide="plus" style="width:16px;height:16px"></i> Crear nuevo
+        <i data-lucide="plus"></i> Crear nuevo
       </button>
     </div>
   </div>
@@ -15,12 +15,12 @@
       <p>Cargando servicios...</p>
     </div>
     <div *ngIf="estado.error" class="error-state">
-      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+      <i data-lucide="alert-circle"></i>
       <p>{{ estado.error }}</p>
     </div>
 
     <div *ngIf="!estado.loading && !estado.error && filtrar(estado.data).length === 0" class="empty-state">
-      <i data-lucide="sparkles" style="width:40px;height:40px"></i>
+      <i data-lucide="sparkles"></i>
       <p>No hay servicios registrados.</p>
     </div>
 
@@ -34,18 +34,18 @@
         </div>
         <div class="card-body">
           <h3 class="card-title">{{ s.nombre }}</h3>
-          <p class="card-text">{{ s.descripcion || 'Sin descripción' }}</p>
+          <p class="card-text">{{ s.descripcion || 'Sin descripciÃ³n' }}</p>
           <div class="card-meta">
-            <span class="meta-item"><i data-lucide="clock" style="width:14px;height:14px"></i> {{ s.duracion }} min</span>
+            <span class="meta-item"><i data-lucide="clock"></i> {{ s.duracion }} min</span>
             <span class="meta-item price">${{ s.precio | number:'1.2-2' }}</span>
           </div>
         </div>
         <div class="card-actions">
           <button type="button" (click)="abrirModalEditar(s)" class="btn btn-ghost btn-sm">
-            <i data-lucide="pencil" style="width:14px;height:14px"></i> Editar
+            <i data-lucide="pencil"></i> Editar
           </button>
           <button type="button" (click)="eliminar(s)" class="btn btn-danger btn-sm">
-            <i data-lucide="trash-2" style="width:14px;height:14px"></i> Eliminar
+            <i data-lucide="trash-2"></i> Eliminar
           </button>
         </div>
       </div>
