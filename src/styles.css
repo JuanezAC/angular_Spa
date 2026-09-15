@@ -1268,12 +1268,31 @@ img {
 
 /* Admin form-actions responsive (shared across crear/editar pages) */
 @media (max-width: 540px) {
-  .admin-page .form-actions {
+  .form-actions {
     flex-direction: column;
   }
 
-  .admin-page .form-actions button {
+  .form-actions button {
     width: 100%;
+  }
+
+  .form-body {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .form-header {
+    padding: var(--space-md);
+  }
+
+  .modal {
+    padding: 0;
+    margin: var(--space-xs);
+    max-height: 95vh;
+  }
+
+  .modal .form-panel {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
   }
 }
 

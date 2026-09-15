@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario/usuario-service';
 import Swal from 'sweetalert2';
@@ -13,6 +13,7 @@ import { Usuario } from '../../models/usuario';
 })
 export class AdminUsuariosEditar implements OnChanges {
   private usuarioService = inject(UsuarioService);
+  private ngZone = inject(NgZone);
   @Input() usuario: Usuario | null = null;
   @Output() usuarioEditado = new EventEmitter<void>();
   @Output() cancelar = new EventEmitter<void>();
@@ -34,7 +35,7 @@ export class AdminUsuariosEditar implements OnChanges {
 
   guardarCambios(): void {
     const id = this.usuarioEditando.id;
-    if (!id) { Swal.fire('Error', 'ID no encontrado', 'error'); return; }
+    if (!id) { this.ngZone.run(() => Swal.fire('Error', 'ID no encontrado', 'error')); return; }
 
     const nombre = this.usuarioEditando.nombre?.trim() || '';
     const correo = this.usuarioEditando.correo?.trim() || '';
@@ -42,16 +43,16 @@ export class AdminUsuariosEditar implements OnChanges {
     const contrasena = this.contrasenaNueva.trim();
 
     if (!nombre || !correo) {
-      Swal.fire('Campos obligatorios', 'Nombre y correo son requeridos', 'warning'); return;
+      this.ngZone.run(() => Swal.fire('Campos obligatorios', 'Nombre y correo son requeridos', 'warning')); return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(correo)) {
-      Swal.fire('Correo inválido', 'Ingresa un correo electrónico válido', 'warning'); return;
+      this.ngZone.run(() => Swal.fire('Correo inválido', 'Ingresa un correo electrónico válido', 'warning')); return;
     }
 
     if (contrasena && contrasena.length < 6) {
-      Swal.fire('Contraseña muy corta', 'La contraseña debe tener al menos 6 caracteres', 'warning'); return;
+      this.ngZone.run(() => Swal.fire('Contraseña muy corta', 'La contraseña debe tener al menos 6 caracteres', 'warning')); return;
     }
 
     
@@ -60,10 +61,10 @@ export class AdminUsuariosEditar implements OnChanges {
 
     this.usuarioService.editar(id, payload as Usuario).subscribe({
       next: () => {
-        Swal.fire('Éxito', 'Usuario actualizado correctamente', 'success');
+        this.ngZone.run(() => Swal.fire('Éxito', 'Usuario actualizado correctamente', 'success'));
         this.usuarioEditado.emit();
       },
-      error: (err) => Swal.fire('Error', err.error?.mensaje || 'Error al actualizar', 'error')
+      error: (err) => this.ngZone.run(() => Swal.fire('Error', err.error?.mensaje || 'Error al actualizar', 'error'))
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HorarioService } from '../../services/horario/horario-service';
@@ -17,6 +17,7 @@ import { HorarioDisponible } from '../../models/horario-disponible';
 export class AdminHorariosEditar implements OnChanges, OnInit {
   private horarioService = inject(HorarioService);
   private profesionalService = inject(ProfesionalService);
+  private ngZone = inject(NgZone);
 
   @Input() horario: HorarioDisponible | null = null;
   @Output() horarioEditado = new EventEmitter<void>();
@@ -40,26 +41,26 @@ export class AdminHorariosEditar implements OnChanges, OnInit {
   ngOnInit(): void {
     this.profesionalService.obtenerTodos().subscribe({
       next: (data) => this.profesionales = data.filter(p => p.estado),
-      error: () => Swal.fire('Error', 'No se pudieron cargar los profesionales', 'error')
+      error: () => this.ngZone.run(() => Swal.fire('Error', 'No se pudieron cargar los profesionales', 'error'))
     });
   }
 
   guardarCambios(): void {
     const id = this.horario?.id;
     if (!id || !this.profesionalId || !this.fecha || !this.hora) {
-      Swal.fire('Campos obligatorios', 'Todos los campos son requeridos', 'warning');
+      this.ngZone.run(() => Swal.fire('Campos obligatorios', 'Todos los campos son requeridos', 'warning'));
       return;
     }
 
     const hoy = new Date().toISOString().split('T')[0];
     if (this.fecha < hoy) {
-      Swal.fire('Fecha inválida', 'No se pueden asignar horarios en el pasado', 'warning');
+      this.ngZone.run(() => Swal.fire('Fecha inválida', 'No se pueden asignar horarios en el pasado', 'warning'));
       return;
     }
 
     const profesionalSeleccionado = this.profesionales.find(p => p.id === this.profesionalId);
     if (profesionalSeleccionado && !profesionalSeleccionado.estado) {
-      Swal.fire('Profesional inactivo', 'El profesional seleccionado no está activo', 'warning');
+      this.ngZone.run(() => Swal.fire('Profesional inactivo', 'El profesional seleccionado no está activo', 'warning'));
       return;
     }
 
@@ -72,10 +73,10 @@ export class AdminHorariosEditar implements OnChanges, OnInit {
 
     this.horarioService.editar(id, actualizado as any).subscribe({
       next: () => {
-        Swal.fire('Éxito', 'Horario actualizado correctamente', 'success');
+        this.ngZone.run(() => Swal.fire('Éxito', 'Horario actualizado correctamente', 'success'));
         this.horarioEditado.emit();
       },
-      error: (err) => Swal.fire('Error', err.error?.mensaje || 'Error al actualizar', 'error')
+      error: (err) => this.ngZone.run(() => Swal.fire('Error', err.error?.mensaje || 'Error al actualizar', 'error'))
     });
   }
 

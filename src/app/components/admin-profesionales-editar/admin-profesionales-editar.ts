@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfesionalService } from '../../services/profesional/profesional-service';
@@ -20,6 +20,7 @@ export class AdminProfesionalesEditar implements OnChanges, OnInit {
   private profesionalService = inject(ProfesionalService);
   private servicioService = inject(ServicioService);
   private proSerService = inject(ProSerService);
+  private ngZone = inject(NgZone);
 
   @Input() profesional: Profesional | null = null;
   @Output() profesionalEditado = new EventEmitter<void>();
@@ -63,20 +64,20 @@ export class AdminProfesionalesEditar implements OnChanges, OnInit {
 
   async guardarCambios(): Promise<void> {
     const id = this.profesionalEditando.id;
-    if (!id) { Swal.fire('Error', 'ID no encontrado', 'error'); return; }
+    if (!id) { this.ngZone.run(() => Swal.fire('Error', 'ID no encontrado', 'error')); return; }
 
     const nombre = this.profesionalEditando.nombre.trim();
     const especialidad = this.profesionalEditando.especialidad.trim();
     const correo = this.profesionalEditando.correo.trim();
     const telefono = this.profesionalEditando.telefono.trim();
 
-    if (!telefono) { Swal.fire('Campo obligatorio', 'El numero de telefono es obligatorio', 'warning'); return; }
-    if (!/^[0-9]+$/.test(telefono)) { Swal.fire('Telefono invalido', 'El numero de telefono solo puede contener numeros', 'warning'); return; }
-    if (!nombre || !especialidad || !correo) { Swal.fire('Campos obligatorios', 'Nombre, especialidad y correo son obligatorios', 'warning'); return; }
+    if (!telefono) { this.ngZone.run(() => Swal.fire('Campo obligatorio', 'El numero de telefono es obligatorio', 'warning')); return; }
+    if (!/^[0-9]+$/.test(telefono)) { this.ngZone.run(() => Swal.fire('Telefono invalido', 'El numero de telefono solo puede contener numeros', 'warning')); return; }
+    if (!nombre || !especialidad || !correo) { this.ngZone.run(() => Swal.fire('Campos obligatorios', 'Nombre, especialidad y correo son obligatorios', 'warning')); return; }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(correo)) { Swal.fire('Correo invalido', 'Ingresa un correo electronico valido', 'warning'); return; }
-    if (this.serviciosSeleccionados.length === 0) { Swal.fire('Servicios requeridos', 'Debe asignar al menos un servicio al profesional', 'warning'); return; }
+    if (!emailRegex.test(correo)) { this.ngZone.run(() => Swal.fire('Correo invalido', 'Ingresa un correo electronico valido', 'warning')); return; }
+    if (this.serviciosSeleccionados.length === 0) { this.ngZone.run(() => Swal.fire('Servicios requeridos', 'Debe asignar al menos un servicio al profesional', 'warning')); return; }
 
     try {
       await firstValueFrom(this.profesionalService.editar(id, {
@@ -86,10 +87,10 @@ export class AdminProfesionalesEditar implements OnChanges, OnInit {
 
       await this.sincronizarAsignaciones(id);
 
-      Swal.fire('Exito', 'Profesional y servicios actualizados', 'success');
+      this.ngZone.run(() => Swal.fire('Exito', 'Profesional y servicios actualizados', 'success'));
       this.profesionalEditado.emit();
     } catch (err: any) {
-      Swal.fire('Error', err.error?.mensaje || 'Error al actualizar', 'error');
+      this.ngZone.run(() => Swal.fire('Error', err.error?.mensaje || 'Error al actualizar', 'error'));
     }
   }
 

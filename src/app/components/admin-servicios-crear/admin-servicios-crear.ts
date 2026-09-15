@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServicioService } from '../../services/servicio/servicio-service';
@@ -14,6 +14,7 @@ import { Servicio } from '../../models/servicio';
 })
 export class AdminServiciosCrear {
   private servicioService = inject(ServicioService);
+  private ngZone = inject(NgZone);
 
   @Output() servicioCreado = new EventEmitter<void>();
   @Output() cancelar = new EventEmitter<void>();
@@ -39,11 +40,11 @@ export class AdminServiciosCrear {
     const precio = this.servicioNuevo.precio;
 
     if (!nombre || !duracion || precio <= 0) {
-      Swal.fire({ icon: 'warning', title: 'Campos obligatorios', text: 'Nombre, duracion y precio son obligatorios' });
+      this.ngZone.run(() => Swal.fire({ icon: 'warning', title: 'Campos obligatorios', text: 'Nombre, duracion y precio son obligatorios' }));
       return;
     }
     if (duracion <= 0) {
-      Swal.fire({ icon: 'warning', title: 'Duracion invalida', text: 'La duracion debe ser mayor a 0 minutos' });
+      this.ngZone.run(() => Swal.fire({ icon: 'warning', title: 'Duracion invalida', text: 'La duracion debe ser mayor a 0 minutos' }));
       return;
     }
 
@@ -59,15 +60,17 @@ export class AdminServiciosCrear {
       next: () => {
         this.servicioNuevo = { nombre: '', descripcion: '', duracion: 30, precio: 0, imagenUrl: '' };
         this.imagenError = false;
-        Swal.fire({ icon: 'success', title: 'Servicio creado', text: 'El servicio se guardo correctamente' });
+        this.ngZone.run(() => Swal.fire({ icon: 'success', title: 'Servicio creado', text: 'El servicio se guardo correctamente' }));
         this.servicioCreado.emit();
       },
       error: (err) => {
-        if (err.status === 401 || err.status === 403) {
-          Swal.fire({ icon: 'error', title: 'Acceso denegado', text: 'No tienes permisos para realizar esta accion' });
-          return;
-        }
-        Swal.fire({ icon: 'error', title: 'Error', text: err.error?.mensaje || 'Ocurrio un error al crear el servicio' });
+        this.ngZone.run(() => {
+          if (err.status === 401 || err.status === 403) {
+            Swal.fire({ icon: 'error', title: 'Acceso denegado', text: 'No tienes permisos para realizar esta accion' });
+            return;
+          }
+          Swal.fire({ icon: 'error', title: 'Error', text: err.error?.mensaje || 'Ocurrio un error al crear el servicio' });
+        });
       }
     });
   }
