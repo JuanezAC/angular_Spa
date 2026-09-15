@@ -1,75 +1,4 @@
-.public-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--space-2xl) var(--space-lg);
-}
-
-.page-header {
-  text-align: center;
-  margin-bottom: var(--space-2xl);
-}
-
-.page-header h1 {
-  font-family: var(--font-heading);
-  font-size: 2.2rem;
-  color: var(--color-text);
-  margin-bottom: var(--space-sm);
-}
-
-.page-subtitle {
-  color: var(--color-text-secondary);
-  font-size: 1.05rem;
-}
-
-/* Search */
-.filtro {
-  margin-bottom: var(--space-xl);
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.search-wrapper {
-  position: relative;
-}
-
-.search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  color: var(--color-text-secondary);
-  pointer-events: none;
-}
-
-.search-input {
-  width: 100%;
-  padding: 12px 16px 12px 42px;
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-  background: var(--color-surface);
-  box-sizing: border-box;
-}
-
-.search-input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(111, 128, 104, 0.12);
-}
-
-/* Cards Grid */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: var(--space-xl);
-}
-
-/* Schedule Card */
+/* Schedule-specific card styles */
 .schedule-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border-light);
@@ -90,7 +19,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-md) var(--space-lg);
-  background: var(--color-background-alt);
+  background: var(--color-background);
   border-bottom: 1px solid var(--color-border-light);
 }
 
@@ -185,95 +114,13 @@
   gap: var(--space-md);
 }
 
-.form-field label {
-  display: block;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.form-select {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  background: var(--color-surface);
-  color: var(--color-text);
-  outline: none;
-  cursor: pointer;
-  transition: border-color var(--transition-fast);
-}
-
-.form-select:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(111, 128, 104, 0.12);
-}
-
 /* Footer */
 .card-footer {
   padding: var(--space-md) var(--space-lg);
   border-top: 1px solid var(--color-border-light);
 }
 
-.btn-reserve {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px;
-  font-size: 0.95rem;
-}
-
-/* States */
-.loading-state, .error-state, .empty-state {
-  text-align: center;
-  padding: var(--space-3xl) 0;
-  color: var(--color-text-secondary);
-}
-
-.error-state {
-  color: var(--color-error);
-}
-
-.empty-state i {
-  color: var(--color-border);
-  margin-bottom: var(--space-md);
-}
-
-.spinner {
-  width: 36px;
-  height: 36px;
-  border: 3px solid var(--color-border-light);
-  border-top-color: var(--color-primary);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto var(--space-md);
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-  .public-page {
-    padding: var(--space-lg) var(--space-md);
-  }
-
-  .page-header h1 {
-    font-size: 1.6rem;
-  }
-
-  .cards-grid {
-    grid-template-columns: 1fr;
-  }
-
   .card-top {
     flex-direction: column;
     align-items: flex-start;
