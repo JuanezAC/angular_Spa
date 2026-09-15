@@ -25,4 +25,10 @@ export class ProfesionalService {
   eliminar(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`, { withCredentials: true });
   }
+
+  obtenerInfoEliminacion(id: number): Observable<{ nombre: string; horarios: number; citas: number; servicios: number }> {
+    return this.http.get<{ nombre: string; horarios: number; citas: number; servicios: number }>(
+      `${this.apiUrl}/${id}/info-eliminacion`, { withCredentials: true }
+    );
+  }
 }

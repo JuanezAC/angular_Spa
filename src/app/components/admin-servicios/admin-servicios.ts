@@ -106,7 +106,7 @@ export class AdminServicios implements OnInit, OnDestroy {
     if (!servicio.id) return;
     Swal.fire({
       title: '¿Eliminar servicio?',
-      text: `Se eliminará "${servicio.nombre}" permanentemente.`,
+      html: `Se eliminará <b>"${servicio.nombre}"</b> permanentemente.<br><br><span style="color:#6b7280">Si algún profesional tiene este servicio asignado, deberás desasignarlo antes de eliminar.</span>`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
@@ -118,7 +118,13 @@ export class AdminServicios implements OnInit, OnDestroy {
             Swal.fire('Eliminado', 'Servicio eliminado correctamente', 'success');
             this.recargarLista();
           },
-          error: (err) => Swal.fire('Error', err.error?.mensaje || 'No se pudo eliminar', 'error')
+          error: (err) => {
+            if (err.status === 409) {
+              Swal.fire({ icon: 'warning', title: 'No se puede eliminar', text: err.error?.mensaje });
+            } else {
+              Swal.fire('Error', err.error?.mensaje || 'No se pudo eliminar', 'error');
+            }
+          }
         });
       }
     });

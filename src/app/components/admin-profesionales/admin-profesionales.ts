@@ -101,23 +101,38 @@ export class AdminProfesionales implements OnInit, OnDestroy {
 
   eliminar(profesional: Profesional): void {
     if (!profesional.id) return;
-    Swal.fire({
-      title: '¿Eliminar profesional?',
-      html: `Se eliminará <b>"${profesional.nombre}"</b>.<br><span style="color:#dc2626">⚠️ Esto también eliminará sus horarios, citas y asignaciones.</span>`,
-      icon: 'warning', showCancelButton: true, confirmButtonText: 'Sí, eliminar TODO', cancelButtonText: 'Cancelar', confirmButtonColor: '#dc2626'
-    }).then(res => {
-      if (res.isConfirmed) {
-        this.profesionalService.eliminar(profesional.id!).subscribe({
-          next: () => {
-            Swal.fire('Eliminado', 'Profesional y relaciones eliminados correctamente', 'success');
-            this.recargarLista();
-          },
-          error: (err) => {
-            if (err.status === 409) Swal.fire({ icon: 'warning', title: 'No se puede eliminar', text: err.error?.mensaje });
-            else Swal.fire('Error', err.error?.mensaje || 'No se pudo eliminar', 'error');
+    this.profesionalService.obtenerInfoEliminacion(profesional.id).subscribe({
+      next: (info) => {
+        const partes: string[] = [];
+        if (info.citas > 0) partes.push(`${info.citas} cita${info.citas > 1 ? 's' : ''}`);
+        if (info.horarios > 0) partes.push(`${info.horarios} horario${info.horarios > 1 ? 's' : ''}`);
+        if (info.servicios > 0) partes.push(`${info.servicios} servicio${info.servicios > 1 ? 's' : ''}`);
+        const detalle = partes.length > 0
+          ? `<br><br><span style="color:#dc2626">⚠️ Se eliminarán también: <b>${partes.join(', ')}</b></span>`
+          : '';
+
+        Swal.fire({
+          title: '¿Eliminar profesional?',
+          html: `Se eliminará <b>"${info.nombre}"</b> permanentemente.${detalle}`,
+          icon: 'warning', showCancelButton: true,
+          confirmButtonText: 'Sí, eliminar TODO', cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#dc2626'
+        }).then(res => {
+          if (res.isConfirmed) {
+            this.profesionalService.eliminar(profesional.id!).subscribe({
+              next: () => {
+                Swal.fire('Eliminado', 'Profesional y relaciones eliminados correctamente', 'success');
+                this.recargarLista();
+              },
+              error: (err) => {
+                if (err.status === 409) Swal.fire({ icon: 'warning', title: 'No se puede eliminar', text: err.error?.mensaje });
+                else Swal.fire('Error', err.error?.mensaje || 'No se pudo eliminar', 'error');
+              }
+            });
           }
         });
-      }
+      },
+      error: () => Swal.fire('Error', 'No se pudo obtener la información del profesional', 'error')
     });
   }
 }
