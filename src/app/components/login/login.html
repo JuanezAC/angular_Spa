@@ -1,18 +1,52 @@
-<div class="login-container">
-    <div class="login-card">
-        <h2>Iniciar sesión</h2>
-        <form (ngSubmit)="iniciarSesion()">
-        <div class="campo">
-            <label for="correo">Correo</label>
-            <input id="correo" name="correo" type="email" [(ngModel)]="correo" placeholder="Ingresa tu correo"/>
-        </div>
-        <div class="campo">
-            <label for="contrasena">Contraseña</label>
-            <input id="contrasena" name="contrasena" type="password" [(ngModel)]="contrasena" placeholder="Ingresa tu contraseña"/>
-        </div>
-        <div class="acciones">
-            <button type="submit">Entrar</button>
-        </div>
-        </form>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-icon">
+        <i data-lucide="log-in"></i>
+      </div>
+      <h2>Iniciar sesión</h2>
+      <p class="auth-subtitle">Ingresa tus credenciales para acceder</p>
     </div>
+
+    <form (ngSubmit)="iniciarSesion()" class="auth-body">
+      <div class="form-group">
+        <label class="form-label" for="correo">Correo electrónico</label>
+        <div class="input-wrapper">
+          <i data-lucide="mail" class="input-icon"></i>
+          <input
+            id="correo"
+            name="correo"
+            type="email"
+            [(ngModel)]="correo"
+            class="form-input with-icon"
+            placeholder="tu@correo.com"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="contrasena">Contraseña</label>
+        <div class="input-wrapper">
+          <i data-lucide="lock" class="input-icon"></i>
+          <input
+            id="contrasena"
+            name="contrasena"
+            type="password"
+            [(ngModel)]="contrasena"
+            class="form-input with-icon"
+            placeholder="Tu contraseña"
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">
+        <i data-lucide="arrow-right"></i>
+        Entrar
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>¿No tienes cuenta? <a routerLink="/registro">Regístrate aquí</a></p>
+    </div>
+  </div>
 </div>

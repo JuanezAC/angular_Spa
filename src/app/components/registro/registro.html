@@ -1,22 +1,67 @@
-<div class="registro-container">
-  <div class="registro-card">
-    <h2>Crear cuenta</h2>
-    <form (ngSubmit)="registrar()">
-      <div class="campo">
-        <label for="nombre">Nombre completo</label>
-        <input id="nombre" name="nombre" type="text" [(ngModel)]="nombre" placeholder="Ingresa tu nombre"/>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-icon">
+        <i data-lucide="user-plus"></i>
       </div>
-      <div class="campo">
-        <label for="correo">Correo</label>
-        <input id="correo" name="correo" type="email" [(ngModel)]="correo" placeholder="Ingresa tu correo"/>
+      <h2>Crear cuenta</h2>
+      <p class="auth-subtitle">Regístrate para reservar tus citas</p>
+    </div>
+
+    <form (ngSubmit)="registrar()" class="auth-body">
+      <div class="form-group">
+        <label class="form-label" for="nombre">Nombre completo</label>
+        <div class="input-wrapper">
+          <i data-lucide="user" class="input-icon"></i>
+          <input
+            id="nombre"
+            name="nombre"
+            type="text"
+            [(ngModel)]="nombre"
+            class="form-input with-icon"
+            placeholder="Tu nombre completo"
+          />
+        </div>
       </div>
-      <div class="campo">
-        <label for="contrasena">Contraseña</label>
-        <input id="contrasena" name="contrasena" type="password" [(ngModel)]="contrasena" placeholder="Ingresa tu contraseña"/>
+
+      <div class="form-group">
+        <label class="form-label" for="correo">Correo electrónico</label>
+        <div class="input-wrapper">
+          <i data-lucide="mail" class="input-icon"></i>
+          <input
+            id="correo"
+            name="correo"
+            type="email"
+            [(ngModel)]="correo"
+            class="form-input with-icon"
+            placeholder="tu@correo.com"
+          />
+        </div>
       </div>
-      <div class="acciones">
-        <button type="submit">Registrarse</button>
+
+      <div class="form-group">
+        <label class="form-label" for="contrasena">Contraseña</label>
+        <div class="input-wrapper">
+          <i data-lucide="lock" class="input-icon"></i>
+          <input
+            id="contrasena"
+            name="contrasena"
+            type="password"
+            [(ngModel)]="contrasena"
+            class="form-input with-icon"
+            placeholder="Mínimo 6 caracteres"
+          />
+        </div>
       </div>
+
+      <button type="submit" class="btn btn-primary btn-block">
+        <i data-lucide="check"></i>
+        Registrarse
+      </button>
     </form>
+
+    <div class="auth-footer">
+      <p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+    </div>
   </div>
 </div>

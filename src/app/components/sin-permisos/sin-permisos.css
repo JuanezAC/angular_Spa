@@ -1,20 +1,85 @@
-.sin-permisos-container {
+.auth-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 60vh;
+  min-height: calc(100vh - var(--navbar-height) - 200px);
+  padding: var(--space-2xl) var(--space-md);
 }
-.sin-permisos-card {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+.auth-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  overflow: hidden;
+}
+
+.auth-header {
+  text-align: center;
+  padding: var(--space-xl) var(--space-xl) 0;
+}
+
+.auth-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-md);
+  color: var(--color-primary);
+}
+
+.auth-icon.error {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.auth-icon i {
+  width: 24px;
+  height: 24px;
+}
+
+.auth-header h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.auth-subtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.auth-body {
+  padding: var(--space-xl);
+}
+
+.auth-body.centered {
   text-align: center;
 }
-h2 { margin-bottom: 15px; color: #333; }
-p { color: #666; margin-bottom: 20px; }
-.acciones { display: flex; justify-content: center; }
-button { padding: 10px 20px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; }
-button:hover { background: #2563eb; }
+
+.help-text {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    max-width: 100%;
+  }
+
+  .auth-header {
+    padding: var(--space-lg) var(--space-lg) 0;
+  }
+
+  .auth-body {
+    padding: var(--space-lg);
+  }
+}
