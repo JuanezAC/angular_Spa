@@ -5,8 +5,8 @@
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  background: linear-gradient(160deg, var(--color-primary-dark) 0%, #2D4F38 50%, #1E3A28 100%);
-  color: #ffffff;
+  background: linear-gradient(160deg, #FAFAF8 0%, #F0F5F1 40%, #E8F0EA 100%);
+  color: var(--color-text);
   padding: var(--space-4xl) 0;
   overflow: hidden;
   min-height: 540px;
@@ -24,13 +24,13 @@
 .hero-shape {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.06;
+  opacity: 0.08;
 }
 
 .hero-shape-1 {
   width: 500px;
   height: 500px;
-  background: var(--color-accent);
+  background: var(--color-primary-light);
   top: -120px;
   right: -100px;
 }
@@ -38,7 +38,7 @@
 .hero-shape-2 {
   width: 350px;
   height: 350px;
-  background: var(--color-primary-light);
+  background: var(--color-secondary);
   bottom: -80px;
   left: -60px;
 }
@@ -61,6 +61,11 @@
 
 .hero-logo-wrapper {
   margin-bottom: var(--space-lg);
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl) var(--space-2xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border-light);
 }
 
 .hero-logo {
@@ -72,12 +77,12 @@
 .hero-badge {
   display: inline-block;
   padding: 6px 18px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(74, 114, 86, 0.1);
+  border: 1px solid rgba(74, 114, 86, 0.2);
   border-radius: var(--radius-full);
   font-size: 0.85rem;
   font-weight: 500;
-  color: #d4cfc6;
+  color: var(--color-primary-dark);
   margin-bottom: var(--space-lg);
   letter-spacing: 0.5px;
 }
@@ -87,13 +92,13 @@
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: var(--space-lg);
-  color: #ffffff;
+  color: var(--color-text);
   text-align: left;
 }
 
 .hero-subtitle {
   font-size: 1.15rem;
-  color: #b0aaa0;
+  color: var(--color-text-secondary);
   margin-bottom: var(--space-xl);
   line-height: 1.7;
   max-width: 480px;
@@ -107,13 +112,13 @@
 }
 
 .hero-actions .btn-secondary {
-  color: #e8e4dc;
-  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--color-primary-dark);
+  border-color: var(--color-primary);
 }
 
 .hero-actions .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   color: #ffffff;
 }
 
@@ -162,10 +167,10 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(74, 114, 86, 0.1);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #ffffff;
+  border: 1px solid rgba(74, 114, 86, 0.2);
+  color: var(--color-primary-dark);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -175,7 +180,7 @@
 }
 
 .carousel-btn:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(74, 114, 86, 0.2);
 }
 
 .carousel-btn :global(i),

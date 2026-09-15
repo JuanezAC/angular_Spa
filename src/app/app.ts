@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 import { SesionService } from './services/sesion/sesion-service';
 import { EventosService } from './services/eventos/eventos-service';
 import { LucideService } from './services/lucide/lucide-service';
@@ -30,11 +31,20 @@ export class App implements OnInit, OnDestroy {
 
   sesion$ = this.sesionService.sesion$;
   menuAbierto = false;
+  esHome = false;
 
   ngOnInit(): void {
     this.sesionService.refrescarSesion();
     this.eventosService.conectar();
     this.lucideService.init();
+
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      this.esHome = event.urlAfterRedirects === '/';
+    });
+
+    this.esHome = this.router.url === '/';
   }
 
   ngOnDestroy(): void {

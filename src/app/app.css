@@ -32,6 +32,14 @@ header {
   text-decoration: none;
   display: flex;
   align-items: center;
+  gap: 10px;
+}
+
+.navbar-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
 }
 
 .brand-text {
@@ -176,6 +184,10 @@ main {
 
   .brand-text {
     font-size: 1.2rem;
+  }
+
+  .navbar-logo {
+    height: 30px;
   }
 
   .nav-links {
