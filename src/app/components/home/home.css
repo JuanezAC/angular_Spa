@@ -61,14 +61,17 @@
 
 .hero-logo-wrapper {
   margin-bottom: var(--space-lg);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg) var(--space-xl);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .hero-logo {
-  height: 100px;
+  height: 90px;
   width: auto;
   object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.9;
+  display: block;
 }
 
 .hero-badge {
@@ -424,7 +427,11 @@
   }
 
   .hero-logo {
-    height: 72px;
+    height: 64px;
+  }
+
+  .hero-logo-wrapper {
+    padding: var(--space-md) var(--space-lg);
   }
 
   .hero-carousel {
