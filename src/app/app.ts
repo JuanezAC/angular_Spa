@@ -5,6 +5,15 @@ import { SesionService } from './services/sesion/sesion-service';
 import { EventosService } from './services/eventos/eventos-service';
 import { LucideService } from './services/lucide/lucide-service';
 import { Footer } from './components/footer/footer';
+import Swal from 'sweetalert2';
+
+const _origSwalFire = Swal.fire.bind(Swal);
+(Swal as any).fire = function (...args: any[]) {
+  if (args[0] && typeof args[0] === 'object') {
+    args[0].zIndex = args[0].zIndex ?? 3000;
+  }
+  return _origSwalFire(...args);
+};
 
 @Component({
   selector: 'app-root',

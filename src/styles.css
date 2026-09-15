@@ -66,6 +66,14 @@
   --navbar-height: 68px;
   --max-width: 1200px;
 
+  /* Z-Index Layers */
+  --z-base: 0;
+  --z-dropdown: 900;
+  --z-sticky: 1000;
+  --z-overlay: 2000;
+  --z-modal: 3000;
+  --z-alert: 4000;
+
   /* Focus / Interactive */
   --focus-shadow: 0 0 0 3px rgba(74, 114, 86, 0.15);
 }
@@ -1121,7 +1129,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
+  z-index: var(--z-overlay);
   padding: var(--space-md);
 }
 
@@ -1423,5 +1431,5 @@ img {
 
 /* ---------- SweetAlert2 above modals ---------- */
 .swal2-container {
-  z-index: 10000 !important;
+  z-index: var(--z-alert) !important;
 }
