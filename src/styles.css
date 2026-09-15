@@ -8,11 +8,12 @@
   --color-primary: #4A7256;
   --color-primary-dark: #3A5E45;
   --color-primary-light: #6D9A78;
-  --color-background: #F7F3EA;
+  --color-background: #FAFAF8;
   --color-surface: #FFFFFF;
-  --color-secondary: #E8DDCC;
+  --color-secondary: #D8C7A3;
+  --color-secondary-light: #F3EEE4;
   --color-accent: #B99A63;
-  --color-text: #29352D;
+  --color-text: #26332C;
   --color-text-secondary: #687269;
   --color-text-light: #94a396;
   --color-border: #ddd5c8;
@@ -23,6 +24,11 @@
   --color-success-bg: #EBF5EE;
   --color-warning: #B99A63;
   --color-warning-bg: #faf6ed;
+
+  /* Warm tints (arena/beige) */
+  --color-warm-50: rgba(216, 199, 163, 0.08);
+  --color-warm-100: rgba(216, 199, 163, 0.15);
+  --color-warm-200: rgba(216, 199, 163, 0.25);
 
   /* Typography */
   --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
@@ -342,7 +348,7 @@ img {
   width: 56px;
   height: 56px;
   border-radius: var(--radius-md);
-  background-color: var(--color-background);
+  background-color: var(--color-secondary-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -548,7 +554,7 @@ img {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--color-background);
+  background: var(--color-secondary-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -762,7 +768,7 @@ img {
 }
 
 .admin-table thead {
-  background: var(--color-background);
+  background: var(--color-secondary-light);
 }
 
 .admin-table th {
@@ -781,7 +787,7 @@ img {
 }
 
 .admin-table tbody tr:hover {
-  background: rgba(74, 114, 86, 0.04);
+  background: var(--color-warm-50);
 }
 
 .admin-table tbody tr:last-child td {
@@ -879,6 +885,7 @@ img {
 
 .form-header {
   padding: var(--space-lg) var(--space-xl);
+  background: var(--color-secondary-light);
   border-bottom: 1px solid var(--color-border-light);
 }
 
