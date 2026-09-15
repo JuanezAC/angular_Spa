@@ -243,6 +243,21 @@
 }
 
 /* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .process-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .process-connector {
+    display: none;
+  }
+
+  .process-step {
+    flex: 0 1 45%;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     padding: var(--space-3xl) 0;
@@ -268,9 +283,7 @@
   }
 
   .process-connector {
-    transform: rotate(90deg);
-    padding-top: 0;
-    padding-bottom: var(--space-sm);
+    display: none;
   }
 
   .process-step {

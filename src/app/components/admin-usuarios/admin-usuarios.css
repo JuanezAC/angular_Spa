@@ -9,3 +9,9 @@
   color: var(--color-error);
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+  .error-state {
+    padding: var(--space-lg);
+  }
+}

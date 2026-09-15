@@ -117,4 +117,8 @@
   .card-image {
     height: 180px;
   }
+
+  .detail-item.price {
+    font-size: 0.95rem;
+  }
 }

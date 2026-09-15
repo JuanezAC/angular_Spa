@@ -19,3 +19,9 @@
 .card-badge .badge {
   display: inline-flex;
 }
+
+@media (max-width: 768px) {
+  .error-state {
+    padding: var(--space-lg);
+  }
+}

@@ -1092,6 +1092,7 @@ img {
   max-width: 520px;
   max-height: 90vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: var(--shadow-xl);
   animation: modalIn 0.25s ease;
 }
@@ -1151,6 +1152,14 @@ img {
     padding: var(--space-2xl) 0;
   }
 
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+
   .container {
     padding: 0 var(--space-md);
   }
@@ -1158,6 +1167,12 @@ img {
   .btn-lg {
     padding: 14px 28px;
     font-size: 1rem;
+  }
+
+  .overlay {
+    padding: var(--space-sm);
+    align-items: flex-start;
+    padding-top: var(--space-xl);
   }
 
   .modal {
@@ -1204,6 +1219,14 @@ img {
 
   .form-row {
     grid-template-columns: 1fr;
+  }
+
+  .public-page {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .public-page .page-header h1 {
+    font-size: 1.6rem;
   }
 
   .auth-page {
