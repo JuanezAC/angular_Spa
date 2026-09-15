@@ -5,9 +5,9 @@
 /* ---------- CSS Variables ---------- */
 :root {
   /* Colors */
-  --color-primary: #6F8068;
-  --color-primary-dark: #35483B;
-  --color-primary-light: #8a9e82;
+  --color-primary: #4A7256;
+  --color-primary-dark: #3A5E45;
+  --color-primary-light: #6D9A78;
   --color-background: #F7F3EA;
   --color-surface: #FFFFFF;
   --color-secondary: #E8DDCC;
@@ -19,8 +19,8 @@
   --color-border-light: #ece7dd;
   --color-error: #c0392b;
   --color-error-bg: #fdf2f2;
-  --color-success: #6F8068;
-  --color-success-bg: #f0f5ee;
+  --color-success: #4A7256;
+  --color-success-bg: #EBF5EE;
   --color-warning: #B99A63;
   --color-warning-bg: #faf6ed;
 
@@ -61,7 +61,7 @@
   --max-width: 1200px;
 
   /* Focus / Interactive */
-  --focus-shadow: 0 0 0 3px rgba(111, 128, 104, 0.15);
+  --focus-shadow: 0 0 0 3px rgba(74, 114, 86, 0.15);
 }
 
 /* ---------- Reset & Base ---------- */
@@ -781,7 +781,7 @@ img {
 }
 
 .admin-table tbody tr:hover {
-  background: rgba(111, 128, 104, 0.04);
+  background: rgba(74, 114, 86, 0.04);
 }
 
 .admin-table tbody tr:last-child td {
@@ -1196,7 +1196,7 @@ img {
 }
 
 .check-item.checked {
-  background: rgba(111, 128, 104, 0.12);
+  background: rgba(74, 114, 86, 0.12);
   border-color: var(--color-primary);
 }
 
@@ -1240,7 +1240,7 @@ img {
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--color-primary-dark);
-  background: rgba(111, 128, 104, 0.12);
+  background: rgba(74, 114, 86, 0.12);
   padding: 2px 8px;
   border-radius: var(--radius-full);
   display: flex;

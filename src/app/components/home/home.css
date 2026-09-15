@@ -5,7 +5,7 @@
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  background: linear-gradient(160deg, var(--color-primary-dark) 0%, #2a4435 50%, #1e3528 100%);
+  background: linear-gradient(160deg, var(--color-primary-dark) 0%, #2D4F38 50%, #1E3A28 100%);
   color: #ffffff;
   padding: var(--space-4xl) 0;
   overflow: hidden;
@@ -203,7 +203,7 @@
 
 /* ---------- CTA ---------- */
 .cta-section {
-  background: linear-gradient(160deg, var(--color-primary-dark) 0%, #2a4435 100%);
+  background: linear-gradient(160deg, var(--color-primary-dark) 0%, #2D4F38 100%);
   text-align: center;
 }
 
