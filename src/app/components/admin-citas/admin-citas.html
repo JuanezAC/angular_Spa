@@ -7,7 +7,7 @@
       <input
         type="text"
         [(ngModel)]="textoFiltro"
-        placeholder="Buscar por fecha, hora, usuario, profesional, servicio u observaciÃ³n"
+        placeholder="Buscar por fecha, hora, usuario, profesional, servicio u observación"
       />
     </div>
   </div>
@@ -26,7 +26,7 @@
 
     <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length === 0" class="empty-state">
       <i data-lucide="calendar-x"></i>
-      <p>No hay citas registradas o no coinciden con tu bÃºsqueda.</p>
+      <p>No hay citas registradas o no coinciden con tu búsqueda.</p>
     </div>
 
     <!-- TABLA DESKTOP -->
@@ -40,8 +40,8 @@
             <th>Usuario</th>
             <th>Profesional</th>
             <th>Servicio</th>
-            <th>ObservaciÃ³n</th>
-            <th>AcciÃ³n</th>
+            <th>Observación</th>
+            <th>Acción</th>
           </tr>
         </thead>
         <tbody>

@@ -10,7 +10,7 @@
       <input
         type="text"
         [(ngModel)]="textoFiltro"
-        placeholder="Buscar por fecha, hora, profesional, servicio u observaciÃ³n"
+        placeholder="Buscar por fecha, hora, profesional, servicio u observación"
         class="search-input"
       />
     </div>
@@ -30,7 +30,7 @@
 
     <div *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length === 0" class="empty-state">
       <i data-lucide="calendar-x"></i>
-      <p>No tienes citas registradas o no coinciden con tu bÃºsqueda.</p>
+      <p>No tienes citas registradas o no coinciden con tu búsqueda.</p>
     </div>
 
     <div class="cards-grid" *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length > 0">
