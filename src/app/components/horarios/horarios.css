@@ -14,9 +14,47 @@
   border-color: var(--color-border);
 }
 
+/* Card header (icon + badge) */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  background: #EDF4EF;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.card-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: rgba(74, 114, 86, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+
+.card-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: var(--space-md);
+}
+
 .card-body {
   padding: var(--space-lg);
   flex: 1;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
 }
 
 /* Professional info */

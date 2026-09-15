@@ -34,18 +34,21 @@
 
     <div class="cards-grid" *ngIf="!estado.loading && !estado.error && filtrarHorarios(estado.data).length > 0">
       <div class="schedule-card" *ngFor="let horario of filtrarHorarios(estado.data)">
-        <div class="card-top">
-          <div class="card-date">
+        <div class="card-header">
+          <div class="card-header-icon">
             <i data-lucide="calendar"></i>
-            <span>{{ horario.fecha }}</span>
           </div>
-          <div class="card-time-badge">
-            <i data-lucide="clock"></i>
-            <span>{{ horario.hora }}</span>
-          </div>
+          <span class="card-badge" [class.badge-success]="horario.disponible" [class.badge-neutral]="!horario.disponible">
+            {{ horario.disponible ? 'Disponible' : 'No disponible' }}
+          </span>
         </div>
 
         <div class="card-body">
+          <h3 class="card-title">{{ horario.fecha }}</h3>
+          <p class="card-time">
+            <i data-lucide="clock"></i>
+            {{ horario.hora }}
+          </p>
           <div class="professional-info">
             <div class="pro-avatar">
               <img *ngIf="horario.profesional.imagenUrl && !hasImageError(horario.profesional.id)" [src]="horario.profesional.imagenUrl" (error)="onImageError(horario.profesional.id)" [alt]="horario.profesional.nombre" />
