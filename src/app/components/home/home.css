@@ -5,8 +5,8 @@
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  background: linear-gradient(160deg, var(--color-primary-dark) 0%, var(--color-dark-mid) 50%, var(--color-dark-deep) 100%);
-  color: var(--color-on-dark);
+  background: linear-gradient(160deg, var(--color-primary-dark) 0%, #2a4435 50%, #1e3528 100%);
+  color: #ffffff;
   padding: var(--space-4xl) 0;
   overflow: hidden;
   min-height: 520px;
@@ -54,12 +54,12 @@
 .hero-badge {
   display: inline-block;
   padding: 6px 18px;
-  background: var(--color-surface-10);
-  border: 1px solid var(--color-surface-15);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-full);
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--color-on-dark-subtle);
+  color: #d4cfc6;
   margin-bottom: var(--space-lg);
   letter-spacing: 0.5px;
 }
@@ -69,12 +69,12 @@
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: var(--space-lg);
-  color: var(--color-on-dark);
+  color: #ffffff;
 }
 
 .hero-subtitle {
   font-size: 1.15rem;
-  color: var(--color-on-dark-faint);
+  color: #b0aaa0;
   margin-bottom: var(--space-xl);
   line-height: 1.7;
   max-width: 520px;
@@ -90,14 +90,14 @@
 }
 
 .hero-actions .btn-secondary {
-  color: var(--color-on-dark-muted);
-  border-color: var(--color-surface-30);
+  color: #e8e4dc;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .hero-actions .btn-secondary:hover {
-  background: var(--color-surface-10);
-  border-color: var(--color-surface-50);
-  color: var(--color-on-dark);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
 }
 
 /* ---------- Features ---------- */
@@ -203,7 +203,7 @@
 
 /* ---------- CTA ---------- */
 .cta-section {
-  background: linear-gradient(160deg, var(--color-primary-dark) 0%, var(--color-dark-mid) 100%);
+  background: linear-gradient(160deg, var(--color-primary-dark) 0%, #2a4435 100%);
   text-align: center;
 }
 
@@ -214,12 +214,12 @@
 
 .cta-section h2 {
   font-size: 2rem;
-  color: var(--color-on-dark);
+  color: #ffffff;
   margin-bottom: var(--space-md);
 }
 
 .cta-section p {
-  color: var(--color-on-dark-faint);
+  color: #b0aaa0;
   font-size: 1.1rem;
   margin-bottom: var(--space-xl);
 }
@@ -232,14 +232,14 @@
 }
 
 .cta-actions .btn-ghost {
-  color: var(--color-on-dark-muted);
-  border-color: var(--color-surface-25);
+  color: #e8e4dc;
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .cta-actions .btn-ghost:hover {
-  background: var(--color-surface-10);
-  color: var(--color-on-dark);
-  border-color: var(--color-surface-40);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 /* ---------- Responsive ---------- */
