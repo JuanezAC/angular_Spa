@@ -28,18 +28,24 @@ header {
   flex-shrink: 0;
 }
 
-.nav-logo {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
+.brand-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
 }
 
 .brand-text {
   font-family: var(--font-heading);
   color: #e8e4dc;
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.brand-accent {
+  color: var(--color-secondary);
+  font-style: italic;
 }
 
 /* Hamburger */
@@ -169,11 +175,7 @@ main {
   }
 
   .brand-text {
-    font-size: 1.15rem;
-  }
-
-  .nav-logo {
-    height: 34px;
+    font-size: 1.2rem;
   }
 
   .nav-links {

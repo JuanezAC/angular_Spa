@@ -5,17 +5,52 @@
     <div class="hero-shape hero-shape-2"></div>
   </div>
   <div class="container hero-content">
-    <span class="hero-badge">Bienestar & Relajación</span>
-    <h1>Tu momento de <span class="text-accent">paz</span> comienza aquí</h1>
-    <p class="hero-subtitle">Reserva servicios de masaje, tratamientos faciales y cuidado personal con los mejores profesionales.</p>
-    <div class="hero-actions">
-      <a routerLink="/servicios" class="btn btn-primary btn-lg">
-        <i data-lucide="sparkles"></i>
-        Ver servicios
-      </a>
-      <a routerLink="/registro" class="btn btn-secondary btn-lg">
-        Crear cuenta
-      </a>
+    <div class="hero-left">
+      <div class="hero-logo-wrapper">
+        <img src="images/Logo.png" alt="Spa Relax" class="hero-logo" />
+      </div>
+      <span class="hero-badge">Bienestar & Relajación</span>
+      <h1>Tu momento de <span class="text-accent">paz</span> comienza aquí</h1>
+      <p class="hero-subtitle">Reserva servicios de masaje, tratamientos faciales y cuidado personal con los mejores profesionales.</p>
+      <div class="hero-actions">
+        <a routerLink="/servicios" class="btn btn-primary btn-lg">
+          <i data-lucide="sparkles"></i>
+          Ver servicios
+        </a>
+        <a routerLink="/registro" class="btn btn-secondary btn-lg">
+          Crear cuenta
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-carousel">
+        <div class="carousel-track">
+          <img
+            *ngFor="let img of carouselImages; let i = index"
+            [src]="img"
+            alt="Spa Relax"
+            class="carousel-slide"
+            [class.active]="i === carouselIndex"
+          />
+        </div>
+        <button type="button" class="carousel-btn carousel-prev" (click)="prev()" aria-label="Anterior">
+          <i data-lucide="chevron-left"></i>
+        </button>
+        <button type="button" class="carousel-btn carousel-next" (click)="next()" aria-label="Siguiente">
+          <i data-lucide="chevron-right"></i>
+        </button>
+        <div class="carousel-dots">
+          <button
+            *ngFor="let img of carouselImages; let i = index"
+            type="button"
+            class="carousel-dot"
+            [class.active]="i === carouselIndex"
+            (click)="goTo(i)"
+            [attr.aria-label]="'Imagen ' + (i + 1)">
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
