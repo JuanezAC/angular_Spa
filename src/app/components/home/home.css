@@ -5,8 +5,8 @@
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  background: linear-gradient(160deg, #FAFAF8 0%, #F0F5F1 40%, #E8F0EA 100%);
-  color: var(--color-text);
+  background: linear-gradient(160deg, var(--color-primary-dark) 0%, #2D4F38 50%, #1E3A28 100%);
+  color: #ffffff;
   padding: var(--space-4xl) 0;
   overflow: hidden;
   min-height: 540px;
@@ -24,13 +24,13 @@
 .hero-shape {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.08;
+  opacity: 0.06;
 }
 
 .hero-shape-1 {
   width: 500px;
   height: 500px;
-  background: var(--color-primary-light);
+  background: var(--color-accent);
   top: -120px;
   right: -100px;
 }
@@ -38,7 +38,7 @@
 .hero-shape-2 {
   width: 350px;
   height: 350px;
-  background: var(--color-secondary);
+  background: var(--color-primary-light);
   bottom: -80px;
   left: -60px;
 }
@@ -77,12 +77,12 @@
 .hero-badge {
   display: inline-block;
   padding: 6px 18px;
-  background: rgba(74, 114, 86, 0.1);
-  border: 1px solid rgba(74, 114, 86, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-full);
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--color-primary-dark);
+  color: #d4cfc6;
   margin-bottom: var(--space-lg);
   letter-spacing: 0.5px;
 }
@@ -92,13 +92,13 @@
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: var(--space-lg);
-  color: var(--color-text);
+  color: #ffffff;
   text-align: left;
 }
 
 .hero-subtitle {
   font-size: 1.15rem;
-  color: var(--color-text-secondary);
+  color: #b0aaa0;
   margin-bottom: var(--space-xl);
   line-height: 1.7;
   max-width: 480px;
@@ -112,13 +112,13 @@
 }
 
 .hero-actions .btn-secondary {
-  color: var(--color-primary-dark);
-  border-color: var(--color-primary);
+  color: #e8e4dc;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .hero-actions .btn-secondary:hover {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
   color: #ffffff;
 }
 
@@ -132,7 +132,7 @@
 .hero-carousel {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
 }
 
 .carousel-viewport {
@@ -143,7 +143,7 @@
 .carousel-track {
   position: relative;
   width: 100%;
-  height: 320px;
+  height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -151,7 +151,7 @@
 
 .carousel-slide {
   position: absolute;
-  width: 55%;
+  width: 62%;
   height: 100%;
   object-fit: cover;
   border-radius: var(--radius-lg);
@@ -167,10 +167,10 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius-full);
-  background: rgba(74, 114, 86, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(74, 114, 86, 0.2);
-  color: var(--color-primary-dark);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -180,7 +180,7 @@
 }
 
 .carousel-btn:hover {
-  background: rgba(74, 114, 86, 0.2);
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .carousel-btn :global(i),

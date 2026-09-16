@@ -14,7 +14,7 @@ export class Home implements OnInit, OnDestroy {
     'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&h=600&fit=crop&q=80',
     'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=800&h=600&fit=crop&q=80',
     'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&h=600&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=800&h=600&fit=crop&q=80'
+    'https://images.unsplash.com/photo-1596178060671-7a80dc8059ea?w=800&h=600&fit=crop&q=80'
   ];
 
   carouselIndex = 0;
