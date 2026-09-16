@@ -40,7 +40,6 @@ header {
   height: 36px;
   width: auto;
   object-fit: contain;
-  border-radius: var(--radius-sm);
 }
 
 .brand-text {
@@ -179,38 +178,50 @@ main {
 
 /* ---------- Responsive — Compact (tablet / many nav items) ---------- */
 @media (max-width: 1100px) and (min-width: 769px) {
+  .nav-brand {
+    gap: 8px;
+  }
+
+  .brand-link {
+    gap: 8px;
+  }
+
   .brand-text {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
 
   .navbar-logo {
-    height: 28px;
+    height: 32px;
+  }
+
+  .nav-links {
+    gap: 1px;
   }
 
   .nav-links a {
-    font-size: 0.75rem;
-    padding: 5px 8px;
+    font-size: 0.82rem;
+    padding: 6px 10px;
     flex-shrink: 1;
     min-width: 0;
   }
 
   .btn-logout {
-    font-size: 0.75rem;
-    padding: 4px 10px;
+    font-size: 0.82rem;
+    padding: 5px 12px;
     flex-shrink: 1;
   }
 
   .user-name {
-    font-size: 0.75rem;
+    font-size: 0.82rem;
   }
 
   .nav-user {
-    gap: 6px;
+    gap: 8px;
     padding-left: 10px;
   }
 
   .separador {
-    margin: 0 2px;
+    margin: 0 4px;
   }
 
   .navbar {
