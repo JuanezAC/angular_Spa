@@ -23,7 +23,7 @@
       <a routerLink="/servicios" routerLinkActive="activo" (click)="cerrarMenu()">Servicios</a>
       <a routerLink="/profesionales" routerLinkActive="activo" (click)="cerrarMenu()">Profesionales</a>
       <a routerLink="/horarios" routerLinkActive="activo" (click)="cerrarMenu()">Horarios</a>
-      <a routerLink="/mis-citas" routerLinkActive="activo" (click)="cerrarMenu()">Mis citas</a>
+      <a *ngIf="sesion.rol !== 'ADMIN'" routerLink="/mis-citas" routerLinkActive="activo" (click)="cerrarMenu()">Mis citas</a>
 
       <ng-container *ngIf="sesion.rol === 'ADMIN'">
         <span class="separador desktop-only">|</span>
