@@ -171,6 +171,36 @@ main {
   min-height: calc(100vh - var(--navbar-height));
 }
 
+/* ---------- Responsive — Compact (tablet / many nav items) ---------- */
+@media (max-width: 1100px) and (min-width: 769px) {
+  .brand-text {
+    font-size: 1.2rem;
+  }
+
+  .navbar-logo {
+    height: 30px;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+
+  .btn-logout {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+  }
+
+  .user-name {
+    font-size: 0.78rem;
+  }
+
+  .nav-user {
+    gap: 8px;
+    padding-left: 12px;
+  }
+}
+
 /* ---------- Responsive — Mobile ---------- */
 @media (max-width: 768px) {
   .navbar {
