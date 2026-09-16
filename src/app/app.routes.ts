@@ -4,7 +4,6 @@ import { Home } from './components/home/home';
 import { Login } from './components/login/login';
 import { Registro } from './components/registro/registro';
 import { SinPermisos } from './components/sin-permisos/sin-permisos';
-import { WinnerComponent } from './components/winner/winner';
 import { authGuard, adminGuard } from './guards/auth.guard';
 
 // USUARIO
@@ -48,9 +47,6 @@ export const routes: Routes = [
   { path: 'admin/horarios', component: AdminHorarios, canActivate: [adminGuard] },
   { path: 'admin/citas', component: AdminCitas, canActivate: [adminGuard] },
   { path: 'admin/usuarios', component: AdminUsuarios, canActivate: [adminGuard] },
-
-  // WINNER (dinámica)
-  { path: 'winner/:id', component: WinnerComponent },
 
   { path: '**', redirectTo: '' }
 ];
