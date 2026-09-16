@@ -7,6 +7,7 @@ header {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
+  overflow: hidden;
 }
 
 .navbar {
@@ -98,6 +99,9 @@ header {
   display: flex;
   align-items: center;
   gap: 2px;
+  min-width: 0;
+  flex-shrink: 1;
+  overflow: hidden;
 }
 
 .nav-links a {
@@ -109,6 +113,8 @@ header {
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
   white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .nav-links a:hover {
@@ -174,30 +180,41 @@ main {
 /* ---------- Responsive — Compact (tablet / many nav items) ---------- */
 @media (max-width: 1100px) and (min-width: 769px) {
   .brand-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .navbar-logo {
-    height: 30px;
+    height: 28px;
   }
 
   .nav-links a {
-    font-size: 0.8rem;
-    padding: 6px 10px;
+    font-size: 0.75rem;
+    padding: 5px 8px;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .btn-logout {
-    font-size: 0.78rem;
-    padding: 5px 12px;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    flex-shrink: 1;
   }
 
   .user-name {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
   }
 
   .nav-user {
-    gap: 8px;
-    padding-left: 12px;
+    gap: 6px;
+    padding-left: 10px;
+  }
+
+  .separador {
+    margin: 0 2px;
+  }
+
+  .navbar {
+    padding: 0 var(--space-md);
   }
 }
 
