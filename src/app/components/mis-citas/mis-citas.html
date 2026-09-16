@@ -34,41 +34,36 @@
     </div>
 
     <div class="cards-grid" *ngIf="!estado.loading && !estado.error && filtrarCitas(estado.data).length > 0">
-      <div class="cita-card" *ngFor="let cita of filtrarCitas(estado.data)">
-        <div class="card-top">
-          <div class="card-date">
+      <div class="entity-card" *ngFor="let cita of filtrarCitas(estado.data)">
+        <div class="card-header">
+          <div class="card-header-icon">
             <i data-lucide="calendar"></i>
-            <span>{{ cita.fecha }}</span>
           </div>
-          <div class="card-time-badge">
-            <i data-lucide="clock"></i>
-            <span>{{ cita.hora }}</span>
-          </div>
+          <span class="card-badge badge-success">Confirmada</span>
         </div>
-
         <div class="card-body">
-          <div class="info-row">
-            <i data-lucide="sparkles"></i>
-            <span class="info-label">Servicio</span>
-            <span class="info-value">{{ cita.servicio?.nombre || 'No disponible' }}</span>
-          </div>
-          <div class="info-row">
-            <i data-lucide="user"></i>
-            <span class="info-label">Profesional</span>
-            <span class="info-value">{{ cita.profesional?.nombre || 'No disponible' }}</span>
-          </div>
-          <div class="info-row" *ngIf="cita.observacion">
-            <i data-lucide="message-square"></i>
-            <span class="info-label">Nota</span>
-            <span class="info-value">{{ cita.observacion }}</span>
+          <h3 class="card-title">{{ cita.fecha }}</h3>
+          <p class="card-time">
+            <i data-lucide="clock"></i>
+            {{ cita.hora }}
+          </p>
+          <div class="card-info">
+            <div class="info-row">
+              <i data-lucide="sparkles"></i>
+              <span>{{ cita.servicio?.nombre || 'No disponible' }}</span>
+            </div>
+            <div class="info-row">
+              <i data-lucide="user"></i>
+              <span>{{ cita.profesional?.nombre || 'No disponible' }}</span>
+            </div>
+            <div class="info-row" *ngIf="cita.observacion">
+              <i data-lucide="message-square"></i>
+              <span>{{ cita.observacion }}</span>
+            </div>
           </div>
         </div>
-
-        <div class="card-footer">
-          <button
-            type="button"
-            (click)="eliminarCita(cita)"
-            class="btn btn-danger btn-sm">
+        <div class="card-actions">
+          <button type="button" (click)="eliminarCita(cita)" class="btn btn-danger btn-sm btn-block">
             <i data-lucide="x"></i> Cancelar cita
           </button>
         </div>
