@@ -7,7 +7,7 @@
   position: relative;
   background: linear-gradient(160deg, var(--color-primary-dark) 0%, #2D4F38 50%, #1E3A28 100%);
   color: #ffffff;
-  padding: var(--space-4xl) 0;
+  padding: var(--space-2xl) 0 var(--space-4xl);
   overflow: hidden;
   min-height: 540px;
   display: flex;
@@ -60,7 +60,7 @@
 }
 
 .hero-logo-wrapper {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
   background: var(--color-surface);
   border-radius: var(--radius-xl);
   padding: var(--space-xl) var(--space-2xl);
@@ -389,7 +389,7 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding: var(--space-3xl) 0;
+    padding: var(--space-xl) 0 var(--space-2xl);
     min-height: auto;
   }
 
