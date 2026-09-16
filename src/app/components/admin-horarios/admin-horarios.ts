@@ -116,8 +116,9 @@ export class AdminHorarios implements OnInit, OnDestroy {
         this.horarioService.eliminar(horario.id!).subscribe({
           next: () => { Swal.fire('Eliminado', 'Horario eliminado correctamente', 'success'); this.recargarLista(); },
           error: (err) => {
-            if (err.status === 409) Swal.fire({ icon: 'warning', title: 'No se puede eliminar', text: err.error?.mensaje });
-            else Swal.fire('Error', err.error?.mensaje || 'No se pudo eliminar', 'error');
+            const msg = typeof err.error === 'string' ? err.error : err.error?.mensaje || 'No se pudo eliminar';
+            if (err.status === 409) Swal.fire({ icon: 'warning', title: 'No se puede eliminar', text: msg });
+            else Swal.fire('Error', msg, 'error');
           }
         });
       }
